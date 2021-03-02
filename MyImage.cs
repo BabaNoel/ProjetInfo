@@ -328,7 +328,9 @@ namespace ProjetInfoGit
 
             File.WriteAllBytes(Agrandir, Var);
             Process.Start(new ProcessStartInfo(Agrandir) { UseShellExecute = true });
+
         }
+        
 
     }
 

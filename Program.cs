@@ -15,6 +15,7 @@ namespace ProjetInfoGit
             MyImage Lena = new MyImage(lena);
             MyImage Coco = new MyImage(coco);
             Coco.From_Image_To_File(coco);
+            Console.WriteLine("Test 1");
         }
     }
 }
