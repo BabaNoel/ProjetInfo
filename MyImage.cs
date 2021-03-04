@@ -25,6 +25,7 @@ namespace ProjetInfoGit
         #region Constructeur
         public MyImage(string Myfile)
         {
+            this.Myfile = Myfile;
             byte[] myfile = File.ReadAllBytes(Myfile);
             byte[] tab = new byte[4];
             //type d’image 
@@ -143,10 +144,10 @@ namespace ProjetInfoGit
             return IntToEndian;
         }
 
-        public void From_Image_To_File(string Myfile)
+        public void From_Image_To_File(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string ImageToByte = "ImageToByte.bmp";
+            
             byte[] Var = new byte[myfile.Length];
             byte[] VarTemp = new byte[4];
 
@@ -219,18 +220,19 @@ namespace ProjetInfoGit
                 }
             }
 
-            File.WriteAllBytes(ImageToByte, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
-            Process.Start(new ProcessStartInfo(ImageToByte) { UseShellExecute = true });
+            File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
+
         /// <summary>
         /// On va agrandir l'image n fois
         /// </summary>
         /// <param name="Myfile"></param>
         /// <returns></returns>
-        public void Agrandir(string Myfile, int n)
+        public void Agrandir(string name, int n)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Agrandir = "agrandir.bmp";
+           
             byte[] Var = new byte[offset + ((n * largeur) * (n * hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
             byte[] VarTemp = new byte[4];
 
@@ -326,8 +328,8 @@ namespace ProjetInfoGit
 
             }
 
-            File.WriteAllBytes(Agrandir, Var);
-            Process.Start(new ProcessStartInfo(Agrandir) { UseShellExecute = true });
+            File.WriteAllBytes(name, Var);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
         } 
 
@@ -336,10 +338,9 @@ namespace ProjetInfoGit
         /// </summary>
         /// <param name="Myfile"></param>
         /// <returns></returns>
-        public void DégradéGris(string Myfile)
+        public void DégradéGris(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
             byte[] fichier = new byte[myfile.Length];                        
             byte[] stock = new byte[4];
 
@@ -388,7 +389,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -401,11 +402,11 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    byte gris = Convert.ToByte((pixel[Ligne, Colonne].rouge + pixel[Ligne, Colonne].vert + pixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
+                    byte gris = Convert.ToByte((Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
                     fichier[compteur] = gris;
                     fichier[compteur + 1] = gris;
                     fichier[compteur + 2] = gris;                              
@@ -413,8 +414,8 @@ namespace ProjetInfoGit
                 }
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
 
         }
@@ -424,10 +425,10 @@ namespace ProjetInfoGit
         /// </summary>
         /// <param name="Myfile"></param>
         /// <returns></returns>
-        public void NoirEtBlanc(string Myfile)
+        public void NoirEtBlanc(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+           
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -476,7 +477,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -489,11 +490,11 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    int valeur_moyenne_pixel = (pixel[Ligne, Colonne].rouge + pixel[Ligne, Colonne].vert + pixel[Ligne, Colonne].bleu) / 3;
+                    int valeur_moyenne_pixel = (Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3;
                     if (valeur_moyenne_pixel <= 128)
                     {
                         //si le pixel est inferieur a 128, alors il est noir donc 0
@@ -513,8 +514,8 @@ namespace ProjetInfoGit
                 }
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
 
         }
@@ -524,10 +525,10 @@ namespace ProjetInfoGit
         /// </summary>
         /// <param name="Myfile"></param>
         /// <returns></returns>
-        public void Miroir(string Myfile)
+        public void Miroir(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+            
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -576,7 +577,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -589,27 +590,113 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    fichier[compteur] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].rouge;
-                    fichier[compteur + 1] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].vert;
-                    fichier[compteur + 2] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].bleu;
+                    fichier[compteur] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].rouge;
+                    fichier[compteur + 1] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].vert;
+                    fichier[compteur + 2] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].bleu;
                     compteur = compteur + 3;
                 }
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
 
         }
         
-        public void Rotation(string Myfile, int angle)
+        //public void Rotation(string name, int angle)
+        //{
+        //    byte[] myfile = File.ReadAllBytes(Myfile);
+        //    byte[] fichier = new byte[myfile.Length];
+        //    byte[] stock = new byte[4];
+
+        //    //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+        //    //Header
+        //    fichier[0] = 66;
+        //    fichier[1] = 77;
+
+        //    stock = Convertir_Int_To_Endian(taille);
+        //    for (int i = 2; i <= 5; i++)
+        //    {
+        //        fichier[i] = stock[i - 2];
+        //    }
+
+        //    stock = Convertir_Int_To_Endian(0);
+        //    for (int i = 6; i <= 9; i++)
+        //    {
+        //        fichier[i] = stock[i - 6];
+        //    }
+
+        //    stock = Convertir_Int_To_Endian(Offset);
+        //    for (int i = 10; i <= 13; i++)
+        //    {
+        //        fichier[i] = stock[i - 10];
+        //    }
+
+        //    //HeaderInfo
+        //    stock = Convertir_Int_To_Endian(40);
+        //    for (int i = 14; i <= 17; i++)
+        //    {
+        //        fichier[i] = stock[i - 14];
+        //    }
+
+        //    stock = Convertir_Int_To_Endian(largeur);
+        //    for (int i = 18; i <= 21; i++)
+        //    {
+        //        fichier[i] = stock[i - 18];
+        //    }
+
+        //    stock = Convertir_Int_To_Endian(hauteur);
+        //    for (int i = 22; i <= 25; i++)
+        //    {
+        //        fichier[i] = stock[i - 22];
+        //    }
+
+        //    fichier[26] = 0;
+        //    fichier[27] = 0;
+
+        //    stock = Convertir_Int_To_Endian(nombrebitCouleur);
+        //    for (int i = 28; i <= 29; i++)
+        //    {
+        //        fichier[i] = stock[i - 28];
+        //    }
+
+        //    for (int i = 30; i <= 53; i++)
+        //    {
+        //        fichier[i] = 0;
+        //    }
+
+        //    //Image
+        //    int angle=angle*Math.PI/180;
+        //    int H=Math.Abs(Math.Cos(angle))*this.hauteur+Math.Abs(Math.Sin(angle))*this.largeur;
+        //    int L=Math.Abs(Math.Cos(angle))*this.largeur+Math.Abs(Math.Sin(angle))*this.hauteur;
+        //    Pixel[,] image1 =new Pixel[H,L];
+        //    for(int i=0; i<L;i++)
+        //    {
+        //            for (int j=0; i<H;i++)
+        //            {
+        //                image1[i,j]=Pixel(255,255,255);
+        //                int X=Math.Cos(angle)*(i-H/2)-Math.Sin(angle)*(j-L/2)+H/2;
+        //                int Y=Math.Sin(angle)*(i-H/2)-Math.Cos(angle)*(j-L/2)+L/2;
+        //                if(X>=0 && Y>=0 && X<this.hauteur && Y<this.largeur)
+        //                {
+        //                    image1[X,Y]=image[i,j];
+        //                }
+        //            }                    
+        //    }
+
+        //    File.WriteAllBytes(name, fichier);
+        //    Process.Start(new ProcessStartInfo(name) { UseShellExecute = true }); 
+
+        //}
+
+        public void InverserCouleur(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+            
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -658,100 +745,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
-            for (int i = 28; i <= 29; i++)
-            {
-                fichier[i] = stock[i - 28];
-            }
-
-            for (int i = 30; i <= 53; i++)
-            {
-                fichier[i] = 0;
-            }
-
-            //Image
-            int angle=angle*Math.PI/180;
-            int H=Math.Abs(Math.Cos(angle))*this.hauteur+Math.Abs(Math.Sin(angle))*this.largeur;
-            int L=Math.Abs(Math.Cos(angle))*this.largeur+Math.Abs(Math.Sin(angle))*this.hauteur;
-            Pixel[,] image1 =new Pixel[H,L];
-            for(int i=0; i<L;i++)
-            {
-                    for (int j=0; i<H;i++)
-                    {
-                        image1[i,j]=Pixel(255,255,255);
-                        int X=Math.Cos(angle)*(i-H/2)-Math.Sin(angle)*(j-L/2)+H/2;
-                        int Y=Math.Sin(angle)*(i-H/2)-Math.Cos(angle)*(j-L/2)+L/2;
-                        if(X>=0 && Y>=0 && X<this.hauteur && Y<this.largeur)
-                        {
-                            image1[X,Y]=image[i,j];
-                        }
-
-                    }
-
-                    
-            }
-
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
-
-
-         
-
-        }
-
-        public void InverserCouleur(string Myfile)
-        {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            string Couleur = "couleur.bmp";
-            byte[] fichier = new byte[myfile.Length];
-            byte[] stock = new byte[4];
-
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
-            //Header
-            fichier[0] = 66;
-            fichier[1] = 77;
-
-            stock = Convertir_Int_To_Endian(taille);
-            for (int i = 2; i <= 5; i++)
-            {
-                fichier[i] = stock[i - 2];
-            }
-
-            stock = Convertir_Int_To_Endian(0);
-            for (int i = 6; i <= 9; i++)
-            {
-                fichier[i] = stock[i - 6];
-            }
-
-            stock = Convertir_Int_To_Endian(Offset);
-            for (int i = 10; i <= 13; i++)
-            {
-                fichier[i] = stock[i - 10];
-            }
-
-            //HeaderInfo
-            stock = Convertir_Int_To_Endian(40);
-            for (int i = 14; i <= 17; i++)
-            {
-                fichier[i] = stock[i - 14];
-            }
-
-            stock = Convertir_Int_To_Endian(largeur);
-            for (int i = 18; i <= 21; i++)
-            {
-                fichier[i] = stock[i - 18];
-            }
-
-            stock = Convertir_Int_To_Endian(hauteur);
-            for (int i = 22; i <= 25; i++)
-            {
-                fichier[i] = stock[i - 22];
-            }
-
-            fichier[26] = 0;
-            fichier[27] = 0;
-
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -764,23 +758,108 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
 
-                        fichier[compteur] = Convert.ToByte(255 - pixel[Ligne,Colonne].rouge);
-                        fichier[compteur + 1] = Convert.ToByte(255 - pixel[Ligne, Colonne].vert);
-                        fichier[compteur + 2] = Convert.ToByte(255 - pixel[Ligne, Colonne].bleu);
+                        fichier[compteur] = Convert.ToByte(255 - Matricepixel[Ligne,Colonne].rouge);
+                        fichier[compteur + 1] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].vert);
+                        fichier[compteur + 2] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].bleu);
                         compteur = compteur + 3;
                    
                 }
             }
 
-            File.WriteAllBytes(Couleur, fichier);
-            Process.Start(new ProcessStartInfo(Couleur) { UseShellExecute = true });
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
 
+        }
+
+        public void Reduction(string name, int n)
+        {
+            if (n > hauteur | n > largeur)
+            {
+                Console.WriteLine("La réduction demandée est trop importante");
+                return;
+            }
+            byte[] myfile = File.ReadAllBytes(this.Myfile);
+            byte[] Var = new byte[offset + (largeur / n * hauteur / n) * 3];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(offset + ((largeur / n) * (hauteur / n)) * 3);
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur / n);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur / n);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne += n)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne += n)
+                {
+
+                    Var[compteur] = Matricepixel[iLigne, iColonne].rouge;
+                    Var[compteur + 1] = Matricepixel[iLigne, iColonne].vert;
+                    Var[compteur + 2] = Matricepixel[iLigne, iColonne].bleu;
+                    compteur = compteur + 3;
+
+                }
+            }
+
+            File.WriteAllBytes(name, Var);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
     }
 
