@@ -388,7 +388,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -401,11 +401,11 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    byte gris = Convert.ToByte((pixel[Ligne, Colonne].rouge + pixel[Ligne, Colonne].vert + pixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
+                    byte gris = Convert.ToByte((Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
                     fichier[compteur] = gris;
                     fichier[compteur + 1] = gris;
                     fichier[compteur + 2] = gris;                              
@@ -427,7 +427,7 @@ namespace ProjetInfoGit
         public void NoirEtBlanc(string Myfile)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+            string NoirBlanc = "noirblanc.bmp";
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -476,7 +476,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -489,11 +489,11 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    int valeur_moyenne_pixel = (pixel[Ligne, Colonne].rouge + pixel[Ligne, Colonne].vert + pixel[Ligne, Colonne].bleu) / 3;
+                    int valeur_moyenne_pixel = (Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3;
                     if (valeur_moyenne_pixel <= 128)
                     {
                         //si le pixel est inferieur a 128, alors il est noir donc 0
@@ -513,8 +513,8 @@ namespace ProjetInfoGit
                 }
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(NoirBlanc, fichier);
+            Process.Start(new ProcessStartInfo(NoirBlanc) { UseShellExecute = true });
 
 
         }
@@ -527,7 +527,7 @@ namespace ProjetInfoGit
         public void Miroir(string Myfile)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+            string Miroir = "miroir.bmp";
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -576,7 +576,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -589,19 +589,19 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    fichier[compteur] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].rouge;
-                    fichier[compteur + 1] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].vert;
-                    fichier[compteur + 2] = pixel[Ligne, pixel.GetLength(1) - 1 - Colonne].bleu;
+                    fichier[compteur] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].rouge;
+                    fichier[compteur + 1] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].vert;
+                    fichier[compteur + 2] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].bleu;
                     compteur = compteur + 3;
                 }
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(Miroir, fichier);
+            Process.Start(new ProcessStartInfo(Miroir) { UseShellExecute = true });
 
 
         }
@@ -609,7 +609,7 @@ namespace ProjetInfoGit
         public void Rotation(string Myfile, int angle)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Gris = "gris.bmp";
+            string Rotation = "rotation.bmp";
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -658,7 +658,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -670,20 +670,20 @@ namespace ProjetInfoGit
             }
 
             //Image
-            int angle=angle*Math.PI/180;
-            int H=Math.Abs(Math.Cos(angle))*this.hauteur+Math.Abs(Math.Sin(angle))*this.largeur;
-            int L=Math.Abs(Math.Cos(angle))*this.largeur+Math.Abs(Math.Sin(angle))*this.hauteur;
+            double angle=angle*Math.PI/180;
+            double H=Math.Abs(Math.Cos(angle))*this.hauteur+Math.Abs(Math.Sin(angle))*this.largeur;
+            double L=Math.Abs(Math.Cos(angle))*this.largeur+Math.Abs(Math.Sin(angle))*this.hauteur;
             Pixel[,] image1 =new Pixel[H,L];
             for(int i=0; i<L;i++)
             {
                     for (int j=0; i<H;i++)
                     {
                         image1[i,j]=Pixel(255,255,255);
-                        int X=Math.Cos(angle)*(i-H/2)-Math.Sin(angle)*(j-L/2)+H/2;
-                        int Y=Math.Sin(angle)*(i-H/2)-Math.Cos(angle)*(j-L/2)+L/2;
+                        double X=Math.Cos(angle)*(i-H/2)-Math.Sin(angle)*(j-L/2)+H/2;
+                        double Y=Math.Sin(angle)*(i-H/2)-Math.Cos(angle)*(j-L/2)+L/2;
                         if(X>=0 && Y>=0 && X<this.hauteur && Y<this.largeur)
                         {
-                            image1[X,Y]=image[i,j];
+                            image1[X,Y]=image1[i,j];
                         }
 
                     }
@@ -691,8 +691,8 @@ namespace ProjetInfoGit
                     
             }
 
-            File.WriteAllBytes(Gris, fichier);
-            Process.Start(new ProcessStartInfo(Gris) { UseShellExecute = true });
+            File.WriteAllBytes(Rotation, fichier);
+            Process.Start(new ProcessStartInfo(Rotation) { UseShellExecute = true });
 
 
          
@@ -751,7 +751,7 @@ namespace ProjetInfoGit
             fichier[26] = 0;
             fichier[27] = 0;
 
-            stock = Convertir_Int_To_Endian(nombrebit);
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 fichier[i] = stock[i - 28];
@@ -764,14 +764,14 @@ namespace ProjetInfoGit
 
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < pixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < pixel.GetLength(1); Colonne++)
+                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
 
-                        fichier[compteur] = Convert.ToByte(255 - pixel[Ligne,Colonne].rouge);
-                        fichier[compteur + 1] = Convert.ToByte(255 - pixel[Ligne, Colonne].vert);
-                        fichier[compteur + 2] = Convert.ToByte(255 - pixel[Ligne, Colonne].bleu);
+                        fichier[compteur] = Convert.ToByte(255 - Matricepixel[Ligne,Colonne].rouge);
+                        fichier[compteur + 1] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].vert);
+                        fichier[compteur + 2] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].bleu);
                         compteur = compteur + 3;
                    
                 }
