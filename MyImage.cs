@@ -693,12 +693,7 @@ namespace ProjetInfoGit
 
             File.WriteAllBytes(Rotation, fichier);
             Process.Start(new ProcessStartInfo(Rotation) { UseShellExecute = true });
-
-
-         
-
         }
-
         public void InverserCouleur(string Myfile)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
