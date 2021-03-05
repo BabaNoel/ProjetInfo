@@ -265,13 +265,13 @@ namespace ProjetInfoGit
                 Var[i] = VarTemp[i - 14];
             }
 
-            VarTemp = Convertir_Int_To_Endian(largeur * 3);
+            VarTemp = Convertir_Int_To_Endian(largeur * n);
             for (int i = 18; i <= 21; i++)
             {
                 Var[i] = VarTemp[i - 18];
             }
 
-            VarTemp = Convertir_Int_To_Endian(hauteur * 3);
+            VarTemp = Convertir_Int_To_Endian(hauteur * n);
             for (int i = 22; i <= 25; i++)
             {
                 Var[i] = VarTemp[i - 22];
@@ -295,36 +295,21 @@ namespace ProjetInfoGit
             int compteur = 54;
             for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
             {
-                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
+                for (int iterateur = 0; iterateur < n; iterateur++)
                 {
-                    for (int i = 0; i < n; i++)
+
+                    for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                     {
-                        Var[compteur + 3 * i] = Matricepixel[Ligne, Colonne].rouge;
-                        Var[compteur + 1 + 3 * i] = Matricepixel[Ligne, Colonne].vert;
-                        Var[compteur + 2 + 3 * i] = Matricepixel[Ligne, Colonne].bleu;
+                        for (int i = 0; i < n; i++)
+                        {
+                            Var[compteur + 3 * i] = Matricepixel[Ligne, Colonne].rouge;
+                            Var[compteur + 1 + 3 * i] = Matricepixel[Ligne, Colonne].vert;
+                            Var[compteur + 2 + 3 * i] = Matricepixel[Ligne, Colonne].bleu;
+                        }
+                        compteur = compteur + 3 * n;
                     }
-                    compteur = compteur + 3 * n;
                 }
-                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
-                {
-                    for (int i = 0; i < n; i++)
-                    {
-                        Var[compteur + 3 * i] = Matricepixel[Ligne, Colonne].rouge;
-                        Var[compteur + 1 + 3 * i] = Matricepixel[Ligne, Colonne].vert;
-                        Var[compteur + 2 + 3 * i] = Matricepixel[Ligne, Colonne].bleu;
-                    }
-                    compteur = compteur + 3 * n;
-                }
-                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
-                {
-                    for (int i = 0; i < n; i++)
-                    {
-                        Var[compteur + 3 * i] = Matricepixel[Ligne, Colonne].rouge;
-                        Var[compteur + 1 + 3 * i] = Matricepixel[Ligne, Colonne].vert;
-                        Var[compteur + 2 + 3 * i] = Matricepixel[Ligne, Colonne].bleu;
-                    }
-                    compteur = compteur + 3 * n;
-                }
+               
 
             }
 
@@ -606,92 +591,105 @@ namespace ProjetInfoGit
 
 
         }
-        
-        //public void Rotation(string name, int angle)
-        //{
-        //    byte[] myfile = File.ReadAllBytes(Myfile);
-        //    byte[] fichier = new byte[myfile.Length];
-        //    byte[] stock = new byte[4];
 
-        //    //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
-        //    //Header
-        //    fichier[0] = 66;
-        //    fichier[1] = 77;
+        public void Rotation(string name, double angle)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            byte[] stock = new byte[4];
+            int hauteur = this.hauteur;
+            int largeur = this.largeur;
+            int H = (int)(Math.Abs(Math.Cos(angle)) * hauteur + Math.Abs(Math.Sin(angle)) * largeur);
+            int L = (int)(Math.Abs(Math.Cos(angle)) * largeur + Math.Abs(Math.Sin(angle)) * hauteur);
+            byte[] fichier = new byte[offset+H*L*3];
+            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+            //Header
+            fichier[0] = 66;
+            fichier[1] = 77;
 
-        //    stock = Convertir_Int_To_Endian(taille);
-        //    for (int i = 2; i <= 5; i++)
-        //    {
-        //        fichier[i] = stock[i - 2];
-        //    }
+            stock = Convertir_Int_To_Endian(offset+H*L);
+            for (int i = 2; i <= 5; i++)
+            {
+                fichier[i] = stock[i - 2];
+            }
 
-        //    stock = Convertir_Int_To_Endian(0);
-        //    for (int i = 6; i <= 9; i++)
-        //    {
-        //        fichier[i] = stock[i - 6];
-        //    }
+            stock = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                fichier[i] = stock[i - 6];
+            }
 
-        //    stock = Convertir_Int_To_Endian(Offset);
-        //    for (int i = 10; i <= 13; i++)
-        //    {
-        //        fichier[i] = stock[i - 10];
-        //    }
+            stock = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                fichier[i] = stock[i - 10];
+            }
 
-        //    //HeaderInfo
-        //    stock = Convertir_Int_To_Endian(40);
-        //    for (int i = 14; i <= 17; i++)
-        //    {
-        //        fichier[i] = stock[i - 14];
-        //    }
+            //HeaderInfo
+            stock = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                fichier[i] = stock[i - 14];
+            }
 
-        //    stock = Convertir_Int_To_Endian(largeur);
-        //    for (int i = 18; i <= 21; i++)
-        //    {
-        //        fichier[i] = stock[i - 18];
-        //    }
+            stock = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                fichier[i] = stock[i - 18];
+            }
 
-        //    stock = Convertir_Int_To_Endian(hauteur);
-        //    for (int i = 22; i <= 25; i++)
-        //    {
-        //        fichier[i] = stock[i - 22];
-        //    }
+            stock = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                fichier[i] = stock[i - 22];
+            }
 
-        //    fichier[26] = 0;
-        //    fichier[27] = 0;
+            fichier[26] = 0;
+            fichier[27] = 0;
 
-        //    stock = Convertir_Int_To_Endian(nombrebitCouleur);
-        //    for (int i = 28; i <= 29; i++)
-        //    {
-        //        fichier[i] = stock[i - 28];
-        //    }
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                fichier[i] = stock[i - 28];
+            }
 
-        //    for (int i = 30; i <= 53; i++)
-        //    {
-        //        fichier[i] = 0;
-        //    }
+            for (int i = 30; i <= 53; i++)
+            {
+                fichier[i] = 0;
+            }
 
-        //    //Image
-        //    int angle=angle*Math.PI/180;
-        //    int H=Math.Abs(Math.Cos(angle))*this.hauteur+Math.Abs(Math.Sin(angle))*this.largeur;
-        //    int L=Math.Abs(Math.Cos(angle))*this.largeur+Math.Abs(Math.Sin(angle))*this.hauteur;
-        //    Pixel[,] image1 =new Pixel[H,L];
-        //    for(int i=0; i<L;i++)
-        //    {
-        //            for (int j=0; i<H;i++)
-        //            {
-        //                image1[i,j]=Pixel(255,255,255);
-        //                int X=Math.Cos(angle)*(i-H/2)-Math.Sin(angle)*(j-L/2)+H/2;
-        //                int Y=Math.Sin(angle)*(i-H/2)-Math.Cos(angle)*(j-L/2)+L/2;
-        //                if(X>=0 && Y>=0 && X<this.hauteur && Y<this.largeur)
-        //                {
-        //                    image1[X,Y]=image[i,j];
-        //                }
-        //            }                    
-        //    }
+            //Image
+            angle = angle * Math.PI / 180;
+            Pixel blanc = new Pixel(255, 255, 255);
+            Pixel[,] image = new Pixel[H, L];
+            for (int i = 0; i < L; i++)
+            {
+                for (int j = 0; i < H; i++)
+                {
+                    image[i, j] = blanc;
+                    int X = (int)(H - j * Math.Sin(angle));
+                    int Y = (int)(hauteur * Math.Sin(angle) + j * Math.Cos(angle));
+                    if (X >= 0 && Y >= 0 && X < H && Y < L)
+                    {
+                        image[X, Y] = Matricepixel[i, j];
+                    }
+                }
+            }
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < H; iLigne++)
+            {
+                for (int iColonne = 0; iColonne < L; iColonne++)
+                {
+                    fichier[compteur] = image[iLigne, iColonne].rouge;           //on attribut chaque couleurs à son emplacement
+                    fichier[compteur + 1] = image[iLigne, iColonne].vert;
+                    fichier[compteur + 2] = image[iLigne, iColonne].bleu;
+                    compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
+                }
+            }
 
-        //    File.WriteAllBytes(name, fichier);
-        //    Process.Start(new ProcessStartInfo(name) { UseShellExecute = true }); 
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
-        //}
+        }
 
         public void InverserCouleur(string name)
         {
