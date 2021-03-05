@@ -872,7 +872,7 @@ namespace ProjetInfoGit
         /// <param name="effet"></param>
         /// <returns></returns>
        
-        Pixel ApplicationConvolution(Pixel[,] pixel, int[,] matrice_convolution, int x, int y,string effet)
+        Pixel ApplicationConvolution(Pixel[,] pixel, int[,] matrice_convolution, int x, int y, string effet)
         {
             byte rouge = 0;
             byte vert = 0;
@@ -887,17 +887,16 @@ namespace ProjetInfoGit
                 {
                     if (effet == "5")
                     {
-                        InfoRouge += rouge + (pixel[(x - 1) + i, (y - 1) + j].rouge) * matrice_convolution[i, j]/9;      //Principe des matrices de convolution 
-                        InfoVert += vert + (pixel[(x - 1) + i, (y - 1) + j].vert) * matrice_convolution[i, j]/9;         //On multiplie le noyau (La matrice 3*3 de notre matrice image) avec la matrice de convolution
-                        InfoBleu += bleu + (pixel[(x - 1) + i, (y - 1) + j].bleu) * matrice_convolution[i, j]/9;
+                        InfoRouge += rouge + (pixel[(x - 1) + i, (y - 1) + j].rouge) * matrice_convolution[i, j] / 9;
+                        InfoVert += vert + (pixel[(x - 1) + i, (y - 1) + j].vert) * matrice_convolution[i, j] / 9;
+                        InfoBleu += bleu + (pixel[(x - 1) + i, (y - 1) + j].bleu) * matrice_convolution[i, j] / 9;
                     }
                     else
                     {
                         InfoRouge += rouge + (pixel[(x - 1) + i, (y - 1) + j].rouge) * matrice_convolution[i, j];      //Principe des matrices de convolution 
                         InfoVert += vert + (pixel[(x - 1) + i, (y - 1) + j].vert) * matrice_convolution[i, j];         //On multiplie le noyau (La matrice 3*3 de notre matrice image) avec la matrice de convolution
                         InfoBleu += bleu + (pixel[(x - 1) + i, (y - 1) + j].bleu) * matrice_convolution[i, j];         //on additione les résultats (d'ou le += pour avoir la valeur de sortie)
-                    }                                                                                               //(formule trouvée sur internet (http://mathinfo.alwaysdata.net/2016/11/filtres-de-convolution)
-
+                    }
                 }
             }
             if (InfoRouge > 255)                         // on applique des valeur arbitraire pour éviter les erreur d'index la valeur maximale d'une couleur étant compris en 0 et 255

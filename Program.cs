@@ -12,7 +12,7 @@ namespace ProjetInfoGit
         {
             Console.WriteLine("Quel image voulez vous choisir ?");
             Console.WriteLine("Tapez 1 pour choisir Coco.");
-            Console.WriteLine("Tapez 2 pour choisir lena.");
+            Console.WriteLine("Tapez 2 pour choisir Lena.");
             string ChoixImage = Convert.ToString(Console.ReadLine());
             if (ChoixImage == "1" || ChoixImage == "2")
             {
