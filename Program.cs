@@ -10,7 +10,26 @@ namespace ProjetInfoGit
     {
         static void Main(string[] args)
         {
-            MyImage image = new MyImage("coco.bmp");
+            Console.WriteLine("Quel image voulez vous choisir ?");
+            Console.WriteLine("Tapez 1 pour choisir Coco.");
+            Console.WriteLine("Tapez 2 pour choisir lena.");
+            string ChoixImage = Convert.ToString(Console.ReadLine());
+            if (ChoixImage == "1" || ChoixImage == "2")
+            {
+                if(ChoixImage == "1" )
+                ChoixImage = "coco.bmp";
+                if (ChoixImage == "2")
+                    ChoixImage = "lena.bmp";
+            }
+            else
+            {
+                Console.WriteLine("votre choix est invalide");
+                Console.WriteLine("Votre image sera Coco.bmp par défaut");
+                ChoixImage = "coco.bmp";
+            }
+            
+            MyImage image = new MyImage(ChoixImage);
+            System.Threading.Thread.Sleep(2000);
             ConsoleKeyInfo cki;
             do
             {
@@ -88,7 +107,15 @@ namespace ProjetInfoGit
                         Console.WriteLine("Tapez 4 pour Repoussage");
                         Console.WriteLine("Tapez 5 pour Flou");
                         string effet = Convert.ToString(Console.ReadLine());
-                        image.Convolution(name, effet);
+                        if (effet == "1" || effet == "2" || effet == "3" || effet == "4" || effet == "5")
+                        {
+                            image.Convolution(name, effet);
+                        }
+                        else
+                        {
+                            Console.WriteLine("votre numéro d'effet est invalide");
+                            break;
+                        }
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");

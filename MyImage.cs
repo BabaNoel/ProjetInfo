@@ -1021,7 +1021,7 @@ namespace ProjetInfoGit
             }
             if (effet == "5")
             {
-                int[,] flou = new int[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } }; // Matrice de repoussage trouvée sur internet
+                int[,] flou = new int[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } }; // Matrice de flou trouvée sur internet
                 effetConvolution = flou;
             }
 
