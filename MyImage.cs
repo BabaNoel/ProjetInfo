@@ -413,7 +413,6 @@ namespace ProjetInfoGit
         public void NoirEtBlanc(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string NoirBlanc = "noirblanc.bmp";
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -601,7 +600,7 @@ namespace ProjetInfoGit
             int H = (int)(Math.Abs(Math.Cos(angle)) * hauteur + Math.Abs(Math.Sin(angle)) * largeur);
             int L = (int)(Math.Abs(Math.Cos(angle)) * largeur + Math.Abs(Math.Sin(angle)) * hauteur);
             byte[] fichier = new byte[offset+H*L*3];
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+           
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -679,10 +678,10 @@ namespace ProjetInfoGit
             {
                 for (int iColonne = 0; iColonne < L; iColonne++)
                 {
-                    fichier[compteur] = image[iLigne, iColonne].rouge;           //on attribut chaque couleurs à son emplacement
+                    fichier[compteur] = image[iLigne, iColonne].rouge;           
                     fichier[compteur + 1] = image[iLigne, iColonne].vert;
                     fichier[compteur + 2] = image[iLigne, iColonne].bleu;
-                    compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
+                    compteur = compteur + 3;                                        
                 }
             }
 
@@ -691,10 +690,9 @@ namespace ProjetInfoGit
 
         }
 
-        public void InverserCouleur(string Myfile)
+        public void InverserCouleur(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
