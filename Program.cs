@@ -98,8 +98,6 @@ namespace ProjetInfoGit
                         image.Miroir(name);
                         break;
                     case 8:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
-                        name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir l'effet de votre matrice de convolution");
                         Console.WriteLine("Tapez 1 pour Detection des bords.");
                         Console.WriteLine("Tapez 2 pour Renforcement des bords");
@@ -107,6 +105,8 @@ namespace ProjetInfoGit
                         Console.WriteLine("Tapez 4 pour Repoussage");
                         Console.WriteLine("Tapez 5 pour Flou");
                         string effet = Convert.ToString(Console.ReadLine());
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        name = Console.ReadLine() + ".bmp";
                         if (effet == "1" || effet == "2" || effet == "3" || effet == "4" || effet == "5")
                         {
                             image.Convolution(name, effet);
