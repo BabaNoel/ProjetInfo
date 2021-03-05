@@ -40,7 +40,7 @@ namespace ProjetInfoGit
                                  + "> 3: inverser les couleurs \n"
                                  + "> 4: Réduire\n"
                                  + "> 5: Aggrandir\n"
-                                 + "> 6: Faire une Rotation\n"
+                                 + "> 6: Faire une Rotation (NE MARCHE PAS ENCORE)\n"
                                  + "> 7: Mettre en miroir\n"
                                  + "> 8: Matrice de convolution\n"
                                  + "\n");
@@ -51,30 +51,33 @@ namespace ProjetInfoGit
                 {
                     #region
                     case 1:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         image.NoirEtBlanc(name);
                         break;
                     case 2:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         image.DégradéGris(name);
                         break;
                     case 3:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         image.InverserCouleur(name);
                         break;
                     case 4:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
-                        name = Console.ReadLine() + ".bmp";
-                        Console.WriteLine("Choisissez un rapport de réduction");
+                        Console.WriteLine("Choisissez un rapport de réduction (sauf multiples de trois");
                         valeur = Convert.ToInt32(Console.ReadLine());
+                        if (valeur <= 0) 
+                        { 
+                            Console.WriteLine("Saisie invalide");
+                            break;
+                        }
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        name = Console.ReadLine() + ".bmp";
                         image.Reduction(name,valeur);
                         break;
                     case 5:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
-                        name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Choisissez un rapport d'aggrandissement");
                         valeur = Convert.ToInt32(Console.ReadLine());
                         if (valeur == 0)
@@ -82,18 +85,19 @@ namespace ProjetInfoGit
                             Console.WriteLine("valeur invalide");
                             break;
                         }
-
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        name = Console.ReadLine() + ".bmp";
                         image.Agrandir(name, valeur);
                         break;
                     case 6:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
-                        name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Choisissez un angle de rotation");
                         valeur = Convert.ToInt32(Console.ReadLine());
-                        //image.Rotation(name, valeur);
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        name = Console.ReadLine() + ".bmp";
+                        image.Rotation(name, valeur);
                         break;
                     case 7:
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         image.Miroir(name);
                         break;
@@ -105,7 +109,7 @@ namespace ProjetInfoGit
                         Console.WriteLine("Tapez 4 pour Repoussage");
                         Console.WriteLine("Tapez 5 pour Flou");
                         string effet = Convert.ToString(Console.ReadLine());
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         if (effet == "1" || effet == "2" || effet == "3" || effet == "4" || effet == "5")
                         {

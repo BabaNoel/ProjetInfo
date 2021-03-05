@@ -780,7 +780,7 @@ namespace ProjetInfoGit
 
         #endregion
 
-
+        #region Innovation
         public void InverserCouleur(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
@@ -863,6 +863,7 @@ namespace ProjetInfoGit
 
 
         }
+        #endregion
 
         #region TD4
         /// <summary>
@@ -871,7 +872,7 @@ namespace ProjetInfoGit
         /// <param name="Myfile"></param>
         /// <param name="effet"></param>
         /// <returns></returns>
-       
+
         Pixel ApplicationConvolution(Pixel[,] pixel, int[,] matrice_convolution, int x, int y, string effet)
         {
             byte rouge = 0;
