@@ -11,6 +11,7 @@ namespace ProjetInfoGit
         static void Main(string[] args)
         {
             MyImage image = new MyImage("coco.bmp");
+            //Dernière version de BABA
             ConsoleKeyInfo cki;
             do
             {
