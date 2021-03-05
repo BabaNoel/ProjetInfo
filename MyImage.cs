@@ -1243,6 +1243,187 @@ namespace ProjetInfoGit
             File.WriteAllBytes(convolution, Var);
             Process.Start(new ProcessStartInfo(convolution) { UseShellExecute = true });
         }
+        Pixel ApplicationConvolution(Pixel[,] pixel, int[,] matrice_convolution, int x, int y)
+        {
+            byte rouge = 0;
+            byte vert = 0;
+            byte bleu = 0;
+            int InfoRouge = 0;
+            int InfoVert = 0;
+            int InfoBleu = 0;
+
+            for (int i = 0; i < 3; i++)                            // Matrice de convolution = 3*3 donc nos index i et j sont inférieur à 3
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    InfoRouge += rouge + (pixel[(x - 1) + i, (y - 1) + j].rouge) * matrice_convolution[i, j];      //Principe des matrices de convolution 
+                    InfoVert += vert + (pixel[(x - 1) + i, (y - 1) + j].vert) * matrice_convolution[i, j];         //On multiplie le noyau (La matrice 3*3 de notre matrice image) avec la matrice de convolution
+                    InfoBleu += bleu + (pixel[(x - 1) + i, (y - 1) + j].bleu) * matrice_convolution[i, j];         //on additione les résultats (d'ou le += pour avoir la valeur de sortie)
+                                                                                                                   //(formule trouvée sur internet (http://mathinfo.alwaysdata.net/2016/11/filtres-de-convolution)
+
+                }
+            }
+            if (InfoRouge > 255)                         // on applique des valeur arbitraire pour éviter les erreur d'index la valeur maximale d'une couleur étant compris en 0 et 255
+            {                                            // si la valeur donnée aprés passage de la matruce de convolution est supérieur à 255, on applique la valeur 255 à la couleur et inversement pour des valeurs inférieur à 0 
+                rouge = 255;
+            }
+            else if (InfoRouge < 0)
+            {
+                rouge = 0;
+            }
+            else
+            {
+                rouge = Convert.ToByte(InfoRouge);
+            }
+
+            if (InfoVert > 255)                 // on répete ceci pour toute les couleurs afin d'éviter toute erreur d'index
+            {
+                vert = 255;
+            }
+            else if (InfoVert < 0)
+            {
+                vert = 0;
+            }
+            else
+            {
+                vert = Convert.ToByte(InfoVert);
+            }
+
+            if (InfoBleu > 255)
+            {
+                bleu = 255;
+            }
+            else if (InfoBleu < 0)
+            {
+                bleu = 0;
+            }
+            else
+            {
+                bleu = Convert.ToByte(InfoBleu);
+            }
+
+
+            Pixel pixelTemp = new Pixel(rouge, vert, bleu);   // notre nouvelle matrice prend alors les valeur trouvés en utilisant la formule précédante 
+
+            return pixelTemp;            // on retourne la nouvelle matrice
+        }
+        public void Convolution(string Myfile, string effet)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);                // on utilise la meme forme que toute les méthode que précédamment pour obtenir les info de l'image et les stocker dans une variable
+            string convolution = "Convolution.bmp";
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int[,] effetConvolution = null;                 // on initialise la matrice de convolution (3*3)
+            if (effet == "DetectionBord")
+            {
+                int[,] detection = new int[,] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } };       // Matrice de détection trouvée sur internet
+                effetConvolution = detection;
+            }
+            if (effet == "RenforcementBord")
+            {
+                int[,] renforcement = new int[,] { { 0, 0, 0 }, { -1, 1, 0 }, { 0, 0, 0 } }; // Matrice de renforcement trouvée sur internet
+                effetConvolution = renforcement;
+            }
+            if (effet == "AugContraste")
+            {
+                int[,] contraste = new int[,] { { 0, -1, 0 }, { -1, 5, -1 }, { 0, -1, 0 } }; // Matrice de contraste trouvée sur internet
+                effetConvolution = contraste;
+            }
+            if (effet == "Repoussage")
+            {
+                int[,] repoussage = new int[,] { { -2, -1, 0 }, { -1, 1, 1 }, { 0, 1, 2 } }; // Matrice de repoussage trouvée sur internet
+                effetConvolution = repoussage;
+            }
+            if (effet == "flou")
+            {
+                int[,] flou = new int[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } }; // Matrice de repoussage trouvée sur internet
+                effetConvolution = flou;
+            }
+
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)       // on parcout en ligne et colonne notre matrice
+                {
+                    if (iLigne == 0 || iColonne == 0 || iLigne == (Matricepixel.GetLength(0) - 1) || iColonne == (Matricepixel.GetLength(1) - 1)) //exception dans ces cas la on ne change rien à la matrice de base (pixel de départ ou 1 pixel avant la fin)
+                    {
+                        Var[compteur] = Matricepixel[iLigne, iColonne].rouge;
+                        Var[compteur + 1] = Matricepixel[iLigne, iColonne].vert;
+                        Var[compteur + 2] = Matricepixel[iLigne, iColonne].bleu;
+                        compteur = compteur + 3;
+                    }
+                    else
+                    {
+                        Pixel pixelTemp = ApplicationConvolution(Matricepixel, effetConvolution, iLigne, iColonne); // on applique la nouvelle matrice à notre matrice existante
+                        Var[compteur] = pixelTemp.rouge;
+                        Var[compteur + 1] = pixelTemp.vert;
+                        Var[compteur + 2] = pixelTemp.bleu;
+                        compteur = compteur + 3;
+                    }
+
+                }
+            }
+
+            File.WriteAllBytes(convolution, Var);
+            Process.Start(new ProcessStartInfo(convolution) { UseShellExecute = true });
+        }
     }
 
     #endregion
