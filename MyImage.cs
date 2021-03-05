@@ -507,7 +507,7 @@ namespace ProjetInfoGit
         /// <summary>
         /// Convertie l'image en miroir
         /// </summary>
-        /// <param name="Myfile"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public void Miroir(string name)
         {
@@ -590,7 +590,6 @@ namespace ProjetInfoGit
 
 
         }
-
         public void Rotation(string name, double angle)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
@@ -689,7 +688,6 @@ namespace ProjetInfoGit
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
         }
-
         public void InverserCouleur(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
@@ -772,7 +770,6 @@ namespace ProjetInfoGit
 
 
         }
-
         public void Reduction(string name, int n)
         {
             if (n > hauteur | n > largeur)
