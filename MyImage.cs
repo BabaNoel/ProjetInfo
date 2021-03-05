@@ -431,7 +431,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+            
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -531,7 +531,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+            
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -593,7 +593,7 @@ namespace ProjetInfoGit
             {
                 for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
-                    fichier[compteur] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].rouge;
+                    fichier[compteur] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].rouge;   //on inverse le sens de parcours de la matrice afin d'obtenir un effet miroir
                     fichier[compteur + 1] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].vert;
                     fichier[compteur + 2] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].bleu;
                     compteur = compteur + 3;
@@ -613,7 +613,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+         
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -701,7 +701,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
+            
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
