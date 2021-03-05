@@ -23,6 +23,7 @@ namespace ProjetInfoGit
                                  + "> 5: Aggrandir\n"
                                  + "> 6: Faire une Rotation\n"
                                  + "> 7: Mettre en miroir\n"
+                                 + "> 8: Matrice de convolution\n"
                                  + "\n");
                 int exo = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -76,6 +77,18 @@ namespace ProjetInfoGit
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
                         name = Console.ReadLine() + ".bmp";
                         image.Miroir(name);
+                        break;
+                    case 8:
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        name = Console.ReadLine() + ".bmp";
+                        Console.WriteLine("Veuillez choisir l'effet de votre matrice de convolution");
+                        Console.WriteLine("Tapez 1 pour Detection des bords.");
+                        Console.WriteLine("Tapez 2 pour Renforcement des bords");
+                        Console.WriteLine("Tapez 3 pour Augmentation du Contraste");
+                        Console.WriteLine("Tapez 4 pour Repoussage");
+                        Console.WriteLine("Tapez 5 pour Flou");
+                        string effet = Convert.ToString(Console.ReadLine());
+                        image.Convolution(name, effet);
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
