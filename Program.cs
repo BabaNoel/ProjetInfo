@@ -29,7 +29,7 @@ namespace ProjetInfoGit
             }
             
             MyImage image = new MyImage(ChoixImage);
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(1500);
             ConsoleKeyInfo cki;
             do
             {
@@ -43,6 +43,9 @@ namespace ProjetInfoGit
                                  + "> 6: Faire une Rotation\n"
                                  + "> 7: Mettre en miroir\n"
                                  + "> 8: Matrice de convolution\n"
+                                 + "> 9: Histogramme\n"
+                                 + "> 10: Fractale\n"
+                                 + "> 11: Stéganographie\n"
                                  + "\n");
                 int exo = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -117,6 +120,33 @@ namespace ProjetInfoGit
                             break;
                         }
                         break;
+                    case 9:
+                        Console.WriteLine("Voilà l'affiche de l'histogramme de votre image");
+                        image.Histograme();
+                        break;
+                    case 11:
+                        Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
+                        Console.WriteLine("Tapez 1 pour choisir Coco.");
+                        Console.WriteLine("Tapez 2 pour choisir Lena.");
+                        string Choix = Convert.ToString(Console.ReadLine());
+                        if (Choix == "1" || Choix == "2")
+                        {
+                            if (Choix == "1")
+                                Choix = "coco.bmp";
+                            if (Choix == "2")
+                                Choix = "lena.bmp";
+                        }
+                        else
+                        {
+                            Console.WriteLine("votre choix est invalide");
+                            Console.WriteLine("Votre image sera Coco.bmp par défaut");
+                            Choix = "coco.bmp";
+                        }
+                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
+                        name = Console.ReadLine() + ".bmp";
+                        MyImage image2 = new MyImage(Choix);
+                        image.Sténographie(image2,name);
+                       break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
                         break;

@@ -149,7 +149,7 @@ namespace ProjetInfoGit
         public void From_Image_To_File(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            
+
             byte[] Var = new byte[myfile.Length];
             byte[] VarTemp = new byte[4];
 
@@ -237,7 +237,7 @@ namespace ProjetInfoGit
         public void Agrandir(string name, int n)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-           
+
             byte[] Var = new byte[offset + ((n * largeur) * (n * hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
             byte[] VarTemp = new byte[4];
 
@@ -314,14 +314,14 @@ namespace ProjetInfoGit
                         compteur = compteur + 3 * n;
                     }
                 }
-               
+
 
             }
 
             File.WriteAllBytes(name, Var);
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
-        } 
+        }
 
         /// <summary>
         /// Convertie l'image en dégradé de gris
@@ -331,7 +331,7 @@ namespace ProjetInfoGit
         public void DégradéGris(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] fichier = new byte[myfile.Length];                        
+            byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
             //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
@@ -399,7 +399,7 @@ namespace ProjetInfoGit
                     byte gris = Convert.ToByte((Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
                     fichier[compteur] = gris;
                     fichier[compteur + 1] = gris;
-                    fichier[compteur + 2] = gris;                              
+                    fichier[compteur + 2] = gris;
                     compteur = compteur + 3;
                 }
             }
@@ -421,7 +421,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            
+
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -517,11 +517,11 @@ namespace ProjetInfoGit
         public void Miroir(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
-            
+
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            
+
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -603,13 +603,13 @@ namespace ProjetInfoGit
             int largeur = this.largeur;
             int H = (int)(Math.Abs(Math.Cos(angle)) * hauteur + Math.Abs(Math.Sin(angle)) * largeur);
             int L = (int)(Math.Abs(Math.Cos(angle)) * largeur + Math.Abs(Math.Sin(angle)) * hauteur);
-            byte[] fichier = new byte[offset+H*L*3];
-           
+            byte[] fichier = new byte[offset + H * L * 3];
+
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
 
-            stock = Convertir_Int_To_Endian(offset+H*L);
+            stock = Convertir_Int_To_Endian(offset + H * L);
             for (int i = 2; i <= 5; i++)
             {
                 fichier[i] = stock[i - 2];
@@ -682,10 +682,10 @@ namespace ProjetInfoGit
             {
                 for (int iColonne = 0; iColonne < L; iColonne++)
                 {
-                    fichier[compteur] = image[iLigne, iColonne].rouge;           
+                    fichier[compteur] = image[iLigne, iColonne].rouge;
                     fichier[compteur + 1] = image[iLigne, iColonne].vert;
                     fichier[compteur + 2] = image[iLigne, iColonne].bleu;
-                    compteur = compteur + 3;                                        
+                    compteur = compteur + 3;
                 }
             }
 
@@ -787,7 +787,7 @@ namespace ProjetInfoGit
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
-            
+
             //Header
             fichier[0] = 66;
             fichier[1] = 77;
@@ -850,11 +850,11 @@ namespace ProjetInfoGit
                 for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
 
-                        fichier[compteur] = Convert.ToByte(255 - Matricepixel[Ligne,Colonne].rouge);
-                        fichier[compteur + 1] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].vert);
-                        fichier[compteur + 2] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].bleu);
-                        compteur = compteur + 3;
-                   
+                    fichier[compteur] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].rouge);
+                    fichier[compteur + 1] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].vert);
+                    fichier[compteur + 2] = Convert.ToByte(255 - Matricepixel[Ligne, Colonne].bleu);
+                    compteur = compteur + 3;
+
                 }
             }
 
@@ -871,7 +871,7 @@ namespace ProjetInfoGit
         /// <param name="Myfile"></param>
         /// <param name="effet"></param>
         /// <returns></returns>
-       
+
         Pixel ApplicationConvolution(Pixel[,] pixel, int[,] matrice_convolution, int x, int y, string effet)
         {
             byte rouge = 0;
@@ -1046,7 +1046,7 @@ namespace ProjetInfoGit
                     }
                     else
                     {
-                        Pixel pixelTemp = ApplicationConvolution(Matricepixel, effetConvolution, iLigne, iColonne,effet); // on applique la nouvelle matrice à notre matrice existante
+                        Pixel pixelTemp = ApplicationConvolution(Matricepixel, effetConvolution, iLigne, iColonne, effet); // on applique la nouvelle matrice à notre matrice existante
                         fichier[compteur] = pixelTemp.rouge;
                         fichier[compteur + 1] = pixelTemp.vert;
                         fichier[compteur + 2] = pixelTemp.bleu;
@@ -1060,8 +1060,369 @@ namespace ProjetInfoGit
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
 
-        
+
+
+        #endregion
+
+        #region TD5
+        /// <summary>
+        /// Méthode qui nous permet de remplir une matrice de noir 
+        /// </summary>
+        /// <param name="pixel"></param>
+        /// <returns></returns>
+        public void Remplissage(Pixel[,] pixel)
+        {
+            for (int i = 0; i < pixel.GetLength(0); i++)
+            {
+                for (int j = 0; j < pixel.GetLength(1); j++)
+                {
+                    pixel[i, j] = new Pixel(0, 0, 0);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Méthode permettant d'afficher l'histogramme de couleur d'une imag
+        /// </summary>
+        /// <returns></returns>
+        public void Histograme()
+        {
+            int[] HistogrameRouge = new int[256];  // on initialise 3 tableaux pour chacune des couleurs d'un Pixel ( Rouge Vert Bleu) et on leur attribue une taille de 256 car la couleurs est codé sur 8 bit donc 256 valeurs
+            int[] HistogrameVert = new int[256];
+            int[] HistogrameBleu = new int[256];
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)  // on va parcourir nos lignes et nos colonnes des différents tableau pour les remplir avec les pixel de leurs couleurs correspondantes (Histogramme rouge avec des pixels rouges ...) 
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+                    HistogrameRouge[Matricepixel[iLigne, iColonne].rouge]++;          // remplissage des tableaux 
+                    HistogrameVert[Matricepixel[iLigne, iColonne].vert]++;
+                    HistogrameBleu[Matricepixel[iLigne, iColonne].bleu]++;
+                }
+            }
+
+            int ValeurMax = 0;    // pour notre histogramme on à besoin de définir la valeur max dans les tableau afin de construire notre histogramme
+
+            for (int index = 0; index < 256; index++)
+            {
+
+                if (ValeurMax < HistogrameRouge[index])    // compare les valeur des tableau avec la valeur max, si la valeur du tableau est plus grande cela devient la valeur max
+                {                                          // on répete ceci pour tout les tableaux
+                    ValeurMax = HistogrameRouge[index];
+                }
+                if (ValeurMax < HistogrameVert[index])
+                {
+                    ValeurMax = HistogrameVert[index];
+                }
+                if (ValeurMax < HistogrameBleu[index])
+                {
+                    ValeurMax = HistogrameBleu[index];
+                }
+            }
+
+            Pixel[,] HRouge = new Pixel[ValeurMax, 256]; // on créer une nouvelle matrice de pixel ayant pour grandeur la valeur max et la valeur max de couleur 256 ( ligne = valeur max pour avoir la distribution des couleurs)
+            Pixel[,] HVert = new Pixel[ValeurMax, 256];
+            Pixel[,] HBleu = new Pixel[ValeurMax, 256];
+            Remplissage(HRouge);                   // On rempli nos matrices de pixels avec des pixel noirs afin d'éviter quelle ne soit nulle        
+            Remplissage(HVert);
+            Remplissage(HBleu);
+
+
+            for (int iColonne = 0; iColonne < 255; iColonne++)  // on parcourt les tableaux Histogrames des différentes couleurs et on remplit les matrices de couleurs par leurs couleurs correspondantes
+            {
+                for (int iLigne = 0; iLigne < HistogrameRouge[iColonne]; iLigne++)
+                {
+                    HRouge[iLigne, iColonne] = new Pixel(0, 0, 255);
+                }
+            }
+            for (int iColonne = 0; iColonne < 255; iColonne++)
+            {
+                for (int iLigne = 0; iLigne < HistogrameVert[iColonne]; iLigne++)
+                {
+                    HVert[iLigne, iColonne] = new Pixel(0, 255, 0);
+                }
+            }
+            for (int iColonne = 0; iColonne < 255; iColonne++)
+            {
+                for (int iLigne = 0; iLigne < HistogrameBleu[iColonne]; iLigne++)
+                {
+                    HBleu[iLigne, iColonne] = new Pixel(255, 0, 0);
+                }
+            }
+
+            byte[] fichier = new byte[ValeurMax * 256 * 3 + 54]; //on se base sur la même méthode que précédament, cette fois ci le tableau de byte est aux dimension ValeurMax * 256 (valeur couleur)*3 (3 couleurs) +54 (pour le Header et les info de l'image)
+            byte[] stock = new byte[4];
+            string rouge = "rouge.bmp";
+            string vert = "vert.bmp";
+            string bleu = "bleu.bmp";
+
+            //Header
+            fichier[0] = 66;
+            fichier[1] = 77;
+
+            stock = Convertir_Int_To_Endian(ValeurMax * 256 * 3 + 54);
+            for (int i = 2; i <= 5; i++)
+            {
+                fichier[i] = stock[i - 2];
+            }
+
+            stock = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                fichier[i] = stock[i - 6];
+            }
+
+            stock = Convertir_Int_To_Endian(54);
+            for (int i = 10; i <= 13; i++)
+            {
+                fichier[i] = stock[i - 10];
+            }
+
+            //HeaderInfo
+            stock = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                fichier[i] = stock[i - 14];
+            }
+
+            stock = Convertir_Int_To_Endian(HVert.GetLength(1));  //ici on peux mettre n'importe quelle matrice de pixel histogramme car elles ont la même taille
+            for (int i = 18; i <= 21; i++)
+            {
+                fichier[i] = stock[i - 18];
+            }
+
+            stock = Convertir_Int_To_Endian(ValeurMax);
+            for (int i = 22; i <= 25; i++)
+            {
+                fichier[i] = stock[i - 22];
+            }
+
+            fichier[26] = 0;
+            fichier[27] = 0;
+
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                fichier[i] = stock[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                fichier[i] = 0;
+            }
+
+
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < HRouge.GetLength(0); iLigne++)                        // on utilise la même méthode que pour les méthodes NoirBlanc par exemple
+            {
+                for (int iColonne = 0; iColonne < HRouge.GetLength(1); iColonne++)
+                {
+                    fichier[compteur] = HRouge[iLigne, iColonne].rouge;                      //on rempli le tableau de byte avec la matrice de pixel histograme 
+                    fichier[compteur + 1] = HRouge[iLigne, iColonne].vert;                   // on fait pareil pour les 2 autres couleurs
+                    fichier[compteur + 2] = HRouge[iLigne, iColonne].bleu;
+                    compteur += 3;
+                }
+            }
+            File.WriteAllBytes(rouge, fichier);
+            Process.Start(new ProcessStartInfo(rouge) { UseShellExecute = true });
+            compteur = 54;
+            for (int iLigne = 0; iLigne < HVert.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < HVert.GetLength(1); iColonne++)
+                {
+                    fichier[compteur] = HVert[iLigne, iColonne].rouge;
+                    fichier[compteur + 1] = HVert[iLigne, iColonne].vert;
+                    fichier[compteur + 2] = HVert[iLigne, iColonne].bleu;
+                    compteur += 3;
+                }
+            }
+
+            File.WriteAllBytes(vert, fichier);
+            Process.Start(new ProcessStartInfo(vert) { UseShellExecute = true });
+
+            compteur = 54;
+            for (int iLigne = 0; iLigne < HBleu.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < HBleu.GetLength(1); iColonne++)
+                {
+                    fichier[compteur] = HBleu[iLigne, iColonne].rouge;
+                    fichier[compteur + 1] = HBleu[iLigne, iColonne].vert;
+                    fichier[compteur + 2] = HBleu[iLigne, iColonne].bleu;
+                    compteur += 3;
+                }
+            }
+            File.WriteAllBytes(bleu, fichier);
+            Process.Start(new ProcessStartInfo(bleu) { UseShellExecute = true });
+
+
+
+
+        }
+
+        /// <summary>
+        /// Permet de faire le lien en 2 byte et en créer un seul au final avec les informations des 2
+        /// </summary>
+        /// <param name="b1"></param>
+        /// <param name="b2">(Méthode BibMath donnée sur le projet </param>
+        /// <returns></returns>
+        public byte LienByte(byte b1, byte b2)
+        {
+            string nb1 = Convert.ToString(b1, 2).PadLeft(8, '0');   // on convertit notre Byte 1 en chaine de caractère dans la base 2
+                                                                    // aligne les caractères à droite en remplissant les espaces manquant avec des 0 pour obtenir un total de 8 caractères
+            string nb2 = Convert.ToString(b2, 2).PadLeft(8, '0');
+
+            string somme = nb1.Substring(0, 4) + nb2.Substring(0, 4); //fait la somme des sous chaines de caractéres ( sous chaine partant de 0 et allant à 4) des 2 bytes (Méthode BibMath : http://www.bibmath.net/crypto/index.php?action=affiche&quoi=stegano/cacheimage ) 
+            byte résultat = Convert.ToByte(somme, 2); //convertie le résultat de la somme des sous chaine de caractère en byte depuis la base 2
+            return résultat;
+        }
+        /// <summary>
+        /// Permet de cacher une image dans une autre
+        /// </summary>
+        /// <param name="pixel2"></param>
+        /// <returns></returns>
+        public void Sténographie(MyImage pixel2,string name)
+        {
+            
+            int offsetPixel2 = pixel2.offset;           // on initialise les paramètre de notre nouvelle image
+            int taillePixel2 = pixel2.taille;
+            int hauteurPixel2 = pixel2.hauteur;
+            int largeurPixel2 = pixel2.largeur;
+            byte[] stock = new byte[4];
+
+
+            if (taillePixel2 < taille)       //on gère les exceptions si la taille/largeur ... est inférieur à notre image de base, cela devient sa nouvelle taille.  
+            {
+                taillePixel2 = taille;
+            }
+            if (hauteurPixel2 < hauteur)
+            {
+                hauteurPixel2 = hauteur;
+            }
+            if (largeurPixel2 < largeur)
+            {
+                largeurPixel2 = largeur;
+            }
+            if (taillePixel2 > taille)       //on gère les exceptions si la taille/largeur ... est inférieur à notre image de base, cela devient sa nouvelle taille.  
+            {
+                taillePixel2 = taille;
+            }
+            if (hauteurPixel2 > hauteur)
+            {
+                hauteurPixel2 = hauteur;
+            }
+            if (largeurPixel2 > largeur)
+            {
+                largeurPixel2 = largeur;
+            }
+
+            byte[] fichier = new byte[taillePixel2];
+
+            //Header
+            fichier[0] = 66;
+            fichier[1] = 77;
+
+            stock = Convertir_Int_To_Endian(taillePixel2);       // méthode utilisé précédemment on remplace juste les varaiables par les variables de la nouvelle image
+            for (int i = 2; i <= 5; i++)
+            {
+                fichier[i] = stock[i - 2];
+            }
+
+            stock = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                fichier[i] = stock[i - 6];
+            }
+
+            stock = Convertir_Int_To_Endian(offsetPixel2);
+            for (int i = 10; i <= 13; i++)
+            {
+                fichier[i] = stock[i - 10];
+            }
+
+            //HeaderInfo
+            stock = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                fichier[i] = stock[i - 14];
+            }
+
+            stock = Convertir_Int_To_Endian(largeurPixel2);
+            for (int i = 18; i <= 21; i++)
+            {
+                fichier[i] = stock[i - 18];
+            }
+
+            stock = Convertir_Int_To_Endian(hauteurPixel2);
+            for (int i = 22; i <= 25; i++)
+            {
+                fichier[i] = stock[i - 22];
+            }
+
+            fichier[26] = 0;
+            fichier[27] = 0;
+
+            stock = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                fichier[i] = stock[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                fichier[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+
+            for (int iLigne = 0; iLigne < hauteurPixel2; iLigne++)             // on parcours en ligne et en colone jusqua parcourir toute la nouvelle image
+            {
+                for (int iColonne = 0; iColonne < largeurPixel2; iColonne++)
+                {
+                    int compteur2 = 0;
+                    if (hauteur - 1 < iLigne)
+                    {
+                        fichier[compteur] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].rouge);        //On fait le lien entre les donnée de l'image 1 et de l'image 2 avec notre fonction LienByte
+                        fichier[compteur + 1] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].vert);     // on remplit les espace vide de l'image de base afin jusqu'a qu'elle les meme dimension que la nouvelle image 
+                        fichier[compteur + 2] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].bleu);     // on l'a rempli de manière à ce que la couleur résultante soit beaucoup plus sombre que la couleur de base
+                        compteur2++;                                                              //exemple si la couleur de l'image 2 est de 255 , la couleur résultante sera de 15 ( 0000 1111)
+                    }
+                    if (largeur - 1 < iColonne)
+                    {
+                        fichier[compteur] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].rouge);
+                        fichier[compteur + 1] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].vert);
+                        fichier[compteur + 2] = LienByte(0, pixel2.Matricepixel[iLigne, iColonne].bleu);
+                        compteur2++;
+                    }
+                    if (pixel2.hauteur - 1 < iLigne)
+                    {
+                        fichier[compteur] = LienByte(Matricepixel[iLigne, iColonne].rouge, 0);        //méme méthode mais cette fois ci les couleurs seront que légerement changé
+                        fichier[compteur + 1] = LienByte(Matricepixel[iLigne, iColonne].vert, 0);     // exemple si la couleur de l'image 1 est de 255 la couleur résultante sera de 240 ( 1111 0000)
+                        fichier[compteur + 2] = LienByte(Matricepixel[iLigne, iColonne].bleu, 0);
+                        compteur2++;
+                    }
+                    if (pixel2.largeur - 1 < iColonne)
+                    {
+                        fichier[compteur] = LienByte(Matricepixel[iLigne, iColonne].rouge, 0);
+                        fichier[compteur + 1] = LienByte(Matricepixel[iLigne, iColonne].vert, 0);
+                        fichier[compteur + 2] = LienByte(Matricepixel[iLigne, iColonne].bleu, 0);
+                        compteur2++;
+                    }
+                    if (compteur2 == 0)                                                             // une fois quelle on les meme dimension,on "supperpose" les deux image pour n'en former plus qu'une
+                    {
+                        fichier[compteur] = LienByte(Matricepixel[iLigne, iColonne].rouge, pixel2.Matricepixel[iLigne, iColonne].rouge);
+                        fichier[compteur + 1] = LienByte(Matricepixel[iLigne, iColonne].vert, pixel2.Matricepixel[iLigne, iColonne].vert);
+                        fichier[compteur + 2] = LienByte(Matricepixel[iLigne, iColonne].bleu, pixel2.Matricepixel[iLigne, iColonne].bleu);
+                    }
+                    compteur = compteur + 3;
+
+
+                }
+            }
+            File.WriteAllBytes(name, fichier);
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
+        }
+
+        #endregion
     }
-    #endregion
 }
 #endregion
