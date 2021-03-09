@@ -780,7 +780,7 @@ namespace ProjetInfoGit
 
         #endregion
 
-
+        #region Innovation
         public void InverserCouleur(string name)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
@@ -863,6 +863,7 @@ namespace ProjetInfoGit
 
 
         }
+        #endregion
 
         #region TD4
         /// <summary>
