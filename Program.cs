@@ -16,8 +16,8 @@ namespace ProjetInfoGit
             string ChoixImage = Convert.ToString(Console.ReadLine());
             if (ChoixImage == "1" || ChoixImage == "2")
             {
-                if(ChoixImage == "1" )
-                ChoixImage = "coco.bmp";
+                if (ChoixImage == "1")
+                    ChoixImage = "coco.bmp";
                 if (ChoixImage == "2")
                     ChoixImage = "lena.bmp";
             }
@@ -27,7 +27,7 @@ namespace ProjetInfoGit
                 Console.WriteLine("Votre image sera Coco.bmp par défaut");
                 ChoixImage = "coco.bmp";
             }
-            
+
             MyImage image = new MyImage(ChoixImage);
             System.Threading.Thread.Sleep(1500);
             ConsoleKeyInfo cki;
@@ -50,7 +50,7 @@ namespace ProjetInfoGit
                 int exo = Convert.ToInt32(Console.ReadLine());
                 string name;
                 int valeur;
-                switch (exo) 
+                switch (exo)
                 {
                     #region
                     case 1:
@@ -71,14 +71,14 @@ namespace ProjetInfoGit
                     case 4:
                         Console.WriteLine("Choisissez un rapport de réduction (sauf multiples de trois");
                         valeur = Convert.ToInt32(Console.ReadLine());
-                        if (valeur <= 0) 
-                        { 
+                        if (valeur <= 0)
+                        {
                             Console.WriteLine("Saisie invalide");
                             break;
                         }
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
-                        image.Reduction(name,valeur);
+                        image.Reduction(name, valeur);
                         break;
                     case 5:
                         Console.WriteLine("Choisissez un rapport d'aggrandissement");
@@ -128,6 +128,8 @@ namespace ProjetInfoGit
                         Console.WriteLine("Voilà l'affiche de l'histogramme de votre image");
                         image.Histograme();
                         break;
+                    case 10:
+                        break;
                     case 11:
                         Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
                         Console.WriteLine("Tapez 1 pour choisir Coco.");
@@ -149,16 +151,18 @@ namespace ProjetInfoGit
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp");
                         name = Console.ReadLine() + ".bmp";
                         MyImage image2 = new MyImage(Choix);
-                        image.Sténographie(image2,name);
-                       break;
+                        image.Sténographie(image2, name);
+                        break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
                         break;
-                        #endregion 
+                        #endregion
                 }
                 Console.WriteLine("Tapez entrée pour retourner au menu ou tapez la touche échappe pour quitter\n");
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
-         }
+
+
+        }
     }
 }
