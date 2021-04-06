@@ -112,7 +112,7 @@ namespace ProjetInfoGit
                         Console.WriteLine("Tapez 4 pour Repoussage");
                         Console.WriteLine("Tapez 5 pour Flou");
                         string effet = Convert.ToString(Console.ReadLine());
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         if (effet == "1" || effet == "2" || effet == "3" || effet == "4" || effet == "5")
                         {
@@ -129,6 +129,11 @@ namespace ProjetInfoGit
                         image.Histograme();
                         break;
                     case 10:
+                        Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        name = Console.ReadLine() + ".bmp";
+                        Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
+                        int itérationMax = Convert.ToInt32(Console.ReadLine());
+                        image.Mandelbrot(name, itérationMax);
                         break;
                     case 11:
                         Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);

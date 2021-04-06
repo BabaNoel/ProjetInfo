@@ -1424,7 +1424,7 @@ namespace ProjetInfoGit
         }
 
         #endregion
-        public void Mandelbrot(string name)
+        public void Mandelbrot(string name, int itérationMax)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
             byte[] Var = new byte[myfile.Length];
@@ -1438,24 +1438,22 @@ namespace ProjetInfoGit
             double y1 = -1.2;
             double y2 = 1.2;
 
-            //on définit une itération Max
-            int itérationMax = 50;
-
             //on definit les zooms en fonction de la taille de notre image
-            double zoom_X = this.largeur / (x2 - x1);
-            double zoom_Y = this.hauteur / (y2 - y1);
+            double zoom_X = this.hauteur / (x2 - x1);
+            double zoom_Y = this.largeur / (y2 - y1);
 
             //creation de la fractale
-            int x = 0;
-            int a = 0;
-            Complexe c = new Complexe(x / zoom_X + x1, y2 / zoom_Y + y1);
-            Complexe z = new Complexe(0, 0);
-            while (x < this.largeur)
+            
+           
+           
+            for(int x=0; x < this.hauteur;x++)
             {
-                int y = 0;
-                while (y < this.hauteur)
+                for (int y = 0; y < this.largeur; y++)
                 {
-                    while (a < itérationMax)
+                    Complexe c = new Complexe(x / zoom_X + x1, y / zoom_Y + y1);
+                    Complexe z = new Complexe(0, 0);
+                    int a = 0;
+                    while (a < itérationMax |z.Module()>=4 )
                     {
                         double tmp = z.Réelle;
                         z.Réelle = z.Réelle * z.Réelle - z.Imaginaire * z.Imaginaire + c.Réelle;
@@ -1464,11 +1462,9 @@ namespace ProjetInfoGit
                     }
                     if (a == itérationMax)
                     {
-                        Matricepixel[x, y] = new Pixel(255, 255, 255);
+                        this.Matricepixel[x, y] = new Pixel(255,255,255);
                     }
-                    y++;
                 }
-                x++;
             }
 
 
@@ -1541,7 +1537,6 @@ namespace ProjetInfoGit
                     compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
                 }
             }
-
             File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
