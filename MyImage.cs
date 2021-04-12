@@ -1541,6 +1541,127 @@ namespace ProjetInfoGit
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
 
-    }    
-}
+        public void Julia(string name, int itérationMax)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+            //On remplit la matrice de noir
+            Remplissage(this.Matricepixel);
+
+            // on définit le cadre de la fractale
+            double x1 = -1;
+            double x2 = 1;
+            double y1 = -1.2;
+            double y2 = 1.2;
+
+            //on definit les zooms en fonction de la taille de notre image
+            double zoom_X = this.hauteur / (x2 - x1);
+            double zoom_Y = this.largeur / (y2 - y1);
+
+            //creation de la fractale
+
+
+
+            for (int x = 0; x < this.hauteur; x++)
+            {
+                for (int y = 0; y < this.largeur; y++)
+                {
+                    Complexe c = new Complexe(0.285,0.01);
+                    Complexe z = new Complexe(x / zoom_X + x1, y / zoom_Y + y1);
+                    int a = 0;
+                    while (a < itérationMax | z.Module() >= 4)
+                    {
+                        double tmp = z.Réelle;
+                        z.Réelle = z.Réelle * z.Réelle - z.Imaginaire * z.Imaginaire + c.Réelle;
+                        z.Imaginaire = 2 * z.Imaginaire * tmp + c.Imaginaire;
+                        a = a + 1;
+                    }
+                    if (a == itérationMax)
+                    {
+                        this.Matricepixel[x, y] = new Pixel(255, 255, 255);
+                    }
+                }
+            }
+
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);                // on récupère chacun leur tour les infos de l'image ( taille, hauteur,largeur...) et on les stockes dans une variables temporaire
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];                                // on utilise la variable temporaire pour remplir un tableau variable (VAR) que l'on va utiliser pour créer un nouveau fichier
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+
+                    Var[compteur] = Matricepixel[iLigne, iColonne].rouge;           //on attribut chaque couleurs à son emplacement
+                    Var[compteur + 1] = Matricepixel[iLigne, iColonne].vert;
+                    Var[compteur + 2] = Matricepixel[iLigne, iColonne].bleu;
+                    compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
+                }
+            }
+            File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
+            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
+        }
+
+    }
+
+}    
+
+
+
 #endregion

@@ -44,8 +44,9 @@ namespace ProjetInfoGit
                                  + "> 7: Mettre en miroir\n"
                                  + "> 8: Matrice de convolution\n"
                                  + "> 9: Histogramme\n"
-                                 + "> 10: Fractale\n"
-                                 + "> 11: Stéganographie\n"
+                                 + "> 10: Fractale de Mandelbrot\n"
+                                 + "> 11: Fractale de Julia\n" 
+                                 + "> 12: Stéganographie\n"
                                  + "\n");
                 int exo = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -132,10 +133,17 @@ namespace ProjetInfoGit
                         Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
-                        int itérationMax = Convert.ToInt32(Console.ReadLine());
-                        image.Mandelbrot(name, itérationMax);
+                        int itérationMaxM = Convert.ToInt32(Console.ReadLine());
+                        image.Mandelbrot(name, itérationMaxM);
                         break;
                     case 11:
+                        Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
+                        name = Console.ReadLine() + ".bmp";
+                        Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
+                        int itérationMaxJ = Convert.ToInt32(Console.ReadLine());
+                        image.Mandelbrot(name, itérationMaxJ);
+                        break;
+                    case 12:
                         Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
                         Console.WriteLine("Tapez 1 pour choisir Coco.");
                         Console.WriteLine("Tapez 2 pour choisir Lena.");
@@ -167,6 +175,7 @@ namespace ProjetInfoGit
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
 
+            
 
         }
     }
