@@ -47,6 +47,7 @@ namespace ProjetInfoGit
                                  + "> 10: Fractale de Mandelbrot\n"
                                  + "> 11: Fractale de Julia\n" 
                                  + "> 12: Stéganographie\n"
+                                 + "> 13: QR Code\n"
                                  + "\n");
                 int exo = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -141,7 +142,7 @@ namespace ProjetInfoGit
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
                         int itérationMaxJ = Convert.ToInt32(Console.ReadLine());
-                        image.Mandelbrot(name, itérationMaxJ);
+                        image.Julia(name, itérationMaxJ);
                         break;
                     case 12:
                         Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
@@ -166,8 +167,22 @@ namespace ProjetInfoGit
                         MyImage image2 = new MyImage(Choix);
                         image.Sténographie(image2, name);
                         break;
+                    case 13:
+                        Encoding u8 = Encoding.UTF8;
+                        Console.WriteLine("Quel phrase voulez vous inscrire ?");
+                        string phrase = Convert.ToString(Console.ReadLine());
+                        int count = u8.GetByteCount(phrase);
+                        byte[] BytePhrase = u8.GetBytes(phrase);
+                        byte[] result = ReedSolomonAlgorithm.Encode(BytePhrase, 7, ErrorCorrectionCodeType.QRCode);
+                        foreach (byte val in phrase)
+                        {
+                            Console.Write(val + " ");
+                        }
+                        Console.WriteLine();
+                        break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
+                        
                         break;
                         #endregion
                 }

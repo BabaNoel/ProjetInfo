@@ -1423,7 +1423,7 @@ namespace ProjetInfoGit
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
 
-        #endregion
+        
         public void Mandelbrot(string name, int itérationMax)
         {
             byte[] myfile = File.ReadAllBytes(Myfile);
@@ -1540,6 +1540,7 @@ namespace ProjetInfoGit
             File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
+        
 
         public void Julia(string name, int itérationMax)
         {
@@ -1657,6 +1658,7 @@ namespace ProjetInfoGit
             File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
+        #endregion
 
     }
 
