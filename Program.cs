@@ -13,139 +13,272 @@ namespace ProjetInfoGit
             int somme = 0;
             int valA = 0;
             int valB = 0;
-            if (a =='A' || b=='A')
+            if (a == 'A')
             {
                 valA = 45 * 10;
-                valB = 10;
+                
             }
-            if (a =='B' || b=='B')
+            if (b == 'A')
+            {
+                valB = 10;
+
+            }
+            if (a =='B')
             {
                 valA = 45 * 11;
+                
+            }
+            if (b == 'B')
+            {
+                
                 valB = 11;
             }
-            if (a == 'C' || b == 'C')
+            if (a == 'C')
             {
                 valA = 45 * 12;
+                
+            }
+            if (b == 'C')
+            {
+
                 valB = 12;
             }
-            if (a == 'D' || b == 'D')
+            if (a == 'D')
             {
                 valA = 45 * 13;
+                
+            }
+            if (b == 'D')
+            {
+
                 valB = 13;
             }
-            if (a == 'E' || b == 'E')
+            if (a == 'E')
             {
                 valA = 45 * 14;
+                
+            }
+            if (b == 'E')
+            {
+
                 valB = 14;
             }
-            if (a == 'F' || b == 'F')
+            if (a == 'F')
             {
                 valA = 45 * 15;
+               
+            }
+            if (b == 'F')
+            {
+
                 valB = 15;
             }
-            if (a == 'G' || b == 'G')
+            if (a == 'G')
             {
                 valA = 45 * 16;
+                
+            }
+            if (b == 'G')
+            {
+
                 valB = 16;
             }
-            if (a == 'H' || b == 'H')
+            if (a == 'H')
             {
                 valA = 45 * 17;
+               
+            }
+            if (b == 'H')
+            {
+
                 valB = 17;
             }
-            if (a == 'I' || b == 'I')
+            if (a == 'I')
             {
                 valA = 45 * 18;
+            }
+            if (b == 'I')
+            {
+
                 valB = 18;
             }
-            if (a == 'J' || b == 'J')
+            if (a == 'J')
             {
                 valA = 45 * 19;
+              
+            }
+            if (b == 'J')
+            {
+
                 valB = 19;
             }
-            if (a == 'K' || b == 'K')
+            if (a == 'K')
             {
                 valA = 45 * 20;
+                
+            }
+            if (b == 'K')
+            {
+
                 valB = 20;
             }
-            if (a == 'L' || b == 'L')
+            if (a == 'L')
             {
                 valA = 45 * 21;
+               
+            }
+            if (b == 'L')
+            {
+
                 valB = 21;
             }
-            if (a == 'M' || b == 'M')
+            if (a == 'M')
             {
                 valA = 45 * 22;
+                
+            }
+            if (b == 'M')
+            {
+
                 valB = 22;
             }
-            if (a == 'N' || b == 'N')
+            if (a == 'N')
             {
                 valA = 45 * 23;
+                
+            }
+            if (b == 'N')
+            {
+
                 valB = 23;
             }
-            if (a == 'O' || b == 'O')
+            if (a == 'O')
             {
                 valA = 45 * 24;
+                
+            }
+            if (b == 'O')
+            {
+
                 valB = 24;
             }
-            if (a == 'P' || b == 'P')
+            if (a == 'P')
             {
                 valA = 45 * 25;
+                
+            }
+            if (b == 'P')
+            {
+
                 valB = 25;
             }
-            if (a == 'Q' || b == 'Q')
+            if (a == 'Q')
             {
                 valA = 45 * 26;
+                
+            }
+            if (b == 'Q')
+            {
+
                 valB = 26;
             }
-            if (a == 'R' || b == 'R')
+            if (a == 'R')
             {
                 valA = 45 * 27;
+            }
+            if (b == 'R')
+            {
+
                 valB = 27;
             }
-            if (a == 'S' || b == 'S')
+            if (a == 'S')
             {
                 valA = 45 * 28;
+                
+            }
+            if (b == 'S')
+            {
+
                 valB = 28;
             }
-            if (a == 'T' || b == 'T')
+            if (a == 'T')
             {
                 valA = 45 * 29;
+               
+            }
+            if (b == 'T')
+            {
+
                 valB = 29;
             }
-            if (a == 'U' || b == 'U')
+            if (a == 'U')
             {
                 valA = 45 * 30;
+               
+            }
+            if (b == 'U')
+            {
+
                 valB = 30;
             }
-            if (a == 'V' || b == 'V')
+            if (a == 'V')
             {
                 valA = 45 * 31;
+                
+            }
+            if (b == 'V')
+            {
+
                 valB = 31;
             }
-            if (a == 'W' || b == 'W')
+            if (a == 'W')
             {
                 valA = 45 * 32;
+                
+            }
+            if (b == 'W')
+            {
+
                 valB = 32;
             }
-            if (a == 'X' || b == 'X')
+            if (a == 'X')
             {
                 valA = 45 * 33;
+                
+            }
+            if (b == 'X')
+            {
+
                 valB = 33;
             }
-            if (a == 'Y' || b == 'Y')
+            if (a == 'Y')
             {
                 valA = 45 * 34;
+               
+            }
+            if (b == 'Y')
+            {
+
                 valB = 34;
             }
-            if (a == 'Z' || b == 'Z')
+            if (a == 'Z')
             {
                 valA = 45 * 35;
+                
+            }
+            if (b == 'Z')
+            {
+
                 valB = 35;
             }
-            if (a == ' ' || b == ' ')
+            if (a == ' ')
             {
                 valA = 45 * 36;
+                
+            }
+            if (b == ' ')
+            {
+
                 valB = 36;
             }
 
@@ -316,7 +449,7 @@ namespace ProjetInfoGit
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
                        string phraseMaj= phrase.ToUpper();
-                        List<bool> list;
+                        List<bool> list; ;
                         for(int i =0;i<phraseMaj.Length-1;i++)
                         {
                             char a = phraseMaj[i];
@@ -324,10 +457,12 @@ namespace ProjetInfoGit
                             int compteur = ConvertisseurASCII(a, b);
                             Console.WriteLine(" " + compteur + "\n");
                             list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
-                            for (int j = 0; j < list.Count; j++)
-                        {
-                            Console.Write(list[j]+ " " );
+                            compteur = 0;
+                            
                         }
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            Console.Write(list[j] + " ");
                         }
                         Console.WriteLine();
                         
