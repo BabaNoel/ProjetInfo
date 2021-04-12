@@ -141,7 +141,7 @@ namespace ProjetInfoGit
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
                         int itérationMaxJ = Convert.ToInt32(Console.ReadLine());
-                        image.Mandelbrot(name, itérationMaxJ);
+                        image.Julia(name, itérationMaxJ);
                         break;
                     case 12:
                         Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
