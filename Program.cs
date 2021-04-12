@@ -8,6 +8,150 @@ namespace ProjetInfoGit
 {
     class Program
     {
+        static int ConvertisseurASCII(char a, char b)
+        {
+            int somme = 0;
+            int valA = 0;
+            int valB = 0;
+            if (a =='A' || b=='A')
+            {
+                valA = 45 * 10;
+                valB = 10;
+            }
+            if (a =='B' || b=='B')
+            {
+                valA = 45 * 11;
+                valB = 11;
+            }
+            if (a == 'C' || b == 'C')
+            {
+                valA = 45 * 12;
+                valB = 12;
+            }
+            if (a == 'D' || b == 'D')
+            {
+                valA = 45 * 13;
+                valB = 13;
+            }
+            if (a == 'E' || b == 'E')
+            {
+                valA = 45 * 14;
+                valB = 14;
+            }
+            if (a == 'F' || b == 'F')
+            {
+                valA = 45 * 15;
+                valB = 15;
+            }
+            if (a == 'G' || b == 'G')
+            {
+                valA = 45 * 16;
+                valB = 16;
+            }
+            if (a == 'H' || b == 'H')
+            {
+                valA = 45 * 17;
+                valB = 17;
+            }
+            if (a == 'I' || b == 'I')
+            {
+                valA = 45 * 18;
+                valB = 18;
+            }
+            if (a == 'J' || b == 'J')
+            {
+                valA = 45 * 19;
+                valB = 19;
+            }
+            if (a == 'K' || b == 'K')
+            {
+                valA = 45 * 20;
+                valB = 20;
+            }
+            if (a == 'L' || b == 'L')
+            {
+                valA = 45 * 21;
+                valB = 21;
+            }
+            if (a == 'M' || b == 'M')
+            {
+                valA = 45 * 22;
+                valB = 22;
+            }
+            if (a == 'N' || b == 'N')
+            {
+                valA = 45 * 23;
+                valB = 23;
+            }
+            if (a == 'O' || b == 'O')
+            {
+                valA = 45 * 24;
+                valB = 24;
+            }
+            if (a == 'P' || b == 'P')
+            {
+                valA = 45 * 25;
+                valB = 25;
+            }
+            if (a == 'Q' || b == 'Q')
+            {
+                valA = 45 * 26;
+                valB = 26;
+            }
+            if (a == 'R' || b == 'R')
+            {
+                valA = 45 * 27;
+                valB = 27;
+            }
+            if (a == 'S' || b == 'S')
+            {
+                valA = 45 * 28;
+                valB = 28;
+            }
+            if (a == 'T' || b == 'T')
+            {
+                valA = 45 * 29;
+                valB = 29;
+            }
+            if (a == 'U' || b == 'U')
+            {
+                valA = 45 * 30;
+                valB = 30;
+            }
+            if (a == 'V' || b == 'V')
+            {
+                valA = 45 * 31;
+                valB = 31;
+            }
+            if (a == 'W' || b == 'W')
+            {
+                valA = 45 * 32;
+                valB = 32;
+            }
+            if (a == 'X' || b == 'X')
+            {
+                valA = 45 * 33;
+                valB = 33;
+            }
+            if (a == 'Y' || b == 'Y')
+            {
+                valA = 45 * 34;
+                valB = 34;
+            }
+            if (a == 'Z' || b == 'Z')
+            {
+                valA = 45 * 35;
+                valB = 35;
+            }
+            if (a == ' ' || b == ' ')
+            {
+                valA = 45 * 36;
+                valB = 36;
+            }
+
+            somme = valB + valA;
+            return somme;
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Quel image voulez vous choisir ?");
@@ -171,16 +315,23 @@ namespace ProjetInfoGit
                         Encoding u8 = Encoding.UTF8;
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
-                        int count = u8.GetByteCount(phrase);
-                        byte[] BytePhrase = u8.GetBytes(phrase);
-                        byte[] result = ReedSolomonAlgorithm.Encode(BytePhrase, 7, ErrorCorrectionCodeType.QRCode);
-                        foreach (byte val in phrase)
+                       string phraseMaj= phrase.ToUpper();
+                        List<bool> list;
+                        for(int i =0;i<phraseMaj.Length-1;i++)
                         {
-                            Console.Write(val + " ");
+                            char a = phraseMaj[i];
+                            char b = phraseMaj[i + 1];
+                            int compteur = ConvertisseurASCII(a, b);
+                            Console.WriteLine(" " + compteur + "\n");
+                            list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
+                            for (int j = 0; j < list.Count; j++)
+                        {
+                            Console.Write(list[j]+ " " );
                         }
-                        
+                        }
                         Console.WriteLine();
-                        Console.WriteLine(" vous avez " + count + " valeur");
+                        
+                       
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
