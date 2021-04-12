@@ -178,7 +178,9 @@ namespace ProjetInfoGit
                         {
                             Console.Write(val + " ");
                         }
+                        
                         Console.WriteLine();
+                        Console.WriteLine(" vous avez " + count + " valeur");
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
