@@ -16,27 +16,27 @@ namespace ProjetInfoGit
             if (a == 'A')
             {
                 valA = 45 * 10;
-                
+
             }
             if (b == 'A')
             {
                 valB = 10;
 
             }
-            if (a =='B')
+            if (a == 'B')
             {
                 valA = 45 * 11;
-                
+
             }
             if (b == 'B')
             {
-                
+
                 valB = 11;
             }
             if (a == 'C')
             {
                 valA = 45 * 12;
-                
+
             }
             if (b == 'C')
             {
@@ -46,7 +46,7 @@ namespace ProjetInfoGit
             if (a == 'D')
             {
                 valA = 45 * 13;
-                
+
             }
             if (b == 'D')
             {
@@ -56,7 +56,7 @@ namespace ProjetInfoGit
             if (a == 'E')
             {
                 valA = 45 * 14;
-                
+
             }
             if (b == 'E')
             {
@@ -66,7 +66,7 @@ namespace ProjetInfoGit
             if (a == 'F')
             {
                 valA = 45 * 15;
-               
+
             }
             if (b == 'F')
             {
@@ -76,7 +76,7 @@ namespace ProjetInfoGit
             if (a == 'G')
             {
                 valA = 45 * 16;
-                
+
             }
             if (b == 'G')
             {
@@ -86,7 +86,7 @@ namespace ProjetInfoGit
             if (a == 'H')
             {
                 valA = 45 * 17;
-               
+
             }
             if (b == 'H')
             {
@@ -105,7 +105,7 @@ namespace ProjetInfoGit
             if (a == 'J')
             {
                 valA = 45 * 19;
-              
+
             }
             if (b == 'J')
             {
@@ -115,7 +115,7 @@ namespace ProjetInfoGit
             if (a == 'K')
             {
                 valA = 45 * 20;
-                
+
             }
             if (b == 'K')
             {
@@ -125,7 +125,7 @@ namespace ProjetInfoGit
             if (a == 'L')
             {
                 valA = 45 * 21;
-               
+
             }
             if (b == 'L')
             {
@@ -135,7 +135,7 @@ namespace ProjetInfoGit
             if (a == 'M')
             {
                 valA = 45 * 22;
-                
+
             }
             if (b == 'M')
             {
@@ -145,7 +145,7 @@ namespace ProjetInfoGit
             if (a == 'N')
             {
                 valA = 45 * 23;
-                
+
             }
             if (b == 'N')
             {
@@ -155,7 +155,7 @@ namespace ProjetInfoGit
             if (a == 'O')
             {
                 valA = 45 * 24;
-                
+
             }
             if (b == 'O')
             {
@@ -165,7 +165,7 @@ namespace ProjetInfoGit
             if (a == 'P')
             {
                 valA = 45 * 25;
-                
+
             }
             if (b == 'P')
             {
@@ -175,7 +175,7 @@ namespace ProjetInfoGit
             if (a == 'Q')
             {
                 valA = 45 * 26;
-                
+
             }
             if (b == 'Q')
             {
@@ -194,7 +194,7 @@ namespace ProjetInfoGit
             if (a == 'S')
             {
                 valA = 45 * 28;
-                
+
             }
             if (b == 'S')
             {
@@ -204,7 +204,7 @@ namespace ProjetInfoGit
             if (a == 'T')
             {
                 valA = 45 * 29;
-               
+
             }
             if (b == 'T')
             {
@@ -214,7 +214,7 @@ namespace ProjetInfoGit
             if (a == 'U')
             {
                 valA = 45 * 30;
-               
+
             }
             if (b == 'U')
             {
@@ -224,7 +224,7 @@ namespace ProjetInfoGit
             if (a == 'V')
             {
                 valA = 45 * 31;
-                
+
             }
             if (b == 'V')
             {
@@ -234,7 +234,7 @@ namespace ProjetInfoGit
             if (a == 'W')
             {
                 valA = 45 * 32;
-                
+
             }
             if (b == 'W')
             {
@@ -244,7 +244,7 @@ namespace ProjetInfoGit
             if (a == 'X')
             {
                 valA = 45 * 33;
-                
+
             }
             if (b == 'X')
             {
@@ -254,7 +254,7 @@ namespace ProjetInfoGit
             if (a == 'Y')
             {
                 valA = 45 * 34;
-               
+
             }
             if (b == 'Y')
             {
@@ -264,7 +264,7 @@ namespace ProjetInfoGit
             if (a == 'Z')
             {
                 valA = 45 * 35;
-                
+
             }
             if (b == 'Z')
             {
@@ -274,7 +274,7 @@ namespace ProjetInfoGit
             if (a == ' ')
             {
                 valA = 45 * 36;
-                
+
             }
             if (b == ' ')
             {
@@ -322,7 +322,7 @@ namespace ProjetInfoGit
                                  + "> 8: Matrice de convolution\n"
                                  + "> 9: Histogramme\n"
                                  + "> 10: Fractale de Mandelbrot\n"
-                                 + "> 11: Fractale de Julia\n" 
+                                 + "> 11: Fractale de Julia\n"
                                  + "> 12: Stéganographie\n"
                                  + "> 13: QR Code\n"
                                  + "\n");
@@ -448,9 +448,9 @@ namespace ProjetInfoGit
                         Encoding u8 = Encoding.UTF8;
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
-                       string phraseMaj= phrase.ToUpper();
+                        string phraseMaj = phrase.ToUpper();
                         List<bool> list = new List<bool>();
-                        for(int i =0;i<phraseMaj.Length-1;i++)
+                        for (int i = 0; i < phraseMaj.Length - 1; i=i+2)
                         {
                             char a = phraseMaj[i];
                             char b = phraseMaj[i + 1];
@@ -458,19 +458,19 @@ namespace ProjetInfoGit
                             Console.WriteLine(" " + compteur + "\n");
                             list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
                             compteur = 0;
-                            
+
                         }
                         for (int j = 0; j < list.Count; j++)
                         {
                             Console.Write(list[j] + " ");
                         }
                         Console.WriteLine();
-                        
-                       
+
+
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
-                        
+
                         break;
                         #endregion
                 }
@@ -478,7 +478,7 @@ namespace ProjetInfoGit
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
 
-            
+
 
         }
     }
