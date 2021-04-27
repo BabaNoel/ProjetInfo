@@ -11,48 +11,107 @@ namespace ProjetInfoGit
         //Champs
         private int version;
         private string txt;
-        private string correction;
+        private byte[] correction;
         private string mode;
         private string indiceNbChar;
-        private List<byte> code;
+        private string code;
 
         public QRcode (string txt,int version)
         {
-            //On utilise un itérateur pour bien placer les bytes du code
-            int iterateur = 0;
-            // on initialise le mode alphanumérique
-            this.mode = "0010";
-            //on l'implémente au code
-            List<byte> code = new List<byte>();
-            for(int i=0;i<4;i++)
-            {
-                code[i] = Convert.ToByte(this.mode[i]);
-                iterateur++;
-            }
-            // on initialise l'indice du nombre de caractère de notre texte et on l'implémente au code en prenant en compte le fait qu'il fasse 9 caractères.
+           
+            this.mode = "alphanumérique";
+            //on implémente au code le mode alphanumérique au code
+            string code = "0010";
+            
+            // on initialise le texte et l'indice du nombre de caractère de notre texte et on l'implémente au code en prenant en compte le fait qu'il fasse 9 caractères.
+            this.txt = txt;
             this.indiceNbChar = Convert.ToString(txt.Length,2);
             if (this.indiceNbChar.Length<9)
             {
                 int différence = 9 - this.indiceNbChar.Length;
                 for(int i=0;i<différence;i++)
                 {
-                    code[iterateur] = 0;
-                    iterateur++;
+                    code = code + "0"; //on rajoute le nombre de zéro manquant devant notre élèment
                 }
             }
-            for(int i=0;i<this.indiceNbChar.Length;i++)
-            {
-                code[iterateur] = Convert.ToByte(this.indiceNbChar[i]);
-            }
+            code = code + this.indiceNbChar;
+            //On convertit le texte en alphanumérique et on l'implémente 
             string txtMaj = txt.ToUpper();
             for (int i = 0; i < txtMaj.Length - 1; i=i+2)
             {
                 char a = txtMaj[i];
                 char b = txtMaj[i + 1];
                 int valeur = ConvertisseurASCII(a, b);
-                
+                string valeurbinaire = Convert.ToString(valeur, 2);
+                //on comble les onze bits avec des zeros
+                if (valeurbinaire.Length < 11)
+                {
+                    int différence = 11 - this.indiceNbChar.Length;
+                    for (int j = 0; j < différence; j++)
+                    {
+                        code =code+"0";
+                    }
+                }
+                code = code + valeurbinaire;
             }
-           
+            //on ajoute la terminaison
+            if(code.Length<152)
+            {
+                int difference = 152 - code.Length;
+                // pour une différence de 1 à 4, on a ajoute le nombre de zéros manquants
+                if (difference <= 4)
+                {
+                    for (int i = 0; i < difference; i++)
+                    {
+                        code =code+"0";
+                    }
+                }
+                // pour une différence supérieure, on ajoute les 4 zeros, puis on termine l'octet avec des zeros et si on a toujours pas 152, on rajoute des octets spécifiques
+                else if(difference>4)
+                {
+                    code = code + "0000";
+                    int reste = code.Length % 8;
+                    for(int i=0; i<reste;i++)
+                    {
+                        code =code+"0";
+                    }
+                    if(code.Length!=152)
+                    {
+                        int NbOctetRestant = (152 - code.Length) / 8;
+                        int alternance = 0;
+                        string fill;
+                        for(int i=0;i<NbOctetRestant;i++)
+                        {
+                            if(alternance==0)
+                            {
+                                fill = "11101100";
+                                alternance = 1;
+                            }
+                            else
+                            {
+                                fill = "00010001" ;
+                                alternance = 0;
+                            }
+                            code = code + fill;
+                            
+                        }
+
+                    }
+                    
+                }
+            }
+            this.code = code; ;
+            //on met le code sous la forme d'un tableau d'octet
+            byte[] TabOctet = new byte[19];
+            int itérateur = 0;
+            for (int i = 0; i < code.Length; i=i+8)
+            {
+                TabOctet[itérateur] = Convert.ToByte(code.Substring(i, 8));
+                itérateur++;
+            }
+            //et on récupère la correction
+            byte[] correction = ReedSolomonAlgorithm.Encode(TabOctet, 7, ErrorCorrectionCodeType.QRCode);
+            this.correction = correction;
         }
 
         private int ConvertisseurASCII(char a, char b)
@@ -331,6 +390,11 @@ namespace ProjetInfoGit
 
             somme = valB + valA;
             return somme;
+        }
+
+        private void DessinV1(string nom)
+        {
+
         }
     }
 }
