@@ -449,7 +449,7 @@ namespace ProjetInfoGit
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
                        string phraseMaj= phrase.ToUpper();
-                        List<bool> list; ;
+                        List<bool> list = new List<bool>();
                         for(int i =0;i<phraseMaj.Length-1;i++)
                         {
                             char a = phraseMaj[i];

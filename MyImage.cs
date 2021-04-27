@@ -1453,7 +1453,7 @@ namespace ProjetInfoGit
                     Complexe c = new Complexe(x / zoom_X + x1, y / zoom_Y + y1);
                     Complexe z = new Complexe(0, 0);
                     int a = 0;
-                    while (a < itérationMax |z.Module()>=4 )
+                    while (a < itérationMax && z.Module() * z.Module() < 4 )
                     {
                         double tmp = z.Réelle;
                         z.Réelle = z.Réelle * z.Réelle - z.Imaginaire * z.Imaginaire + c.Réelle;
@@ -1571,7 +1571,7 @@ namespace ProjetInfoGit
                     Complexe c = new Complexe(0.285,0.01);
                     Complexe z = new Complexe(x / zoom_X + x1, y / zoom_Y + y1);
                     int a = 0;
-                    while (a < itérationMax | z.Module() >= 4)
+                    while (a < itérationMax && z.Module() * z.Module() < 4)
                     {
                         double tmp = z.Réelle;
                         z.Réelle = z.Réelle * z.Réelle - z.Imaginaire * z.Imaginaire + c.Réelle;
