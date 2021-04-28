@@ -90,6 +90,18 @@ namespace ProjetInfoGit
                 iColonne++;
             }
         }
+
+        public MyImage(int dimension, Pixel[,] Matricepixel)
+        {
+            this.type = "bmp";
+            this.hauteur = dimension;
+            this.largeur = dimension;
+            this.taille = dimension * dimension * 3;
+            this.nombrebitCouleur = 24;
+            this.offset = 54;
+            this.Matricepixel = Matricepixel;
+
+        }
         #endregion
 
         #region Propriété
@@ -121,7 +133,7 @@ namespace ProjetInfoGit
             get { return this.nombrebitCouleur; }
         }
         #endregion
-
+        
         #region Méthodes
         //Méthodes
 
@@ -148,9 +160,9 @@ namespace ProjetInfoGit
 
         public void From_Image_To_File(string name)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
+            //byte[] myfile = File.ReadAllBytes(Myfile);
 
-            byte[] Var = new byte[myfile.Length];
+            byte[] Var = new byte[taille];
             byte[] VarTemp = new byte[4];
 
             //Header
@@ -236,7 +248,6 @@ namespace ProjetInfoGit
         /// <returns></returns>
         public void Agrandir(string name, int n)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
 
             byte[] Var = new byte[offset + ((n * largeur) * (n * hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
             byte[] VarTemp = new byte[4];
@@ -330,8 +341,8 @@ namespace ProjetInfoGit
         /// <returns></returns>
         public void DégradéGris(string name)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] fichier = new byte[myfile.Length];
+           
+            byte[] fichier = new byte[taille];
             byte[] stock = new byte[4];
 
             //on utilise le presque la meme methode que pour la fonction From_Image_To_File seulement la partie image change car on vient modifier la couleur de l'image
@@ -417,10 +428,9 @@ namespace ProjetInfoGit
         /// <returns></returns>
         public void NoirEtBlanc(string name)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] fichier = new byte[myfile.Length];
+            
+            byte[] fichier = new byte[this.taille];
             byte[] stock = new byte[4];
-
 
             //Header
             fichier[0] = 66;
@@ -516,9 +526,7 @@ namespace ProjetInfoGit
         /// <returns></returns>
         public void Miroir(string name)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-
-            byte[] fichier = new byte[myfile.Length];
+            byte[] fichier = new byte[taille];
             byte[] stock = new byte[4];
 
 
@@ -597,7 +605,7 @@ namespace ProjetInfoGit
         }
         public void Rotation(string name, double angle)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
+            
             byte[] stock = new byte[4];
             int hauteur = this.hauteur;
             int largeur = this.largeur;
@@ -609,7 +617,7 @@ namespace ProjetInfoGit
             fichier[0] = 66;
             fichier[1] = 77;
 
-            stock = Convertir_Int_To_Endian(offset + H * L);
+            stock = Convertir_Int_To_Endian(offset + H * L*3);
             for (int i = 2; i <= 5; i++)
             {
                 fichier[i] = stock[i - 2];
@@ -700,7 +708,7 @@ namespace ProjetInfoGit
                 Console.WriteLine("La réduction demandée est trop importante");
                 return;
             }
-            byte[] myfile = File.ReadAllBytes(this.Myfile);
+          
             byte[] Var = new byte[offset + (largeur / n * hauteur / n) * 3];
             byte[] VarTemp = new byte[4];
 
@@ -783,8 +791,8 @@ namespace ProjetInfoGit
         #region Innovation
         public void InverserCouleur(string name)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] fichier = new byte[myfile.Length];
+            
+            byte[] fichier = new byte[taille];
             byte[] stock = new byte[4];
 
 
@@ -946,8 +954,8 @@ namespace ProjetInfoGit
         }
         public void Convolution(string name, string effet)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);                // on utilise la meme forme que toute les méthode que précédamment pour obtenir les info de l'image et les stocker dans une variable
-            byte[] fichier = new byte[myfile.Length];
+            // on utilise la meme forme que toute les méthode que précédamment pour obtenir les info de l'image et les stocker dans une variable
+            byte[] fichier = new byte[taille];
             byte[] stock = new byte[4];
 
             //Header
@@ -1426,8 +1434,8 @@ namespace ProjetInfoGit
         
         public void Mandelbrot(string name, int itérationMax)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] Var = new byte[myfile.Length];
+           
+            byte[] Var = new byte[taille];
             byte[] VarTemp = new byte[4];
             //On remplit la matrice de noir
             Remplissage(this.Matricepixel);
@@ -1544,8 +1552,8 @@ namespace ProjetInfoGit
 
         public void Julia(string name, int itérationMax)
         {
-            byte[] myfile = File.ReadAllBytes(Myfile);
-            byte[] Var = new byte[myfile.Length];
+            
+            byte[] Var = new byte[taille];
             byte[] VarTemp = new byte[4];
             //On remplit la matrice de noir
             Remplissage(this.Matricepixel);
