@@ -583,9 +583,9 @@ namespace ProjetInfoGit
 
             }
             MyImage QR = new MyImage(21, image);
-            QR.Agrandir("Qrcode",4);
-            QR.Miroir("QRCODE");
-            QR.From_Image_To_File(nom);
+            QR.Agrandir("Qrcode.bmp", 7);
+            QR.Miroir("QRCODE.bmp");
+            QR.From_Image_To_File("QRcode.bmp");
 
 
             //code = new Pixel[25, 25];

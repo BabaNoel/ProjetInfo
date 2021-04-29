@@ -96,7 +96,7 @@ namespace ProjetInfoGit
             this.type = "bmp";
             this.hauteur = dimension;
             this.largeur = dimension;
-            this.taille = dimension * dimension * 3;
+            this.taille = dimension * dimension * 3+ 54;
             this.nombrebitCouleur = 24;
             this.offset = 54;
             this.Matricepixel = Matricepixel;
@@ -160,8 +160,6 @@ namespace ProjetInfoGit
 
         public void From_Image_To_File(string name)
         {
-            //byte[] myfile = File.ReadAllBytes(Myfile);
-
             byte[] Var = new byte[taille];
             byte[] VarTemp = new byte[4];
 
@@ -169,7 +167,7 @@ namespace ProjetInfoGit
             Var[0] = 66;
             Var[1] = 77;
 
-            VarTemp = Convertir_Int_To_Endian(taille);                // on récupère chacun leur tour les infos de l'image ( taille, hauteur,largeur...) et on les stockes dans une variables temporaire
+            VarTemp = Convertir_Int_To_Endian(this.taille);                // on récupère chacun leur tour les infos de l'image ( taille, hauteur,largeur...) et on les stockes dans une variables temporaire
             for (int i = 2; i <= 5; i++)
             {
                 Var[i] = VarTemp[i - 2];                                // on utilise la variable temporaire pour remplir un tableau variable (VAR) que l'on va utiliser pour créer un nouveau fichier
@@ -255,8 +253,8 @@ namespace ProjetInfoGit
             //Header
             Var[0] = 66;
             Var[1] = 77;
-
-            VarTemp = Convertir_Int_To_Endian(offset + (largeur * hauteur) * n); //la taille de l'image est donc plus grande
+            this.taille = (offset + (largeur * hauteur) * n);
+            VarTemp = Convertir_Int_To_Endian(this.taille); //la taille de l'image est donc plus grande
             for (int i = 2; i <= 5; i++)
             {
                 Var[i] = VarTemp[i - 2];
