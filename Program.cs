@@ -11,30 +11,65 @@ namespace ProjetInfoGit
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Quel image voulez vous choisir ?");
-            Console.WriteLine("Tapez 1 pour choisir Coco.");
-            Console.WriteLine("Tapez 2 pour choisir Lena.");
-            string ChoixImage = Convert.ToString(Console.ReadLine());
-            if (ChoixImage == "1" || ChoixImage == "2")
+            //titre
+            Console.WriteLine("_|_|_|_| _|_|_|_| _|_|_|_| _|_|_|_| _|    _|  _|_|_|  _|    _| _|_|_|_|\n"
+                               + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|        \n"
+                               + "_|_|_|   _|_|_|      _|    _|    _| _|    _| _|       _|_|_|_| _|_|_|\n"
+                               + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|\n"
+                               + "_|    _| _|_|_|_|    _|    _|_|_|_| _|_|_|_|  _|_|_|  _|    _| _|_|_|_| ");
+            Console.WriteLine("\n\n");
+            Console.WriteLine("Bienvenue sur Retouche, votre programme de retouches photos et de création.");
+            Console.ReadLine();
+            Console.Clear();
+            int limite = 0;
+            string Image=null;
+            while (Image == null)
             {
-                if (ChoixImage == "1")
-                    ChoixImage = "coco.bmp";
-                if (ChoixImage == "2")
-                    ChoixImage = "lena.bmp";
+                //Choix de l'image
+                Console.WriteLine("_|_|_|_| _|_|_|_| _|_|_|_| _|_|_|_| _|    _|  _|_|_|  _|    _| _|_|_|_|\n"
+                                   + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|        \n"
+                                   + "_|_|_|   _|_|_|      _|    _|    _| _|    _| _|       _|_|_|_| _|_|_|\n"
+                                   + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|\n"
+                                   + "_|    _| _|_|_|_|    _|    _|_|_|_| _|_|_|_|  _|_|_|  _|    _| _|_|_|_| ");
+                Console.WriteLine("\n\n");
+                Console.WriteLine("Quel image voulez vous choisir ?");
+                Console.WriteLine("Tapez 1 pour choisir Coco.");
+                Console.WriteLine("Tapez 2 pour choisir Lena.");
+                int ChoixImage = Convert.ToInt32(Console.ReadLine());
+                if (ChoixImage == 1 || ChoixImage == 2 )
+                {
+                    if (ChoixImage == 1)
+                        Image = "coco.bmp";
+                    if (ChoixImage == 2)
+                        Image = "lena.bmp";
+                }
+                else
+                {
+                    Console.WriteLine("votre choix est invalide, recommencez");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                if(limite==3)
+                {
+                    Console.WriteLine("Votre image sera Coco par défault");
+                    Image = "coco.bmp";
+                }
+                limite++;
+                
             }
-            else
-            {
-                Console.WriteLine("votre choix est invalide");
-                Console.WriteLine("Votre image sera Coco.bmp par défaut");
-                ChoixImage = "coco.bmp";
-            }
-
-            MyImage image = new MyImage(ChoixImage);
+            MyImage image = new MyImage(Image);
             System.Threading.Thread.Sleep(1500);
             ConsoleKeyInfo cki;
             do
             {
                 Console.Clear();
+                //titre
+                Console.WriteLine("_|_|_|_| _|_|_|_| _|_|_|_| _|_|_|_| _|    _|  _|_|_|  _|    _| _|_|_|_|\n"
+                                    + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|        \n"
+                                    + "_|_|_|   _|_|_|      _|    _|    _| _|    _| _|       _|_|_|_| _|_|_|\n"
+                                    + "_|    _| _|          _|    _|    _| _|    _| _|       _|    _| _|\n"
+                                    + "_|    _| _|_|_|_|    _|    _|_|_|_| _|_|_|_|  _|_|_|  _|    _| _|_|_|_| ");
+                Console.WriteLine("\n");
                 Console.WriteLine("Menu :\n\n"
                                  + "> 1: Mettre en Noir et Blanc \n"
                                  + "> 2: Mettre en dégradés de gris \n"
@@ -146,7 +181,7 @@ namespace ProjetInfoGit
                         image.Julia(name, itérationMaxJ);
                         break;
                     case 12:
-                        Console.WriteLine("Quel image voulez vous cacher dans " + ChoixImage);
+                        Console.WriteLine("Quel image voulez vous cacher dans " + Image);
                         Console.WriteLine("Tapez 1 pour choisir Coco.");
                         Console.WriteLine("Tapez 2 pour choisir Lena.");
                         string Choix = Convert.ToString(Console.ReadLine());
@@ -173,13 +208,14 @@ namespace ProjetInfoGit
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
                         QRcode QR = new QRcode(phrase,1);
+                        Console.WriteLine(QR.Code);
                         QR.Dessin("QRCODE");
-                            //int compteur = ConvertisseurASCII(a, b);
-                            //Console.WriteLine(" " + compteur + "\n");
-                            //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
-                            //compteur = 0;
+                        //int compteur = ConvertisseurASCII(a, b);
+                        //Console.WriteLine(" " + compteur + "\n");
+                        //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
+                        //compteur = 0;
 
-                       break;
+                        break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
 

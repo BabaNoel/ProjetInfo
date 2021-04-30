@@ -14,22 +14,17 @@ namespace ProjetInfoGit
         private byte[] correction;
         private string mode;
         private string indiceNbChar;
-        private byte[] code;
+        private string code;
         private string masque;
 
         public QRcode(string txt, int version)
         {
             this.masque= "111011111000100";
             this.mode = "0010";
-            byte[] code = new byte[208];
+            string code;
             //on implémente au code le mode alphanumérique au code
-            int iterateur = 0;
-            for(int i=0;i<4;i++)
-            {
-                code[iterateur] = Convert.ToByte(mode[i]);
-                iterateur++;
-            }
-
+            code = mode;              
+           
             // on initialise le texte et l'indice du nombre de caractère de notre texte et on l'implémente au code en prenant en compte le fait qu'il fasse 9 caractères.
             this.txt = txt;
             this.indiceNbChar = Convert.ToString(txt.Length, 2);
@@ -38,38 +33,56 @@ namespace ProjetInfoGit
                 int différence = 9 - this.indiceNbChar.Length;
                 for (int i = 0; i < différence; i++)
                 {
-                    code[iterateur] = 0; //on rajoute le nombre de zéro manquant devant notre élèment
-                    iterateur++;
+                    code = code + '0'; //on rajoute le nombre de zéro manquant devant notre élèment
                 }
             }
-            for (int i = 0; i < this.indiceNbChar.Length; i++)
-            {
-                code[iterateur] = Convert.ToByte(indiceNbChar[i]);
-                iterateur++;
-            }
+            code = code + indiceNbChar;
             //On convertit le texte en alphanumérique et on l'implémente 
             string txtMaj = txt.ToUpper();
-            for (int i = 0; i < txtMaj.Length - 1; i = i + 2)
+            for (int i = 0; i < txtMaj.Length; i++)
             {
-                char a = txtMaj[i];
-                char b = txtMaj[i + 1];
-                int valeur = ConvertisseurASCII(a, b);
-                string valeurbinaire = Convert.ToString(valeur, 2);
-                //on comble les onze bits avec des zeros
-                if (valeurbinaire.Length < 11)
+                string valeurbinaire;
+                if (txtMaj.Length % 2 == 1 && i == txtMaj.Length-1)
                 {
-                    int différence = 11 - this.indiceNbChar.Length;
-                    for (int j = 0; j < différence; j++)
+                    char a1 = txtMaj[i];
+                    int valeur = ConvertisseurASCII('|',a1);
+                    valeurbinaire = Convert.ToString(valeur, 2);
+                    Console.WriteLine(valeur);
+                    Console.WriteLine(valeurbinaire);
+                    Console.ReadLine();
+                    //on comble les 6 bits avec des zeros
+                    if (valeurbinaire.Length < 6)
                     {
-                        code[iterateur] = 0;
-                        iterateur++;
+                        int différence = 6 - valeurbinaire.Length;
+                        for (int j = 0; j < différence; j++)
+                        {
+                            code = code + '0';
+                        }
                     }
+                    code = code + valeurbinaire;
                 }
-                for (int j = 0; j < valeurbinaire.Length; j++)
+                else if(i%2==0)
                 {
-                    code[iterateur] = Convert.ToByte(valeurbinaire[j]);
-                    iterateur++;
+                    char a = txtMaj[i];
+                    char b = txtMaj[i + 1];
+                    int valeur = ConvertisseurASCII(a, b);
+                    Console.WriteLine(valeur);
+                    valeurbinaire = Convert.ToString(valeur, 2);
+                    Console.WriteLine(valeurbinaire);
+                    Console.ReadLine();
+                    //on comble les onze bits avec des zeros
+                    if (valeurbinaire.Length < 11)
+                    {
+                        int différence =11 - valeurbinaire.Length;
+                        for (int j = 0; j < différence; j++)
+                        {
+                            code = code + '0';
+                        }
+                    }
+                    code = code + valeurbinaire;
                 }
+                
+              
             }
             //on ajoute la terminaison
             if (code.Length < 152)
@@ -80,8 +93,7 @@ namespace ProjetInfoGit
                 {
                     for (int i = 0; i < difference; i++)
                     {
-                        code[iterateur] = 0;
-                        iterateur++;
+                        code =code+ '0';
                     }
                 }
                 // pour une différence supérieure, on ajoute les 4 zeros, puis on termine l'octet avec des zeros et si on a toujours pas 152, on rajoute des octets spécifiques
@@ -89,14 +101,12 @@ namespace ProjetInfoGit
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        code[iterateur] = 0;
-                        iterateur++;
+                       code = code + '0';
                     }
                     int reste = code.Length % 8;
-                    for (int i = 0; i < reste; i++)
+                    for (int i = 0; i < 8-reste; i++)
                     {
-                        code[iterateur] = 0;
-                        iterateur++;
+                        code=code+'0';
                     }
                     if (code.Length != 152)
                     {
@@ -115,11 +125,7 @@ namespace ProjetInfoGit
                                 fill = "00010001";
                                 alternance = 0;
                             }
-                            for (int j = 0; j < fill.Length; j++)
-                            {
-                                code[iterateur] = Convert.ToByte(fill[j]);
-                                iterateur++;
-                            }
+                            code = code + fill;
 
                         }
 
@@ -129,22 +135,40 @@ namespace ProjetInfoGit
             }
             this.code = code;
             //on met le code sous la forme d'un tableau d'octet
-            Encoding u8 = Encoding.UTF8;
-            int iBC = u8.GetByteCount(txt);
-            byte[] bytes = u8.GetBytes(txt);
-            byte[] correction = ReedSolomonAlgorithm.Encode(bytes, 7, ErrorCorrectionCodeType.QRCode);
+            byte[] tabOctet = new byte[19];
+            int itérateur = 0;
+            for (int i = 0; i < code.Length; i += 8)
+            {
+                string str = "";
+                for (int j = i; j < i + 8; j++)
+                {
+                    str += code[j];
+                }
+                tabOctet[itérateur] = Convert.ToByte(str, 2);
+                itérateur++;
+            }
+
+            byte[] correction = ReedSolomonAlgorithm.Encode(tabOctet, 7, ErrorCorrectionCodeType.QRCode);
             foreach (byte valeur in correction)
             {
                 string val = Convert.ToString(valeur, 2);
-                for (int i = 0; i < val.Length; i++)
+                if(val.Length<8)
                 {
-                    if (val.Length > i) { code[iterateur + 7 - i] = (byte)val[val.Length - 1 - i]; }
-                    else { code[iterateur+ 7 - i] = 0; }
+                    int différence = 8 - val.Length;
+                    for(int i=0;i<différence;i++)
+                    {
+                        code = code + '0';
+                    }
                 }
-                iterateur += 8;
+                code = code + val;
             }
             this.correction = correction;
+            Console.WriteLine(code);
+            Console.ReadLine();
         }
+
+       public string Code
+        { get { return code; } }
 
         private int ConvertisseurASCII(char a, char b)
         {
@@ -419,6 +443,11 @@ namespace ProjetInfoGit
 
                 valB = 36;
             }
+            if (a == '|')
+            {
+
+                valA = 0;
+            }
 
             somme = valB + valA;
             return somme;
@@ -432,6 +461,13 @@ namespace ProjetInfoGit
         public void Dessin(string nom)
         {
             Pixel[,] image = new Pixel[21, 21];
+            for(int i=0; i<21;i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    image[i, j] = new Pixel(145, 145, 145);
+                }
+            }
 
             //tracage des separateurs
             for (int i = 0; i < 7; i++)
@@ -535,56 +571,56 @@ namespace ProjetInfoGit
             //noir module
             image[13, 8] = new Pixel(0, 0, 0);
 
-            //ecriture du image
-            bool montee = true;
-            int index = 0;
-            for (int x = 20; x > 0; x -= 2)
-            {
-                if (x == 6) { x--; }
-                if (montee)
-                {
-                    for (int y = 20; y >= 0; y--)
-                    {
+            ////ecriture du image
+            //bool montee = true;
+            //int index = 0;
+            //for (int x = 20; x > 0; x -= 2)
+            //{
+            //    if (x == 6) { x--; }
+            //    if (montee)
+            //    {
+            //        for (int y = 20; y >= 0; y--)
+            //        {
 
-                        if (image[y, x] == null)
-                        {
-                            if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
-                            else { image[y, x] = new Pixel(0, 0, 0); }
-                            index++;
-                        }
-                        if (image[y, x - 1] == null)
-                        {
-                            if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
-                            else { image[y, x - 1] = new Pixel(0, 0, 0); }
-                            index++;
-                        }
-                    }
-                    montee = false;
-                }
-                else
-                {
-                    for (int y = 0; y < 21; y++)
-                    {
-                        if (image[y, x] == null)
-                        {
-                            if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
-                            else { image[y, x] = new Pixel(0, 0, 0); }
-                            index++;
-                        }
-                        if (image[y, x - 1] == null)
-                        {
-                            if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
-                            else { image[y, x - 1] = new Pixel(0, 0, 0); }
-                            index++;
-                        }
-                    }
-                    montee = true;
-                }
+            //            if (image[y, x] == null)
+            //            {
+            //                if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+            //                else { image[y, x] = new Pixel(0, 0, 0); }
+            //                index++;
+            //            }
+            //            if (image[y, x - 1] == null)
+            //            {
+            //                if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+            //                else { image[y, x - 1] = new Pixel(0, 0, 0); }
+            //                index++;
+            //            }
+            //        }
+            //        montee = false;
+            //    }
+            //    else
+            //    {
+            //        for (int y = 0; y < 21; y++)
+            //        {
+            //            if (image[y, x] == null)
+            //            {
+            //                if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+            //                else { image[y, x] = new Pixel(0, 0, 0); }
+            //                index++;
+            //            }
+            //            if (image[y, x - 1] == null)
+            //            {
+            //                if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+            //                else { image[y, x - 1] = new Pixel(0, 0, 0); }
+            //                index++;
+            //            }
+            //        }
+            //        montee = true;
+                //}
 
-            }
+            //}
             MyImage QR = new MyImage(21, image);
-            QR.Agrandir("Qrcode.bmp", 7);
-            QR.Miroir("QRCODE.bmp");
+            QR.Agrandir("Qrcode.bmp", 6);
+            //QR.Miroir("QRCODE.bmp");
             QR.From_Image_To_File("QRcode.bmp");
 
 
@@ -763,6 +799,6 @@ namespace ProjetInfoGit
 
 
 
-        
+
     }
 }

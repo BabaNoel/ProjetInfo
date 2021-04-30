@@ -247,13 +247,13 @@ namespace ProjetInfoGit
         public void Agrandir(string name, int n)
         {
 
-            byte[] Var = new byte[offset + ((n * largeur) * (n * hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
+            byte[] Var = new byte[this.offset + ((n * this.largeur) * (n * this.hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
             byte[] VarTemp = new byte[4];
 
             //Header
             Var[0] = 66;
             Var[1] = 77;
-            this.taille = (offset + (largeur * hauteur) * n);
+            this.taille = (this.offset + (this.largeur*n*this.hauteur*n));
             VarTemp = Convertir_Int_To_Endian(this.taille); //la taille de l'image est donc plus grande
             for (int i = 2; i <= 5; i++)
             {
@@ -266,7 +266,7 @@ namespace ProjetInfoGit
                 Var[i] = VarTemp[i - 6];
             }
 
-            VarTemp = Convertir_Int_To_Endian(offset);
+            VarTemp = Convertir_Int_To_Endian(this.offset);
             for (int i = 10; i <= 13; i++)
             {
                 Var[i] = VarTemp[i - 10];
@@ -279,13 +279,15 @@ namespace ProjetInfoGit
                 Var[i] = VarTemp[i - 14];
             }
 
-            VarTemp = Convertir_Int_To_Endian(largeur * n);
+            //this.largeur = this.largeur *n;
+            VarTemp = Convertir_Int_To_Endian(this.largeur*n);
             for (int i = 18; i <= 21; i++)
             {
                 Var[i] = VarTemp[i - 18];
             }
 
-            VarTemp = Convertir_Int_To_Endian(hauteur * n);
+            //this.hauteur = this.hauteur * n;
+            VarTemp = Convertir_Int_To_Endian(this.hauteur*n);
             for (int i = 22; i <= 25; i++)
             {
                 Var[i] = VarTemp[i - 22];
@@ -294,7 +296,7 @@ namespace ProjetInfoGit
             Var[26] = 0;
             Var[27] = 0;
 
-            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            VarTemp = Convertir_Int_To_Endian(this.nombrebitCouleur);
             for (int i = 28; i <= 29; i++)
             {
                 Var[i] = VarTemp[i - 28];
@@ -305,20 +307,21 @@ namespace ProjetInfoGit
                 Var[i] = 0;
             }
 
+           
             //Image
             int compteur = 54;
-            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
+            for (int Ligne = 0; Ligne < this.Matricepixel.GetLength(0); Ligne++)
             {
                 for (int iterateur = 0; iterateur < n; iterateur++)
                 {
 
-                    for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
+                    for (int Colonne = 0; Colonne < this.Matricepixel.GetLength(1); Colonne++)
                     {
                         for (int i = 0; i < n; i++)
                         {
-                            Var[compteur + 3 * i] = Matricepixel[Ligne, Colonne].rouge;
-                            Var[compteur + 1 + 3 * i] = Matricepixel[Ligne, Colonne].vert;
-                            Var[compteur + 2 + 3 * i] = Matricepixel[Ligne, Colonne].bleu;
+                            Var[compteur + 3 * i] = this.Matricepixel[Ligne, Colonne].rouge;
+                            Var[compteur + 1 + 3 * i] = this.Matricepixel[Ligne, Colonne].vert;
+                            Var[compteur + 2 + 3 * i] = this.Matricepixel[Ligne, Colonne].bleu;
                         }
                         compteur = compteur + 3 * n;
                     }
@@ -595,6 +598,7 @@ namespace ProjetInfoGit
                     compteur = compteur + 3;
                 }
             }
+            this.Matricepixel=Matricepixel;
 
             File.WriteAllBytes(name, fichier);
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
