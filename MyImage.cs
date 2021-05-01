@@ -1377,7 +1377,7 @@ namespace ProjetInfoGit
         }
 
         /// <summary>
-        /// Permet de régler la saturation des couleurs de l'image( Convertisseur RGB => HSL à faire )( pas fini)
+        /// Permet de régler la teinte(Hue), la Saturation et la luminance de l'image
         /// </summary>
         /// <param name="Myfile"></param>
         /// /// <param name="sat"></param>
@@ -1797,7 +1797,7 @@ namespace ProjetInfoGit
 
             File.WriteAllBytes(Sat, Var);
             Process.Start(new ProcessStartInfo(Sat) { UseShellExecute = true });
-        } // Permet de régler la teinte(Hue), la Saturation et la luminance de l'image
+        } 
         #endregion
 
         /// <summary>
