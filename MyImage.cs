@@ -987,6 +987,661 @@ namespace ProjetInfoGit
 
 
         }
+
+
+        /// <summary>
+        /// Permet de régler l'exposition de la photo ( plus sombre ou plus claire)
+        /// </summary>
+        /// <param name="Myfile"></param>
+        /// <param name="expo"></param>
+        /// <returns></returns>
+        public void Exposition(string Myfile, int expo)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            string Expo = "Exposition.bmp";
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);  //même méthode que précédemment
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+                    int nombreR = Convert.ToInt32(Matricepixel[iLigne, iColonne].rouge);    // on convertie la valeur du pixel rouge en entier
+                    nombreR = nombreR + expo;                                            // on lui ajoute une valeur d'exposition
+                    if (nombreR > 255)                                        //on gère les execeptions
+                    {
+                        nombreR = 255;
+                    }
+                    if (nombreR < 0)
+                    {
+                        nombreR = 0;
+                    }
+                    byte PixR = Convert.ToByte(nombreR);            // on convertie notre valeur en byte pour pouvoir remplir la matrice de pixel ( on fais pareil pour les deux autres couleurs )
+
+                    int nombreB = Convert.ToInt32(Matricepixel[iLigne, iColonne].bleu);
+                    nombreB = nombreB + expo;
+                    if (nombreB > 255)
+                    {
+                        nombreB = 255;
+                    }
+                    if (nombreB < 0)
+                    {
+                        nombreB = 0;
+                    }
+                    byte PixB = Convert.ToByte(nombreB);
+
+                    int nombreV = Convert.ToInt32(Matricepixel[iLigne, iColonne].vert);
+                    nombreV = nombreV + expo;
+                    if (nombreV > 255)
+                    {
+                        nombreV = 255;
+                    }
+                    if (nombreV < 0)
+                    {
+                        nombreV = 0;
+                    }
+                    byte PixV = Convert.ToByte(nombreV);
+
+                    Var[compteur] = PixR;
+                    Var[compteur + 1] = PixV;
+                    Var[compteur + 2] = PixB;
+                    compteur = compteur + 3;
+                }
+            }
+
+            File.WriteAllBytes(Expo, Var);
+            Process.Start(new ProcessStartInfo(Expo) { UseShellExecute = true });
+        }
+
+        /// <summary>
+        /// Permet de régler les ombres de la photos(les ombres peuvent devenir plus claire ou plus sombre)
+        /// </summary>
+        /// <param name="Myfile"></param>
+        /// <param name="ombre"></param>
+        /// <returns></returns>
+        public void Ombre(string Myfile, int ombre)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            string Shadow = "Ombre.bmp";
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);  //même méthode que précédemment 
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+                    int nombreR = Convert.ToInt32(Matricepixel[iLigne, iColonne].rouge);
+                    if (nombreR < 75)                                        // meme méthode que pour l'exposition sauf qu'ici on ne cible que les couleurs en dessous d'un certain seuil(ici 75 qui se trouve etre la meilleur valeur pour voir une vrai différence d'apres nos différents test )
+                    {
+                        nombreR = nombreR + ombre;
+                        if (nombreR > 255)
+                        {
+                            nombreR = 255;
+                        }
+                        if (nombreR < 0)
+                        {
+                            nombreR = 0;
+                        }
+
+                    }
+                    byte PixR = Convert.ToByte(nombreR);
+
+                    int nombreB = Convert.ToInt32(Matricepixel[iLigne, iColonne].bleu);
+                    if (nombreB < 75)
+                    {
+                        nombreB = nombreB + ombre;
+                        if (nombreB > 255)
+                        {
+                            nombreB = 255;
+                        }
+                        if (nombreB < 0)
+                        {
+                            nombreB = 0;
+                        }
+
+                    }
+                    byte PixB = Convert.ToByte(nombreB);
+
+                    int nombreV = Convert.ToInt32(Matricepixel[iLigne, iColonne].vert);
+                    if (nombreV < 75)
+                    {
+                        nombreV = nombreV + ombre;
+                        if (nombreV > 255)
+                        {
+                            nombreV = 255;
+                        }
+                        if (nombreV < 0)
+                        {
+                            nombreV = 0;
+                        }
+
+                    }
+                    byte PixV = Convert.ToByte(nombreV);
+
+                    Var[compteur] = PixR;
+                    Var[compteur + 1] = PixV;
+                    Var[compteur + 2] = PixB;
+                    compteur = compteur + 3;
+                }
+            }
+
+            File.WriteAllBytes(Shadow, Var);
+            Process.Start(new ProcessStartInfo(Shadow) { UseShellExecute = true });
+        }
+
+        /// <summary>
+        /// Permet de régler les hautes lumière de la photos(Plus claires ou plus sombre)
+        /// </summary>
+        /// <param name="Myfile"></param>
+        /// /// <param name="HL"></param>
+        /// <returns></returns>
+        public void HautesLumiere(string Myfile, int HL)
+        {
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            string HighLights = "HautesLumières.bmp";
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+                    int nombreR = Convert.ToInt32(Matricepixel[iLigne, iColonne].rouge);
+                    if (nombreR > 150)                                       // on fait l'inverse de la méthode pour les ombres
+                    {
+                        nombreR = nombreR + HL;
+                        if (nombreR > 255)
+                        {
+                            nombreR = 255;
+                        }
+                        if (nombreR < 0)
+                        {
+                            nombreR = 0;
+                        }
+
+                    }
+                    byte PixR = Convert.ToByte(nombreR);
+
+                    int nombreB = Convert.ToInt32(Matricepixel[iLigne, iColonne].bleu);
+                    if (nombreB > 150)
+                    {
+                        nombreB = nombreB + HL;
+                        if (nombreB > 255)
+                        {
+                            nombreB = 255;
+                        }
+                        if (nombreB < 0)
+                        {
+                            nombreB = 0;
+                        }
+
+                    }
+                    byte PixB = Convert.ToByte(nombreB);
+
+                    int nombreV = Convert.ToInt32(Matricepixel[iLigne, iColonne].vert);
+                    if (nombreV > 150)
+                    {
+                        nombreV = nombreV + HL;
+                        if (nombreV > 255)
+                        {
+                            nombreV = 255;
+                        }
+                        if (nombreV < 0)
+                        {
+                            nombreV = 0;
+                        }
+
+                    }
+                    byte PixV = Convert.ToByte(nombreV);
+
+                    Var[compteur] = PixR;
+                    Var[compteur + 1] = PixV;
+                    Var[compteur + 2] = PixB;
+                    compteur = compteur + 3;
+                }
+            }
+
+            File.WriteAllBytes(HighLights, Var);
+            Process.Start(new ProcessStartInfo(HighLights) { UseShellExecute = true });
+        }
+
+        /// <summary>
+        /// Permet de régler la saturation des couleurs de l'image( Convertisseur RGB => HSL à faire )( pas fini)
+        /// </summary>
+        /// <param name="Myfile"></param>
+        /// /// <param name="sat"></param>
+        /// <returns></returns>
+        public void Saturation(string Myfile, int sat)
+        {
+
+            byte[] myfile = File.ReadAllBytes(Myfile);
+            string Sat = "Saturation.bmp";
+            byte[] Var = new byte[myfile.Length];
+            byte[] VarTemp = new byte[4];
+
+            //Header
+            Var[0] = 66;
+            Var[1] = 77;
+
+            VarTemp = Convertir_Int_To_Endian(taille);
+            for (int i = 2; i <= 5; i++)
+            {
+                Var[i] = VarTemp[i - 2];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(0);
+            for (int i = 6; i <= 9; i++)
+            {
+                Var[i] = VarTemp[i - 6];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(Offset);
+            for (int i = 10; i <= 13; i++)
+            {
+                Var[i] = VarTemp[i - 10];
+            }
+
+            //HeaderInfo
+            VarTemp = Convertir_Int_To_Endian(40);
+            for (int i = 14; i <= 17; i++)
+            {
+                Var[i] = VarTemp[i - 14];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(largeur);
+            for (int i = 18; i <= 21; i++)
+            {
+                Var[i] = VarTemp[i - 18];
+            }
+
+            VarTemp = Convertir_Int_To_Endian(hauteur);
+            for (int i = 22; i <= 25; i++)
+            {
+                Var[i] = VarTemp[i - 22];
+            }
+
+            Var[26] = 0;
+            Var[27] = 0;
+
+            VarTemp = Convertir_Int_To_Endian(nombrebitCouleur);
+            for (int i = 28; i <= 29; i++)
+            {
+                Var[i] = VarTemp[i - 28];
+            }
+
+            for (int i = 30; i <= 53; i++)
+            {
+                Var[i] = 0;
+            }
+
+            //Image
+            int compteur = 54;
+            for (int iLigne = 0; iLigne < Matricepixel.GetLength(0); iLigne++)
+            {
+                for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
+                {
+                    int Teinte;
+                    int Saturation;
+
+                    int nombreR = Convert.ToInt32((Matricepixel[iLigne, iColonne].rouge));
+                    int nombreV = Convert.ToInt32((Matricepixel[iLigne, iColonne].vert));
+                    int nombreB = Convert.ToInt32((Matricepixel[iLigne, iColonne].bleu));
+
+                    // int somme = nombreR + nombreB + nombreV;    test avec l'algorithme de conversion trouvé ici :https://www.f-legrand.fr/scidoc/docmml/image/niveaux/couleurs/couleurs.html
+                    //nombreR = nombreR / somme;
+                    // nombreV = nombreV / somme;
+                    //nombreB = nombreB / somme;
+                    //int maxRB = Math.Max(nombreR, nombreB);
+                    // int maxBV = Math.Max(nombreB, nombreV);
+                    //int max;
+                    //if (maxBV < maxRB)
+                    //{
+                    //max = maxRB;
+                    //}
+                    //else
+                    //{
+                    // max = maxBV;
+                    //}
+                    //int minRB = Math.Min(nombreR, nombreB);
+                    //int minBV = Math.Min(nombreB, nombreV);
+                    //int min = 0;
+                    //if (minBV < minRB)
+                    //{
+                    //min = minBV;
+                    //}
+                    //   else
+                    //{
+                    //min = minRB;
+                    //}
+                    //int C = max - min;
+                    //Lumière = maxBV;
+                    //if (Lumière == 0)
+                    //{
+                    //nombreR = 0;
+                    //nombreV = 0;
+                    //nombreB = 0;
+
+                    //
+
+
+                    //Saturation = C / Lumière;
+                    //if (C == 0)
+                    //{
+                    //nombreR = 0;
+                    //nombreB = Lumière;
+                    //nombreV = 0;
+                    //}
+                    //if (max == nombreR)
+                    //{
+                    //Teinte = 60 * (nombreV * nombreV) / C % 360;
+                    //}
+                    //else if (max == nombreV)
+                    //{
+                    //Teinte = (120 + 60) * (nombreB - nombreR) / C;
+                    //
+                    // else
+                    //{
+                    //Teinte = (240 + 60) * (nombreR - nombreV) / C;
+                    //}
+
+
+                    //Saturation = Saturation + sat;
+
+                    //int newC = Lumière * Saturation;
+                    //int newMin = Lumière - newC;
+                    //if (Teinte > 300 && Teinte<= 360)
+                    //{
+                    //nombreR = Lumière;
+                    //nombreV = newMin;
+                    //nombreB = nombreV + newC * (360 - Teinte) / 60;
+                    //
+                    //else if (Teinte>= 0 && Teinte<= 60)
+                    //{
+                    //nombreR = Lumière;
+                    //nombreB = newMin;
+                    //nombreV = nombreB + newC * (Teinte/60);
+                    //}
+                    //else if (Teinte > 60 && Teinte <= 120)
+                    //{
+                    //nombreV = Lumière;
+                    //nombreB = newMin;
+                    //nombreR = nombreB + newC * (120-Teinte)/60;
+                    //}
+                    //  else if (Teinte > 120 && Teinte <= 180)
+                    //{
+                    //nombreV = Lumière;
+                    //nombreR = newMin;
+                    //nombreB = nombreR + newC * (Teinte-120 )/60;
+                    //}
+                    //else if (Teinte > 180 && Teinte <=240)
+                    //{
+                    //nombreB = Lumière;
+                    //nombreR = newMin;
+                    //nombreV = nombreR + newC * (240-Teinte)/60;
+                    //}
+                    //else
+                    //{
+                    //nombreB = Lumière;
+                    //nombreV = newMin;
+                    //nombreR = nombreV + newC * (240-Teinte) / 60;
+                    //}
+                    //if (nombreR > 255)
+                    // {
+                    //nombreR = 255;
+                    //}
+                    //if (nombreR < 0)
+                    //{
+                    //nombreR = 0;
+                    //
+                    //if (nombreV > 255)
+                    //{
+                    //}
+                    //   if (nombreV < 0)
+                    //{
+                    //nombreV = 0;
+                    //}
+                    //if (nombreB > 255)
+                    //{
+                    //nombreB = 255;
+                    //}
+                    //if (nombreB < 0)
+                    //{
+                    //nombreB = 0;
+                    //}
+
+                    int maxRB = Math.Max(nombreR, nombreB);
+                    int maxBV = Math.Max(nombreB, nombreV);
+                    int max;
+                    if (maxBV < maxRB)
+                    {
+                        max = maxRB;
+                    }
+                    else
+                    {
+                        max = maxBV;
+                    }
+                    int minRB = Math.Min(nombreR, nombreB);
+                    int minBV = Math.Min(nombreB, nombreV);
+                    int min = 0;
+                    if (minBV < minRB)
+                    {
+                        min = minBV;
+                    }
+                    else
+                    {
+                        min = minRB;
+                    }
+                    if (max == min)
+                    {
+                        Teinte = 0;
+                    }
+                    else if (max == nombreR)
+                    {
+                        Teinte = (60 * ((nombreV - nombreB) / (max - min)) + 360) % 360;
+                    }
+                    else if (max == nombreV)
+                    {
+                        Teinte = (60 * ((nombreB - nombreR) / (max - min)) + 120);
+                    }
+                    else if (max == nombreB)
+                    {
+                        Teinte = (60 * ((nombreR - nombreV) / (max - min)) + 240);
+                    }
+
+                    if (max == 0)
+                    {
+                        Saturation = 0;
+                    }
+                    else
+                    {
+                        Saturation = 1 - (min / max);
+                    }
+
+                    byte PixR = Convert.ToByte(nombreR);
+                    byte PixV = Convert.ToByte(nombreV);
+                    byte PixB = Convert.ToByte(nombreB);
+
+                    Var[compteur] = PixR;
+                    Var[compteur + 1] = PixV;
+                    Var[compteur + 2] = PixB;
+                    compteur = compteur + 3;
+                }
+            }
+
+            File.WriteAllBytes(Sat, Var);
+            Process.Start(new ProcessStartInfo(Sat) { UseShellExecute = true });
+        } // Permet de régler la saturation des couleurs de l'image( Convertisseur RGB => HSL à faire )( pas fini)
         #endregion
 
         /// <summary>
