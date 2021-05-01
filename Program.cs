@@ -226,7 +226,6 @@ namespace ProjetInfoGit
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
                         QRcode Qr = new QRcode(phrase, 1);
-
                         Qr.Dessin("Agrandissement");
                         //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
                         break;
