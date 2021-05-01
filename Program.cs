@@ -448,25 +448,7 @@ namespace ProjetInfoGit
                         Encoding u8 = Encoding.UTF8;
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
-                        string phraseMaj = phrase.ToUpper();
-                        List<bool> list = new List<bool>();
-                        for (int i = 0; i < phraseMaj.Length - 1; i=i+2)
-                        {
-                            char a = phraseMaj[i];
-                            char b = phraseMaj[i + 1];
-                            int compteur = ConvertisseurASCII(a, b);
-                            Console.WriteLine(" " + compteur + "\n");
-                            list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
-                            compteur = 0;
-
-                        }
-                        for (int j = 0; j < list.Count; j++)
-                        {
-                            Console.Write(list[j] + " ");
-                        }
-                        Console.WriteLine();
-
-
+                        //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
