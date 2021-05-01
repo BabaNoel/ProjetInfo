@@ -1798,10 +1798,10 @@ namespace ProjetInfoGit
             File.WriteAllBytes(Sat, Var);
             Process.Start(new ProcessStartInfo(Sat) { UseShellExecute = true });
         } 
-        #endregion
+        
 
         /// <summary>
-        /// dessine la fractale de mandelbrot
+        /// dessine le contour de la fractale de Mandelbrot
         /// </summary>
         /// <param name="name"></param>
         /// <param name="itérationMax"></param>
@@ -1921,6 +1921,7 @@ namespace ProjetInfoGit
             File.WriteAllBytes(name, Var);                       //on sauvegarde l'image(sous le nom ImageToByte)
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
+        #endregion
 
         #region TD4
         /// <summary>
