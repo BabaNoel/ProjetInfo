@@ -1573,15 +1573,15 @@ namespace ProjetInfoGit
                         tempV = tempV + tempV2;
                         tempB = TeinteFinale - 0.333;
                         tempB = tempB + tempB2;
-                        if (tempR < 1)
+                        if (tempR < 0)
                         {
                             tempR = tempR + 1;
                         }
-                        if (tempB < 1)
+                        if (tempB < 0)
                         {
                             tempB = tempB + 1;
                         }
-                        if (tempV < 1)
+                        if (tempV < 0)
                         {
                             tempV = tempV + 1;
                         }
@@ -1642,15 +1642,15 @@ namespace ProjetInfoGit
                         tempB = TeinteFinale - 0.333;
                         tempB = tempB + tempB2;
 
-                        if (tempR < 1)
+                        if (tempR < 0)
                         {
                             tempR = tempR + 1;
                         }
-                        if (tempB < 1)
+                        if (tempB < 0)
                         {
                             tempB = tempB + 1;
                         }
-                        if (tempV < 1)
+                        if (tempV < 0)
                         {
                             tempV = tempV + 1;
                         }
@@ -1711,15 +1711,15 @@ namespace ProjetInfoGit
                         tempB = TeinteFinale - 0.333;
                         tempB = tempB + tempB2;
 
-                        if (tempR < 1)
+                        if (tempR < 0)
                         {
                             tempR = tempR + 1;
                         }
-                        if (tempB < 1)
+                        if (tempB < 0)
                         {
                             tempB = tempB + 1;
                         }
-                        if (tempV < 1)
+                        if (tempV < 0)
                         {
                             tempV = tempV + 1;
                         }
@@ -1797,7 +1797,7 @@ namespace ProjetInfoGit
 
             File.WriteAllBytes(Sat, Var);
             Process.Start(new ProcessStartInfo(Sat) { UseShellExecute = true });
-        } // Permet de régler la saturation des couleurs de l'image( Convertisseur RGB => HSL à faire )( pas fini)
+        } // Permet de régler la teinte(Hue), la Saturation et la luminance de l'image
         #endregion
 
         /// <summary>
