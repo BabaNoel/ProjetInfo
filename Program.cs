@@ -87,6 +87,10 @@ namespace ProjetInfoGit
                                  + "> 13: QR Code\n"
                                  + "> 14: Coutour stylisé de fractale\n"
                                  + "> 15: Changer d'image\n"
+                                 + "> 16: Innovation : Exposition\n"
+                                 + "> 17: Innovation : Ombre\n"
+                                 + "> 18: Innovation : Hautes lumières\n"
+                                 + "> 19: Innovation : Convertion HSL\n"
                                  + "\n");
                 int numero = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -265,6 +269,43 @@ namespace ProjetInfoGit
 
                         }
                         image = new MyImage(Image);
+                        break;
+                    case 16:
+                        Console.WriteLine("Comment voulez vous régler l'exposition de l'image ?");
+                        Console.WriteLine("choisissez une valeur comprise entre 0 et 255 pour eclaircir l'image ");
+                        Console.WriteLine("choisissez une valeur comprise entre -255 et 0 pour assombrir l'image ");
+                        int Expo = Convert.ToInt32(Console.ReadLine());
+                        if (Expo < -255 || Expo > 255)
+                        {
+                            Console.WriteLine("Vous avez rempli une valeur non valide");
+                        }
+                        image.Exposition(Image, Expo);
+                        break;
+                    case 17:
+                        Console.WriteLine("Comment voulez vous régler les ombres de l'image ?");
+                        Console.WriteLine("choisissez une valeur comprise entre 0 et 255 pour eclaircir les ombres");
+                        Console.WriteLine("choisissez une valeur comprise entre -255 et 0 pour assombrir les ombres");
+                        int Ombre = Convert.ToInt32(Console.ReadLine());
+                        if (Ombre < -255 || Ombre > 255)
+                        {
+                            Console.WriteLine("Vous avez rempli une valeur non valide");
+                        }
+                        image.Ombre(Image, Ombre);
+                        break;
+                    case 18:
+                        Console.WriteLine("Comment voulez vous régler les hautes lumières de l'image ?");
+                        Console.WriteLine("choisissez une valeur comprise entre 0 et 255 pour eclaircir les hautes lumières");
+                        Console.WriteLine("choisissez une valeur comprise entre -255 et 0 pour assombrir les hautes lumières");
+                        int HL = Convert.ToInt32(Console.ReadLine());
+                        if (HL < -255 || HL > 255)
+                        {
+                            Console.WriteLine("Vous avez rempli une valeur non valide");
+                        }
+                        image.HautesLumiere(Image, HL);
+                        break;
+                    case 19:
+                        Console.WriteLine("Comment voulez vous régler la teinte, la saturation et la luminance de l'image?");
+                        image.HSL(Image);
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");

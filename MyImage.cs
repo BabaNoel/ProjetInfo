@@ -1382,11 +1382,41 @@ namespace ProjetInfoGit
         /// <param name="Myfile"></param>
         /// /// <param name="sat"></param>
         /// <returns></returns>
-        public void Saturation(string Myfile, int sat)
+        public void HSL(string Myfile)
         {
-
+            double Teinte;
+            double Saturation;
+            double Luminance;
+            double TempLumi1;
+            double TempLumi2;
+            double TeinteFinale;
+            double tempR;
+            double tempV;
+            double tempB;
+            double max;
+            double TeinteDegré;
+            Console.WriteLine("Comment voulez vous changer la teinte de votre rouge");
+            Console.WriteLine("Rentrez une valeur entre -100 et 100");
+            double tempR2 = Convert.ToDouble(Console.ReadLine());
+            tempR2 = tempR2 / 100;
+            Console.WriteLine("Comment voulez vous changer la teinte de votre Vert");
+            Console.WriteLine("Rentrez une valeur entre -100 et 100");
+            double tempV2 = Convert.ToDouble(Console.ReadLine());
+            tempV2 = tempV2 / 100;
+            Console.WriteLine("Comment voulez vous changer la teinte de votre bleu");
+            Console.WriteLine("Rentrez une valeur entre -100 et 100");
+            double tempB2 = Convert.ToDouble(Console.ReadLine());
+            tempB2 = tempB2 / 100;
+            Console.WriteLine("Comment voulez vous changer la saturation de votre image");
+            Console.WriteLine("Rentrez une valeur entre -100 et 100");
+            double Sat2 = Convert.ToDouble(Console.ReadLine());
+            Sat2 = Sat2 / 100;
+            Console.WriteLine("Comment voulez vous changer la Luminance de votre image");
+            Console.WriteLine("Rentrez une valeur entre -100 et 100");
+            double Lum2 = Convert.ToDouble(Console.ReadLine());
+            Lum2 = Lum2 / 100;
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Sat = "Saturation.bmp";
+            string Sat = "HSL.bmp";
             byte[] Var = new byte[myfile.Length];
             byte[] VarTemp = new byte[4];
 
@@ -1451,182 +1481,308 @@ namespace ProjetInfoGit
             {
                 for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
                 {
-                    int Teinte;
-                    int Saturation;
+                    
 
-                    int nombreR = Convert.ToInt32((Matricepixel[iLigne, iColonne].rouge));
-                    int nombreV = Convert.ToInt32((Matricepixel[iLigne, iColonne].vert));
-                    int nombreB = Convert.ToInt32((Matricepixel[iLigne, iColonne].bleu));
+                    double nombreR = Convert.ToInt32((Matricepixel[iLigne, iColonne].rouge));
+                    double nombreV = Convert.ToInt32((Matricepixel[iLigne, iColonne].vert));
+                    double nombreB = Convert.ToInt32((Matricepixel[iLigne, iColonne].bleu));
+                    // Console.WriteLine("Rouge = " + nombreR);
+                    //Console.WriteLine("Vert = " + nombreV);
+                    //Console.WriteLine("Bleu = " + nombreB);
+                    
+                    nombreR = nombreR / 255;
+                    nombreV = nombreV / 255;
+                    nombreB = nombreB / 255;
+                    double maxRGB = Math.Max(Math.Max(nombreR, nombreV), nombreB);
+                    double minRGB = Math.Min(Math.Min(nombreR, nombreV), nombreB);
+                    Luminance = Convert.ToDouble((maxRGB + minRGB) / 2);
+                    Luminance = Math.Round(Luminance, 2);
+                    Luminance = Luminance + Lum2;
+                   
+                    
+                    // int PourcentageLuminance = Convert.ToInt32(Luminance * 100);
+                    Saturation = (maxRGB - minRGB) / (maxRGB + minRGB);
+                    Saturation = Math.Round(Saturation, 2);
+                    Saturation = Saturation + Sat2;
+                    
+                    TempLumi1 = Luminance * (1 + Saturation);
+                    TempLumi2 = 2 * Luminance - TempLumi1;
+                    //Console.WriteLine("Luminance " + Luminance);
+                    // Console.WriteLine("Pourcentatge " + PourcentageLuminance);
 
-                    // int somme = nombreR + nombreB + nombreV;    test avec l'algorithme de conversion trouvé ici :https://www.f-legrand.fr/scidoc/docmml/image/niveaux/couleurs/couleurs.html
-                    //nombreR = nombreR / somme;
-                    // nombreV = nombreV / somme;
-                    //nombreB = nombreB / somme;
-                    //int maxRB = Math.Max(nombreR, nombreB);
-                    // int maxBV = Math.Max(nombreB, nombreV);
-                    //int max;
-                    //if (maxBV < maxRB)
-                    //{
-                    //max = maxRB;
-                    //}
-                    //else
-                    //{
-                    // max = maxBV;
-                    //}
-                    //int minRB = Math.Min(nombreR, nombreB);
-                    //int minBV = Math.Min(nombreB, nombreV);
-                    //int min = 0;
-                    //if (minBV < minRB)
-                    //{
-                    //min = minBV;
-                    //}
-                    //   else
-                    //{
-                    //min = minRB;
-                    //}
-                    //int C = max - min;
-                    //Lumière = maxBV;
-                    //if (Lumière == 0)
-                    //{
-                    //nombreR = 0;
-                    //nombreV = 0;
-                    //nombreB = 0;
+                    if (Luminance < 0.5)
+                    {
+                        Saturation = (maxRGB - minRGB) / (maxRGB + minRGB);
+                        Saturation = Math.Round(Saturation, 2);
+                        Saturation = Saturation + Sat2;
+                        
+                        //   int PourcentageSaturation = Convert.ToInt32(Saturation * 100);
+                        //Console.WriteLine("Saturation " + Saturation);
+                        //Console.WriteLine("Pourcentage " + PourcentageSaturation);
+                        TempLumi1 = Luminance * (1 + Saturation);
+                        TempLumi2 = 2 * Luminance - TempLumi1;
+                    }
+                    if (Luminance == 0.5)
+                    {
+                        Saturation = (maxRGB - minRGB) / (maxRGB + minRGB);
+                        Saturation = Math.Round(Saturation, 2);
+                        Saturation = Saturation + Sat2;
+                        
+                        // int PourcentageSaturation = Convert.ToInt32(Saturation * 100);
+                        //Console.WriteLine("Saturation " + Saturation);
+                        //Console.WriteLine("Pourcentage " + PourcentageSaturation);
+                        TempLumi1 = (Luminance + Saturation) - (Luminance*Saturation);
+                        TempLumi2 = 2 * Luminance - TempLumi1;
 
-                    //
+                    }
+                    if (Luminance > 0.5)
+                    {
+                        Saturation = (maxRGB - minRGB) / (2- maxRGB - minRGB);
+                        Saturation = Math.Round(Saturation, 2);
+                        Saturation = Saturation + Sat2;
+                        
+                        //int PourcentageSaturation = Convert.ToInt32(Saturation * 100);
+                        //WriteLine("Saturation " + Saturation);
+                        //Console.WriteLine("Pourcentage " + PourcentageSaturation);
+                        TempLumi1 = (Luminance + Saturation) - (Luminance * Saturation);
+                        TempLumi2 = 2 * Luminance - TempLumi1;
+                    }
+                    if (nombreR > nombreB && nombreR > nombreV)
+                    {
+                        max = nombreR;
+                        Teinte = Convert.ToDouble((nombreV - nombreB) / (maxRGB - minRGB));
+                        Teinte = Math.Round(Teinte, 2);
+                        if (Teinte < 0)
+                        {
+                            TeinteDegré = (Teinte * 60) + 360;
+                        }
+                        else
+                        {
+                            TeinteDegré = Teinte * 60;
+                        }
+
+                        TeinteDegré = Math.Round(TeinteDegré);
+                        //int PourcentageTeinte = Convert.ToInt32(Teinte * 100);
+                        //Console.WriteLine("Teinte Degrés entier = " + TeinteDegré);
+                        //Console.WriteLine("Teinte " + Teinte);
+                        //Console.WriteLine("PourcentageTeinte " + PourcentageTeinte);
+                        TeinteFinale = Teinte / 360;
+                        tempR = TeinteFinale + 0.333;
+                        tempR = tempR + tempR2;
+                        tempV = TeinteFinale;
+                        tempV = tempV + tempV2;
+                        tempB = TeinteFinale - 0.333;
+                        tempB = tempB + tempB2;
+                        if (tempR < 1)
+                        {
+                            tempR = tempR + 1;
+                        }
+                        if (tempB < 1)
+                        {
+                            tempB = tempB + 1;
+                        }
+                        if (tempV < 1)
+                        {
+                            tempV = tempV + 1;
+                        }
+                        if (tempR > 1)
+                        {
+                            tempR = tempR - 1;
+                        }
+                        if (tempB > 1)
+                        {
+                            tempB = tempB - 1;
+                        }
+                        if (tempV > 1)
+                        {
+                            tempV = tempV - 1;
+                        }
 
 
-                    //Saturation = C / Lumière;
-                    //if (C == 0)
-                    //{
-                    //nombreR = 0;
-                    //nombreB = Lumière;
-                    //nombreV = 0;
-                    //}
-                    //if (max == nombreR)
-                    //{
-                    //Teinte = 60 * (nombreV * nombreV) / C % 360;
-                    //}
-                    //else if (max == nombreV)
-                    //{
-                    //Teinte = (120 + 60) * (nombreB - nombreR) / C;
-                    //
-                    // else
-                    //{
-                    //Teinte = (240 + 60) * (nombreR - nombreV) / C;
-                    //}
+                        if (6 * tempR < 1)
+                        {
+                            nombreR = TempLumi2 + (TempLumi1 - TempLumi2) * 6 * tempR;
+                        }
+                        if (2 * tempR < 1)
+                        {
+                            nombreR = TempLumi1;
+                        }
+                        if (3 * tempR < 2)
+                        {
+                            nombreR = TempLumi2 + (TempLumi1 - TempLumi2) * (0.666-tempR)*6;
+                        }
+                        if(3 * tempR >2)
+                        {
+                            nombreR = TempLumi2;
+                        }
+                    }
+                    if (nombreV > nombreR && nombreV > nombreB)
+                    {
+                        max = nombreV;
+                        Teinte = Convert.ToDouble(2 + (nombreB - nombreR) / (maxRGB - minRGB));
+                        Teinte = Math.Round(Teinte, 2);
+                        if (Teinte < 0)
+                        {
+                            TeinteDegré = (Teinte * 60) + 360;
+                        }
+                        else
+                        {
+                            TeinteDegré = Teinte * 60;
+                        }
+
+                        TeinteDegré = Math.Round(TeinteDegré);
+                       // int PourcentageTeinte = Convert.ToInt32(Teinte * 100);
+                        //Console.WriteLine("Teinte " + Teinte);
+                        //Console.WriteLine("PourcentageTeinte " + PourcentageTeinte);
+                        TeinteFinale = Teinte / 360;
+                        tempR = TeinteFinale + 0.333;
+                        tempR = tempR + tempR2;
+                        tempV = TeinteFinale;
+                        tempV = tempV + tempV2;
+                        tempB = TeinteFinale - 0.333;
+                        tempB = tempB + tempB2;
+
+                        if (tempR < 1)
+                        {
+                            tempR = tempR + 1;
+                        }
+                        if (tempB < 1)
+                        {
+                            tempB = tempB + 1;
+                        }
+                        if (tempV < 1)
+                        {
+                            tempV = tempV + 1;
+                        }
+                        if (tempR > 1)
+                        {
+                            tempR = tempR - 1;
+                        }
+                        if (tempB > 1)
+                        {
+                            tempB = tempB - 1;
+                        }
+                        if (tempV > 1)
+                        {
+                            tempV = tempV - 1;
+                        }
 
 
-                    //Saturation = Saturation + sat;
+                        if (6 * tempV < 1)
+                        {
+                            nombreV = TempLumi2 + (TempLumi1 - TempLumi2) * 6 * tempV;
+                        }
+                        if (2 * tempV < 1)
+                        {
+                            nombreV = TempLumi1;
+                        }
+                        if (3 * tempV < 2)
+                        {
+                            nombreV = TempLumi2 + (TempLumi1 - TempLumi2) * (0.666 - tempV) * 6;
+                        }
+                        if (3 * tempV > 2)
+                        {
+                            nombreV = TempLumi2;
+                        }
+                    }
+                    if (nombreB > nombreR && nombreB > nombreV)
+                    {
+                        max = nombreB;
+                        Teinte = Convert.ToDouble(4 + (nombreR - nombreV) / (maxRGB - minRGB));
+                        Teinte = Math.Round(Teinte, 2);
+                        if (Teinte < 0)
+                        {
+                            TeinteDegré = (Teinte * 60) + 360;
+                        }
+                        else
+                        {
+                            TeinteDegré = Teinte * 60;
+                        }
 
-                    //int newC = Lumière * Saturation;
-                    //int newMin = Lumière - newC;
-                    //if (Teinte > 300 && Teinte<= 360)
-                    //{
-                    //nombreR = Lumière;
-                    //nombreV = newMin;
-                    //nombreB = nombreV + newC * (360 - Teinte) / 60;
-                    //
-                    //else if (Teinte>= 0 && Teinte<= 60)
-                    //{
-                    //nombreR = Lumière;
-                    //nombreB = newMin;
-                    //nombreV = nombreB + newC * (Teinte/60);
-                    //}
-                    //else if (Teinte > 60 && Teinte <= 120)
-                    //{
-                    //nombreV = Lumière;
-                    //nombreB = newMin;
-                    //nombreR = nombreB + newC * (120-Teinte)/60;
-                    //}
-                    //  else if (Teinte > 120 && Teinte <= 180)
-                    //{
-                    //nombreV = Lumière;
-                    //nombreR = newMin;
-                    //nombreB = nombreR + newC * (Teinte-120 )/60;
-                    //}
-                    //else if (Teinte > 180 && Teinte <=240)
-                    //{
-                    //nombreB = Lumière;
-                    //nombreR = newMin;
-                    //nombreV = nombreR + newC * (240-Teinte)/60;
-                    //}
-                    //else
-                    //{
-                    //nombreB = Lumière;
-                    //nombreV = newMin;
-                    //nombreR = nombreV + newC * (240-Teinte) / 60;
-                    //}
-                    //if (nombreR > 255)
-                    // {
-                    //nombreR = 255;
-                    //}
-                    //if (nombreR < 0)
-                    //{
-                    //nombreR = 0;
-                    //
-                    //if (nombreV > 255)
-                    //{
-                    //}
-                    //   if (nombreV < 0)
-                    //{
-                    //nombreV = 0;
-                    //}
-                    //if (nombreB > 255)
-                    //{
-                    //nombreB = 255;
-                    //}
-                    //if (nombreB < 0)
-                    //{
-                    //nombreB = 0;
-                    //}
+                        TeinteDegré = Math.Round(TeinteDegré);
+                       // int PourcentageTeinte = Convert.ToInt32(Teinte * 100);
+                        //Console.WriteLine("Teinte " + Teinte);
+                        //Console.WriteLine("PourcentageTeinte " + PourcentageTeinte);
+                        TeinteFinale = Teinte / 360;
+                        tempR = TeinteFinale + 0.333;
+                        tempR = tempR + tempR2;
+                        tempV = TeinteFinale;
+                        tempV = tempV + tempV2;
+                        tempB = TeinteFinale - 0.333;
+                        tempB = tempB + tempB2;
 
-                    int maxRB = Math.Max(nombreR, nombreB);
-                    int maxBV = Math.Max(nombreB, nombreV);
-                    int max;
-                    if (maxBV < maxRB)
-                    {
-                        max = maxRB;
+                        if (tempR < 1)
+                        {
+                            tempR = tempR + 1;
+                        }
+                        if (tempB < 1)
+                        {
+                            tempB = tempB + 1;
+                        }
+                        if (tempV < 1)
+                        {
+                            tempV = tempV + 1;
+                        }
+                        if (tempR > 1)
+                        {
+                            tempR = tempR - 1;
+                        }
+                        if (tempB > 1)
+                        {
+                            tempB = tempB - 1;
+                        }
+                        if (tempV > 1)
+                        {
+                            tempV = tempV - 1;
+                        }
+
+
+                        if (6 * tempB < 1)
+                        {
+                            nombreB = TempLumi2 + (TempLumi1 - TempLumi2) * 6 * tempB;
+                        }
+                        if (2 * tempB < 1)
+                        {
+                            nombreB = TempLumi1;
+                        }
+                        if (3 * tempB < 2)
+                        {
+                            nombreB = TempLumi2 + (TempLumi1 - TempLumi2) * (0.666 - tempB) * 6;
+                        }
+                        if (3 * tempB > 2)
+                        {
+                            nombreB = TempLumi2;
+                        }
+
                     }
-                    else
+                    nombreR = nombreR * 255;
+                    nombreV = nombreV * 255;
+                    nombreB = nombreB * 255;
+                    if (nombreR > 255)
                     {
-                        max = maxBV;
+                        nombreR = 255;
                     }
-                    int minRB = Math.Min(nombreR, nombreB);
-                    int minBV = Math.Min(nombreB, nombreV);
-                    int min = 0;
-                    if (minBV < minRB)
+                    if (nombreR < 0)
                     {
-                        min = minBV;
+                        nombreR = 0;
                     }
-                    else
+                    if (nombreB > 255)
                     {
-                        min = minRB;
+                        nombreB = 255;
                     }
-                    if (max == min)
+                    if (nombreB < 0)
                     {
-                        Teinte = 0;
+                        nombreB = 0;
                     }
-                    else if (max == nombreR)
+                    if (nombreV > 255)
                     {
-                        Teinte = (60 * ((nombreV - nombreB) / (max - min)) + 360) % 360;
+                        nombreV = 255;
                     }
-                    else if (max == nombreV)
+                    if (nombreV < 0)
                     {
-                        Teinte = (60 * ((nombreB - nombreR) / (max - min)) + 120);
-                    }
-                    else if (max == nombreB)
-                    {
-                        Teinte = (60 * ((nombreR - nombreV) / (max - min)) + 240);
+                        nombreV = 0;
                     }
 
-                    if (max == 0)
-                    {
-                        Saturation = 0;
-                    }
-                    else
-                    {
-                        Saturation = 1 - (min / max);
-                    }
 
                     byte PixR = Convert.ToByte(nombreR);
                     byte PixV = Convert.ToByte(nombreV);
