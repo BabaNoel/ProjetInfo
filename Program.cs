@@ -59,7 +59,7 @@ namespace ProjetInfoGit
                 
             }
             MyImage image = new MyImage(Image);
-            System.Threading.Thread.Sleep(1500);
+            
             ConsoleKeyInfo cki;
             do
             {
@@ -221,9 +221,9 @@ namespace ProjetInfoGit
                         Encoding u8 = Encoding.UTF8;
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
-                        QRcode QR = new QRcode(phrase,1);
-                        Console.WriteLine(QR.Code);
-                        QR.Dessin("QRCODE");
+                        QRcode Qr = new QRcode(phrase, 1);
+
+                        Qr.Dessin("Agranndissement");
                         //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
                         break;
                     case 14:
