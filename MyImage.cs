@@ -1380,7 +1380,6 @@ namespace ProjetInfoGit
         /// Permet de régler la teinte(Hue), la Saturation et la luminance de l'image
         /// </summary>
         /// <param name="Myfile"></param>
-        /// /// <param name="sat"></param>
         /// <returns></returns>
         public void HSL(string Myfile)
         {
