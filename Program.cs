@@ -74,23 +74,23 @@ namespace ProjetInfoGit
                 Console.WriteLine("Menu :\n\n"
                                  + "> 1: Mettre en Noir et Blanc \n"
                                  + "> 2: Mettre en dégradés de gris \n"
-                                 + "> 3: inverser les couleurs \n"
-                                 + "> 4: Réduire\n"
-                                 + "> 5: Aggrandir\n"
-                                 + "> 6: Faire une Rotation (NE MARCHE PAS ENCORE)\n"
-                                 + "> 7: Mettre en miroir\n"
-                                 + "> 8: Matrice de convolution\n"
-                                 + "> 9: Histogramme\n"
-                                 + "> 10: Fractale de Mandelbrot\n"
-                                 + "> 11: Fractale de Julia\n"
-                                 + "> 12: Stéganographie\n"
-                                 + "> 13: QR Code\n"
-                                 + "> 14: Coutour stylisé de fractale\n"
-                                 + "> 15: Changer d'image\n"
-                                 + "> 16: Innovation : Exposition\n"
+                                 + "> 3: Réduire\n"
+                                 + "> 4: Aggrandir\n"
+                                 + "> 5: Faire une Rotation (NE MARCHE PAS ENCORE)\n"
+                                 + "> 6: Mettre en miroir\n"
+                                 + "> 7: Matrice de convolution\n"
+                                 + "> 8: Histogramme\n"
+                                 + "> 9: Fractale de Mandelbrot\n"
+                                 + "> 10: Fractale de Julia\n"
+                                 + "> 11: Stéganographie\n"
+                                 + "> 12: QR Code\n"
+                                 + "> 13: Innovation: inverser les couleurs \n"
+                                 + "> 14: Innovation: Coutour stylisé de fractale\n"
+                                 + "> 15: Innovation : Convertion HSL\n"
+                                 + "> 15: Innovation : Exposition\n"
                                  + "> 17: Innovation : Ombre\n"
                                  + "> 18: Innovation : Hautes lumières\n"
-                                 + "> 19: Innovation : Convertion HSL\n"
+                                 + "> 19: Changer d'image\n"
                                  + "\n");
                 int numero = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -110,13 +110,13 @@ namespace ProjetInfoGit
                         image.DégradéGris(name);
                         image = new MyImage(name);
                         break;
-                    case 3:
+                    case 13:
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         image.InverserCouleur(name);
                         image = new MyImage(name); 
                         break;
-                    case 4:
+                    case 3:
                         Console.WriteLine("Choisissez un rapport de réduction (sauf multiples de trois");
                         valeur = Convert.ToInt32(Console.ReadLine());
                         if (valeur <= 0)
@@ -129,7 +129,7 @@ namespace ProjetInfoGit
                         image.Reduction(name, valeur);
                         image = new MyImage(name); 
                         break;
-                    case 5:
+                    case 4:
                         Console.WriteLine("Choisissez un rapport d'aggrandissement");
                         valeur = Convert.ToInt32(Console.ReadLine());
                         if (valeur == 0)
@@ -142,7 +142,7 @@ namespace ProjetInfoGit
                         image.Agrandir(name, valeur);
                         image = new MyImage(name); 
                         break;
-                    case 6:
+                    case 5:
                         Console.WriteLine("Choisissez un angle de rotation");
                         valeur = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
@@ -150,7 +150,7 @@ namespace ProjetInfoGit
                         image.Rotation(name, valeur);
                         image = new MyImage(name); 
                         break;
-                    case 7:
+                    case 6:
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le sens du miroir:\n> 1: Horizontal\n> 2: Vertical");
@@ -162,7 +162,7 @@ namespace ProjetInfoGit
                         image.Miroir(name, sens);
                         image = new MyImage(name);
                         break;
-                    case 8:
+                    case 7:
                         Console.WriteLine("Veuillez choisir l'effet de votre matrice de convolution");
                         Console.WriteLine("Tapez 1 pour Detection des bords.");
                         Console.WriteLine("Tapez 2 pour Renforcement des bords");
@@ -183,11 +183,11 @@ namespace ProjetInfoGit
                         }
                         image = new MyImage(name); 
                         break;
-                    case 9:
+                    case 8:
                         Console.WriteLine("Voilà l'affiche de l'histogramme de votre image");
                         image.Histograme();
                         break;
-                    case 10:
+                    case 9:
                         Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
@@ -195,7 +195,7 @@ namespace ProjetInfoGit
                         image.Mandelbrot(name, itérationMaxM);
                         image = new MyImage(name);
                         break;
-                    case 11:
+                    case 10:
                         Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
                         Console.WriteLine("Veuillez choisir le nombre d'itération à effectuer");
@@ -203,7 +203,7 @@ namespace ProjetInfoGit
                         image.Julia(name, itérationMaxJ);
                         image = new MyImage(name); 
                         break;
-                    case 12:
+                    case 11:
                         Console.WriteLine("Quel image voulez vous cacher dans " + Image);
                         Console.WriteLine("Tapez 1 pour choisir Coco.");
                         Console.WriteLine("Tapez 2 pour choisir Lena.");
@@ -227,7 +227,7 @@ namespace ProjetInfoGit
                         image.Sténographie(image2, name);
                         image = new MyImage(name); 
                         break;
-                    case 13:
+                    case 12:
                         Encoding u8 = Encoding.UTF8;
                         Console.WriteLine("Quel phrase voulez vous inscrire ?");
                         string phrase = Convert.ToString(Console.ReadLine());
@@ -243,7 +243,7 @@ namespace ProjetInfoGit
                         image.ContourDeMandelbrot(name, itérationMax);
                         image = new MyImage(name);
                         break;
-                    case 15:
+                    case 19:
                         Image = null;
                         while (Image == null)//tant que l'on n'a pas assigné de valeur à l'image
                         {
@@ -308,7 +308,7 @@ namespace ProjetInfoGit
                         }
                         image.HautesLumiere(Image, HL);
                         break;
-                    case 19:
+                    case 15:
                         Console.WriteLine("Comment voulez vous régler la teinte, la saturation et la luminance de l'image?");
                         image.HSL(Image);
                         break;
