@@ -76,7 +76,7 @@ namespace ProjetInfoGit
                                  + "> 2: Mettre en dégradés de gris \n"
                                  + "> 3: Réduire\n"
                                  + "> 4: Aggrandir\n"
-                                 + "> 5: Faire une Rotation (NE MARCHE PAS ENCORE)\n"
+                                 + "> 5: Faire une Rotation selon un angle de 90, 180 ou 270 degré\n"
                                  + "> 6: Mettre en miroir\n"
                                  + "> 7: Matrice de convolution\n"
                                  + "> 8: Histogramme\n"
@@ -84,8 +84,8 @@ namespace ProjetInfoGit
                                  + "> 10: Fractale de Julia\n"
                                  + "> 11: Stéganographie\n"
                                  + "> 12: QR Code\n"
-                                 + "> 13: Innovation: inverser les couleurs \n"
-                                 + "> 14: Innovation: Coutour stylisé de fractale\n"
+                                 + "> 13: Innovation : inverser les couleurs \n"
+                                 + "> 14: Innovation : Coutour stylisé de fractale\n"
                                  + "> 15: Innovation : Convertion HSL\n"
                                  + "> 15: Innovation : Exposition\n"
                                  + "> 17: Innovation : Ombre\n"
@@ -143,12 +143,8 @@ namespace ProjetInfoGit
                         image = new MyImage(name); 
                         break;
                     case 5:
-                        Console.WriteLine("Choisissez un angle de rotation");
-                        valeur = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
-                        name = Console.ReadLine() + ".bmp";
-                        image.Rotation(name, valeur);
-                        image = new MyImage(name); 
+                        Console.WriteLine("Vous allez devoir choisir un angle de rotation entre 90, 180 et 270°");
+                        image.Rotation(Image);
                         break;
                     case 6:
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
