@@ -225,8 +225,13 @@ namespace ProjetInfoGit
                         break;
                     case 12:
                         Encoding u8 = Encoding.UTF8;
-                        Console.WriteLine("Quel phrase voulez vous inscrire ?");
-                        string phrase = Convert.ToString(Console.ReadLine());
+                        string phrase="                          ";
+                        while(phrase.Length>25)
+                        {
+                            Console.WriteLine("Quel phrase voulez vous inscrire ?(25 caractère maximum)");
+                            phrase = Convert.ToString(Console.ReadLine());
+                            if (phrase.Length > 25) { Console.WriteLine("Saisie invalide"); }
+                        }
                         QRcode Qr = new QRcode(phrase, 1);
                         Qr.Dessin("Agrandissement");
                         break;

@@ -430,6 +430,90 @@ namespace ProjetInfoGit
 
                 valB = 35;
             }
+            if (a == '|')
+            {
+
+                valA = 0;
+            }
+            if (a == '$')
+            {
+                valA = 45 * 37;
+
+            }
+            if (b == '$')
+            {
+                valB = 37;
+            }
+            if (a == '%')
+            {
+                valA = 45 * 38;
+
+            }
+            if (b == '%')
+            {
+                valB = 38;
+
+            }
+            if (a == '*')
+            {
+                valA = 45 * 39;
+
+            }
+            if (b == '*')
+            {
+                valB = 39;
+
+            }
+            if (a == '+')
+            {
+                valA = 45 * 40;
+
+            }
+            if (b == '+')
+            {
+                valB = 40;
+
+            }
+            if (a == '-')
+            {
+                valA = 45 * 41;
+
+            }
+            if (b == '-')
+            {
+                valB = 41;
+
+            }
+            if (a == '.')
+            {
+                valA = 45 * 42;
+
+            }
+            if (b == '.')
+            {
+                valB = 42;
+
+            }
+            if (a == '/')
+            {
+                valA = 45 * 43;
+
+            }
+            if (b == '/')
+            {
+                valB = 43;
+
+            }
+            if (a == ':')
+            {
+                valA = 45 * 44;
+
+            }
+            if (b == ':')
+            {
+                valB = 44;
+
+            }
             if (a == ' ')
             {
                 valA = 45 * 36;
@@ -440,12 +524,106 @@ namespace ProjetInfoGit
 
                 valB = 36;
             }
-            if (a == '|')
+            if (a == '0')
+            {
+                valA = 45 * 0;
+
+            }
+            if (b == '0')
             {
 
-                valA = 0;
+                valB = 0;
             }
+            if (a == '1')
+            {
+                valA = 45 * 1;
 
+            }
+            if (b == '1')
+            {
+
+                valB = 1;
+            }
+            if (a == '2')
+            {
+                valA = 45 * 2;
+
+            }
+            if (b == '2')
+            {
+
+                valB = 2;
+            }
+            if (a == '3')
+            {
+                valA = 45 * 3;
+
+            }
+            if (b == '3')
+            {
+
+                valB = 3;
+            }
+            if (a == '4')
+            {
+                valA = 45 * 4;
+
+            }
+            if (b == '4')
+            {
+
+                valB = 4;
+            }
+            if (a == '5')
+            {
+                valA = 45 * 5;
+
+            }
+            if (b == '5')
+            {
+
+                valB = 5;
+            }
+            if (a == '6')
+            {
+                valA = 45 * 6;
+
+            }
+            if (b == '6')
+            {
+
+                valB = 6;
+            }
+            if (a == '7')
+            {
+                valA = 45 * 7;
+
+            }
+            if (b == '7')
+            {
+
+                valB = 7;
+            }
+            if (a == '8')
+            {
+                valA = 45 * 8;
+
+            }
+            if (b == '8')
+            {
+
+                valB = 8;
+            }
+            if (a == '9')
+            {
+                valA = 45 * 9;
+
+            }
+            if (b == '9')
+            {
+
+                valB = 9;
+            }
             somme = valB + valA;
             return somme;
         }
@@ -671,10 +849,10 @@ namespace ProjetInfoGit
             QR.Miroir("QRcode.bmp", 'H');
             QR = new MyImage("QRcode.bmp");
             QR.Agrandissement(8);
-            
 
 
-            
+
+
         }
 
 
