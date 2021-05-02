@@ -848,7 +848,7 @@ namespace ProjetInfoGit
             MyImage QR = new MyImage(21, image);
             QR.Miroir("QRcode.bmp", 'H');
             QR = new MyImage("QRcode.bmp");
-            QR.Agrandissement(8);
+            QR.Agrandir("QRcode.bmp", 8);
 
 
 

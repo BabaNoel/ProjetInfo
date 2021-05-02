@@ -87,7 +87,7 @@ namespace ProjetInfoGit
                                  + "> 13: Innovation : Inverser les couleurs \n"
                                  + "> 14: Innovation : Coutour stylisé de fractale\n"
                                  + "> 15: Innovation : Convertion HSL\n"
-                                 + "> 15: Innovation : Exposition\n"
+                                 + "> 16: Innovation : Exposition\n"
                                  + "> 17: Innovation : Ombre\n"
                                  + "> 18: Innovation : Hautes lumières\n"
                                  + "> 19: Changer d'image\n"

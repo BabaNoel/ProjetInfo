@@ -244,7 +244,7 @@ namespace ProjetInfoGit
             File.WriteAllBytes(name, fichier);                       //on sauvegarde l'image(sous le nom ImageToByte)
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
-       
+
 
         #endregion
 
@@ -252,7 +252,8 @@ namespace ProjetInfoGit
         /// <summary>
         /// On va agrandir l'image n fois
         /// </summary>
-        /// <param name="Myfile"></param>
+        /// <param name="name"></param>
+        /// <param name ="n"></param>
         /// <returns></returns>
         public void Agrandir(string name, int n)
         {
@@ -342,101 +343,11 @@ namespace ProjetInfoGit
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
         }
-        public void Agrandissement(int n)
-        {
-
-            byte[] fichier = new byte[this.offset + ((n * this.largeur) * (n * this.hauteur)) * 3];      // la taille du tableau change car il contient plus de pixel après un agrandissement
-            byte[] stock = new byte[4];
-            string name = "Agrandissement.bmp";
-
-            //Header
-            fichier[0] = 66;
-            fichier[1] = 77;
-            this.taille = (this.offset + (this.largeur * n * this.hauteur * n));
-            stock = Convertir_Int_To_Endian(this.taille); //la taille de l'image est donc plus grande
-            for (int i = 2; i <= 5; i++)
-            {
-                fichier[i] = stock[i - 2];
-            }
-
-            stock = Convertir_Int_To_Endian(0);
-            for (int i = 6; i <= 9; i++)
-            {
-                fichier[i] = stock[i - 6];
-            }
-
-            stock = Convertir_Int_To_Endian(this.offset);
-            for (int i = 10; i <= 13; i++)
-            {
-                fichier[i] = stock[i - 10];
-            }
-
-            //HeaderInfo
-            stock = Convertir_Int_To_Endian(40);
-            for (int i = 14; i <= 17; i++)
-            {
-                fichier[i] = stock[i - 14];
-            }
-
-            //this.largeur = this.largeur *n;
-            stock = Convertir_Int_To_Endian(this.largeur * n);
-            for (int i = 18; i <= 21; i++)
-            {
-                fichier[i] = stock[i - 18];
-            }
-
-            //this.hauteur = this.hauteur * n;
-            stock = Convertir_Int_To_Endian(this.hauteur * n);
-            for (int i = 22; i <= 25; i++)
-            {
-                fichier[i] = stock[i - 22];
-            }
-
-            fichier[26] = 0;
-            fichier[27] = 0;
-
-            stock = Convertir_Int_To_Endian(this.nombrebitCouleur);
-            for (int i = 28; i <= 29; i++)
-            {
-                fichier[i] = stock[i - 28];
-            }
-
-            for (int i = 30; i <= 53; i++)
-            {
-                fichier[i] = 0;
-            }
-
-
-            //Image
-            int compteur = 54;
-            for (int Ligne = 0; Ligne < this.Matricepixel.GetLength(0); Ligne++)
-            {
-                for (int iterateur = 0; iterateur < n; iterateur++)
-                {
-
-                    for (int Colonne = 0; Colonne < this.Matricepixel.GetLength(1); Colonne++)
-                    {
-                        for (int i = 0; i < n; i++)
-                        {
-                            fichier[compteur + 3 * i] = this.Matricepixel[Ligne, Colonne].rouge;
-                            fichier[compteur + 1 + 3 * i] = this.Matricepixel[Ligne, Colonne].vert;
-                            fichier[compteur + 2 + 3 * i] = this.Matricepixel[Ligne, Colonne].bleu;
-                        }
-                        compteur = compteur + 3 * n;
-                    }
-                }
-
-
-            }
-
-            File.WriteAllBytes(name, fichier);
-            Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
-        }
-
+       
         /// <summary>
         /// Convertie l'image en dégradé de gris
         /// </summary>
-        /// <param name="Myfile"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public void DégradéGris(string name)
         {
@@ -524,7 +435,7 @@ namespace ProjetInfoGit
         /// <summary>
         /// Convertie l'image en noir et blanc
         /// </summary>
-        /// <param name="Myfile"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public void NoirEtBlanc(string name)
         {
@@ -853,105 +764,6 @@ namespace ProjetInfoGit
                 File.WriteAllBytes(Rotation270, fichier);
                 Process.Start(new ProcessStartInfo(Rotation270) { UseShellExecute = true });
             }
-        }
-
-        public void RotationTest(string name, double angle)
-        {
-
-        //byte[] stock = new byte[4];
-        //int hauteur = this.hauteur;
-        //int largeur = this.largeur;
-        // int H = (int)(Math.Abs(Math.Cos(angle)) * hauteur + Math.Abs(Math.Sin(angle)) * largeur);
-        //  int L = (int)(Math.Abs(Math.Cos(angle)) * largeur + Math.Abs(Math.Sin(angle)) * hauteur);
-        //  byte[] fichier = new byte[offset + H * L * 3];
-
-        //Header
-        //  fichier[0] = 66;
-        //  fichier[1] = 77;
-
-        //   stock = Convertir_Int_To_Endian(offset + H * L*3);
-        //   for (int i = 2; i <= 5; i++)
-        //   {
-        //  fichier[i] = stock[i - 2];
-        //    }
-
-        //  stock = Convertir_Int_To_Endian(0);
-        //  for (int i = 6; i <= 9; i++)
-        //{
-        //  fichier[i] = stock[i - 6];
-        //   }
-
-        //  stock = Convertir_Int_To_Endian(Offset);
-        //  for (int i = 10; i <= 13; i++)
-        // {
-        //  fichier[i] = stock[i - 10];
-        //  }
-
-        //HeaderInfo
-        // stock = Convertir_Int_To_Endian(40);
-        // for (int i = 14; i <= 17; i++)
-        // {
-        //  fichier[i] = stock[i - 14];
-        //  }
-
-        // stock = Convertir_Int_To_Endian(largeur);
-        //   for (int i = 18; i <= 21; i++)
-        //   {
-        //   fichier[i] = stock[i - 18];
-        //}
-
-        //   stock = Convertir_Int_To_Endian(hauteur);
-        //  for (int i = 22; i <= 25; i++)
-        //   {
-        //   fichier[i] = stock[i - 22];
-        //}
-
-        //   fichier[26] = 0;
-        //  fichier[27] = 0;
-
-        // stock = Convertir_Int_To_Endian(nombrebitCouleur);
-        // for (int i = 28; i <= 29; i++)
-        //  {
-        //   fichier[i] = stock[i - 28];
-        // }
-
-        // for (int i = 30; i <= 53; i++)
-        // {
-        //   fichier[i] = 0;
-        //  }
-
-        //Image
-        // angle = angle * Math.PI / 180;
-        //  Pixel blanc = new Pixel(255, 255, 255);
-        //  Pixel[,] image = new Pixel[H, L];
-        //  for (int i = 0; i < L; i++)
-        //  {
-        //   for (int j = 0; i < H; i++)
-        //   {
-        //   image[i, j] = blanc;
-        //  int X = (int)(H - j * Math.Sin(angle));
-        //   int Y = (int)(hauteur * Math.Sin(angle) + j * Math.Cos(angle));
-        //    if (X >= 0 && Y >= 0 && X < H && Y < L)
-        //  {
-        //   image[X, Y] = Matricepixel[i, j];
-        //}
-        // }
-        //   }
-        //   int compteur = 54;
-        // for (int iLigne = 0; iLigne < H; iLigne++)
-        // {
-        // for (int iColonne = 0; iColonne < L; iColonne++)
-        // {
-        //fichier[compteur] = image[iLigne, iColonne].rouge;
-        //fichier[compteur + 1] = image[iLigne, iColonne].vert;
-        //fichier[compteur + 2] = image[iLigne, iColonne].bleu;
-        //compteur = compteur + 3;
-        //}
-        // }
-
-        //   File.WriteAllBytes(name, fichier);
-        //  Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
-
         }
 
         /// <summary>
@@ -2071,7 +1883,8 @@ namespace ProjetInfoGit
         /// <summary>
         /// donne le pixel issus du calcul de convolution pour noyau, la matrice de l'effet choisi
         /// </summary>
-        /// <param name="Myfile"></param>
+        /// <param name="pixel"></param>
+        /// /// <param name ="matrice_convolution"></param>
         /// <param name="effet"></param>
         /// <returns></returns>
 
@@ -2488,6 +2301,7 @@ namespace ProjetInfoGit
         /// Permet de cacher une image dans une autre
         /// </summary>
         /// <param name="pixel2"></param>
+        /// <param name ="name"></param>
         /// <returns></returns>
         public void Sténographie(MyImage pixel2, string name)
         {
