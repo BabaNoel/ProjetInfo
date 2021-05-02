@@ -160,7 +160,8 @@ namespace ProjetInfoGit
                 code = code + val;
             }
             this.correction = correction;
-            
+            this.code = code;
+
         }
 
        public string Code
@@ -457,14 +458,7 @@ namespace ProjetInfoGit
         public void Dessin(string nom)
         {
             Pixel[,] image = new Pixel[21, 21];
-            for(int i=0; i<21;i++)   //on remplit notre matrice de noir
-            {
-                for (int j = 0; j < 21; j++)
-                {
-                    image[i, j] = new Pixel(0, 145, 0);
-                }
-            }
-
+            
             //tracage des separateurs
             for (int i = 0; i < 7; i++)
             {
@@ -566,55 +560,90 @@ namespace ProjetInfoGit
 
             //noir module
             image[13, 8] = new Pixel(0, 0, 0);
+            int caselibre = 0;
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    if (image[i, j] == null) {caselibre++ ; }
+                }
+            }
+            Console.WriteLine(caselibre);
+            Console.WriteLine(code.Length);
+            Console.ReadLine();
+            //ecriture du image
+            bool montee = true;
+            int index = 0;
+            for (int x = 20; x > 0; x -= 2)
+            {
+                if (x == 6) { x--; }
+                if (montee==true)
+                {
+                    for (int y = 20; y >= 0; y--)
+                    {
 
-            ////ecriture du image
-            //bool montee = true;
-            //int index = 0;
-            //for (int x = 20; x > 0; x -= 2)
-            //{
-            //    if (x == 6) { x--; }
-            //    if (montee)
-            //    {
-            //        for (int y = 20; y >= 0; y--)
-            //        {
+                        if (image[y, x] == null)
+                        {
+                            if(code.Length<=index)
+                            {
+                                image[y, x - 1] = new Pixel(255, 255, 255);
+                            }
+                            else if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+                            else { image[y, x] = new Pixel(0, 0, 0); }
+                            index++;
+                        }
+                        if (image[y, x - 1] == null)
+                        {
+                            if (code.Length<= index)
+                            {
+                                image[y, x - 1] = new Pixel(255, 255, 255);
+                            }
+                            else if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+                            else { image[y, x - 1] = new Pixel(0, 0, 0); }
+                            index++;
+                        }
+                    }
+                    montee = false;
+                }
+                else
+                {
+                    for (int y = 0; y < 21; y++)
+                    {
+                        if (image[y, x] == null)
+                        {
+                            if (code.Length <= index)
+                            {
+                                image[x, y] = new Pixel(255, 255, 255);
+                            }
+                            else if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+                            else { image[y, x] = new Pixel(0, 0, 0); }
+                            index++;
+                        }
+                        if (image[y, x - 1] == null)
+                        {
+                            if (code.Length <= index)
+                            {
+                                image[y, x - 1] = new Pixel(255, 255, 255);
+                            }
+                            else if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+                            else { image[y, x - 1] = new Pixel(0, 0, 0); }
+                            index++;
+                        }
+                    }
+                    montee = true;
+                }
 
-            //            if (image[y, x] == null)
-            //            {
-            //                if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
-            //                else { image[y, x] = new Pixel(0, 0, 0); }
-            //                index++;
-            //            }
-            //            if (image[y, x - 1] == null)
-            //            {
-            //                if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
-            //                else { image[y, x - 1] = new Pixel(0, 0, 0); }
-            //                index++;
-            //            }
-            //        }
-            //        montee = false;
-            //    }
-            //    else
-            //    {
-            //        for (int y = 0; y < 21; y++)
-            //        {
-            //            if (image[y, x] == null)
-            //            {
-            //                if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
-            //                else { image[y, x] = new Pixel(0, 0, 0); }
-            //                index++;
-            //            }
-            //            if (image[y, x - 1] == null)
-            //            {
-            //                if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
-            //                else { image[y, x - 1] = new Pixel(0, 0, 0); }
-            //                index++;
-            //            }
-            //        }
-            //        montee = true;
-                //}
-
-            //}
+            }
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    if (image[i, j] == null) { image[i, j] = new Pixel(255, 255, 255); }
+                }
+            }
             MyImage QR = new MyImage(21, image);
+            QR.Miroir("QRcode.bmp", 'H');
+            QR = new MyImage("QRcode.bmp");
             QR.Agrandissement(8);
             
 
