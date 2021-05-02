@@ -84,7 +84,7 @@ namespace ProjetInfoGit
                                  + "> 10: Fractale de Julia\n"
                                  + "> 11: Stéganographie\n"
                                  + "> 12: QR Code\n"
-                                 + "> 13: Innovation : inverser les couleurs \n"
+                                 + "> 13: Innovation : Inverser les couleurs \n"
                                  + "> 14: Innovation : Coutour stylisé de fractale\n"
                                  + "> 15: Innovation : Convertion HSL\n"
                                  + "> 15: Innovation : Exposition\n"
