@@ -153,8 +153,14 @@ namespace ProjetInfoGit
                     case 7:
                         Console.WriteLine("Veuillez choisi le nom que vous souhaitez donner à votre image (sans le .bmp)");
                         name = Console.ReadLine() + ".bmp";
-                        image.Miroir(name);
-                        image = new MyImage(name); 
+                        Console.WriteLine("Veuillez choisir le sens du miroir:\n> 1: Horizontal\n> 2: Vertical");
+                        char c = Convert.ToChar(Console.ReadLine());
+                        char sens;
+                        if (c == '1') { sens = 'H'; }
+                        else if (c == '2') { sens = 'V'; }
+                        else { break; }
+                        image.Miroir(name, sens);
+                        image = new MyImage(name);
                         break;
                     case 8:
                         Console.WriteLine("Veuillez choisir l'effet de votre matrice de convolution");

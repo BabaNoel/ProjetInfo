@@ -630,7 +630,7 @@ namespace ProjetInfoGit
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public void Miroir(string name)
+        public void Miroir(string name, char sens)
         {
             byte[] fichier = new byte[taille];
             byte[] stock = new byte[4];
@@ -652,7 +652,7 @@ namespace ProjetInfoGit
                 fichier[i] = stock[i - 6];
             }
 
-            stock = Convertir_Int_To_Endian(Offset);
+            stock = Convertir_Int_To_Endian(offset);
             for (int i = 10; i <= 13; i++)
             {
                 fichier[i] = stock[i - 10];
@@ -692,25 +692,49 @@ namespace ProjetInfoGit
             }
 
             //Image
-            int compteur = 54;
-            for (int Ligne = 0; Ligne < Matricepixel.GetLength(0); Ligne++)
+            Pixel[,] Matrice = new Pixel[Matricepixel.GetLength(0), Matricepixel.GetLength(1)];
+            if (sens == 'V')
             {
-                for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
+                for (int j = 0; j < this.hauteur; j++)
                 {
-                    fichier[compteur] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].rouge;
-                    fichier[compteur + 1] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].vert;
-                    fichier[compteur + 2] = Matricepixel[Ligne, Matricepixel.GetLength(1) - 1 - Colonne].bleu;
+                    for (int i = 0; i < this.largeur; i++)
+                    {
+                        Matrice[j, i] = Matricepixel[j, this.largeur - 1 - i];
+                    }
+                }
+
+            }
+            else
+            {
+                for (int i = 0; i < this.largeur; i++)
+                {
+                    for (int j = 0; j < this.hauteur; j++)
+                    {
+                        Matrice[j, i] = Matricepixel[this.hauteur - 1 - j, i];
+                    }
+                }
+
+            }
+            int compteur = 54;
+            for (int Ligne = 0; Ligne < Matrice.GetLength(0); Ligne++)
+            {
+                for (int Colonne = 0; Colonne < Matrice.GetLength(1); Colonne++)
+                {
+                    fichier[compteur] = Matrice[Ligne, Colonne].rouge;
+                    fichier[compteur + 1] = Matrice[Ligne, Colonne].vert;
+                    fichier[compteur + 2] = Matrice[Ligne, Colonne].bleu;
                     compteur = compteur + 3;
                 }
             }
-            
+
+
 
             File.WriteAllBytes(name, fichier);
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
 
 
         }
-       
+
         public void Rotation(string name, double angle)
         {
             
