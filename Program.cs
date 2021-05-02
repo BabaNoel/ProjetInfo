@@ -233,7 +233,6 @@ namespace ProjetInfoGit
                         string phrase = Convert.ToString(Console.ReadLine());
                         QRcode Qr = new QRcode(phrase, 1);
                         Qr.Dessin("Agrandissement");
-                        //list = Convert.ToString(compteur, 2).PadLeft(11, '0').Select(c => c == '1' ? true : false).ToList();
                         break;
                     case 14:
                         Console.WriteLine("Veuillez choisir le nom que vous souhaitez donner à votre image (sans le .bmp)");

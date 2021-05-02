@@ -29,12 +29,10 @@ namespace ProjetInfoGit
             byte[] myfile = File.ReadAllBytes(Myfile);
             byte[] tab = new byte[4];
             //type d’image 
-
             if (myfile[0] == 66 && myfile[1] == 77)            // on vérifie le type de l'image aux emplacements 0 et 1 du Header
             {
                 this.type = "bmp";
             }
-
             //taille Offset
             for (int index = 0; index < 4; index++)              // on trouve l'Offset de l'image aux emplacements 10 à 14 du Header ( d'ou le + 10)
             {
@@ -42,15 +40,12 @@ namespace ProjetInfoGit
             }
             this.offset = Convertir_Endian_To_Int(tab);
 
-
             //taille du fichier 
-
             for (int index = 0; index < 4; index++)       // on trouve la taille de l'image aux index 2 à 5 du Header
             {
                 tab[index] = myfile[index + 2];
             }
             this.taille = Convertir_Endian_To_Int(tab);
-
 
             //largeur et hauteur de l’image            // on trouve la largeur de l'image aux emplacements 18 à 22 du Header ( d'ou le + 18)
             for (int index = 0; index < 4; index++)
@@ -268,7 +263,6 @@ namespace ProjetInfoGit
             //Header
             Var[0] = 66;
             Var[1] = 77;
-            this.taille = (this.offset + (this.largeur*n*this.hauteur*n));
             VarTemp = Convertir_Int_To_Endian(this.taille); //la taille de l'image est donc plus grande
             for (int i = 2; i <= 5; i++)
             {
@@ -294,14 +288,13 @@ namespace ProjetInfoGit
                 Var[i] = VarTemp[i - 14];
             }
 
-            //this.largeur = this.largeur *n;
             VarTemp = Convertir_Int_To_Endian(this.largeur*n);
             for (int i = 18; i <= 21; i++)
             {
                 Var[i] = VarTemp[i - 18];
             }
 
-            //this.hauteur = this.hauteur * n;
+          
             VarTemp = Convertir_Int_To_Endian(this.hauteur*n);
             for (int i = 22; i <= 25; i++)
             {
@@ -513,6 +506,7 @@ namespace ProjetInfoGit
             {
                 for (int Colonne = 0; Colonne < Matricepixel.GetLength(1); Colonne++)
                 {
+                    // on prends la moyenne des 3 couleurs et on la donne pour chaque sous-pixels
                     byte gris = Convert.ToByte((Matricepixel[Ligne, Colonne].rouge + Matricepixel[Ligne, Colonne].vert + Matricepixel[Ligne, Colonne].bleu) / 3);  // formule pour un dégradé de gris : (rouge + vert + bleu)/3
                     fichier[compteur] = gris;
                     fichier[compteur + 1] = gris;
@@ -693,7 +687,7 @@ namespace ProjetInfoGit
 
             //Image
             Pixel[,] Matrice = new Pixel[Matricepixel.GetLength(0), Matricepixel.GetLength(1)];
-            if (sens == 'V')
+            if (sens == 'V')// miroir par rapport à une droite verticale
             {
                 for (int j = 0; j < this.hauteur; j++)
                 {
@@ -704,7 +698,7 @@ namespace ProjetInfoGit
                 }
 
             }
-            else
+            else//miroir par rapport à une droite horinzontale
             {
                 for (int i = 0; i < this.largeur; i++)
                 {
@@ -1949,7 +1943,7 @@ namespace ProjetInfoGit
 
         #region TD4
         /// <summary>
-        ///  On applique différents effet ( détection de bord / remplissage ... ) avec des matrices de convolution déja existante
+        /// donne le pixel issus du calcul de convolution pour noyau, la matrice de l'effet choisi
         /// </summary>
         /// <param name="Myfile"></param>
         /// <param name="effet"></param>
@@ -2026,6 +2020,12 @@ namespace ProjetInfoGit
 
             return pixelTemp;            // on retourne la nouvelle matrice
         }
+
+        /// <summary>
+        /// Construit l'image résultant de la convolution par un effet choisi
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="effet"></param>
         public void Convolution(string name, string effet)
         {
             // on utilise la meme forme que toute les méthode que précédamment pour obtenir les info de l'image et les stocker dans une variable
