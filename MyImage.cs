@@ -1372,7 +1372,7 @@ namespace ProjetInfoGit
             double Lum2 = Convert.ToDouble(Console.ReadLine());
             Lum2 = Lum2 / 100;
             byte[] myfile = File.ReadAllBytes(Myfile);
-            string Sat = "HSL.bmp";
+            string HSL = "HSL.bmp";
             byte[] fichier = new byte[myfile.Length];
             byte[] stock = new byte[4];
 
@@ -1454,9 +1454,8 @@ namespace ProjetInfoGit
                     Luminance = Convert.ToDouble((maxRGB + minRGB) / 2);
                     Luminance = Math.Round(Luminance, 2);
                     Luminance = Luminance + Lum2;
-                   
-                    
-                    // int PourcentageLuminance = Convert.ToInt32(Luminance * 100);
+                   // int PourcentageLuminance = Convert.ToInt32(Luminance * 100);
+
                     Saturation = (maxRGB - minRGB) / (maxRGB + minRGB);
                     Saturation = Math.Round(Saturation, 2);
                     Saturation = Saturation + Sat2;
@@ -1751,8 +1750,8 @@ namespace ProjetInfoGit
                 }
             }
 
-            File.WriteAllBytes(Sat, fichier);
-            Process.Start(new ProcessStartInfo(Sat) { UseShellExecute = true });
+            File.WriteAllBytes(HSL, fichier);
+            Process.Start(new ProcessStartInfo(HSL) { UseShellExecute = true });
         } 
         
 
@@ -2499,10 +2498,10 @@ namespace ProjetInfoGit
             fichier[0] = 66;
             fichier[1] = 77;
 
-            stock = Convertir_Int_To_Endian(taille);                // on récupère chacun leur tour les infos de l'image ( taille, hauteur,largeur...) et on les stockes dans une variables temporaire
+            stock = Convertir_Int_To_Endian(taille);               
             for (int i = 2; i <= 5; i++)
             {
-                fichier[i] = stock[i - 2];                                // on utilise la variable temporaire pour remplir un tableau variable (VAR) que l'on va utiliser pour créer un nouveau fichier
+                fichier[i] = stock[i - 2];                                
             }
 
             stock = Convertir_Int_To_Endian(0);
@@ -2558,13 +2557,13 @@ namespace ProjetInfoGit
                 for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
                 {
 
-                    fichier[compteur] = Matricepixel[iLigne, iColonne].rouge;           //on attribut chaque couleurs à son emplacement
+                    fichier[compteur] = Matricepixel[iLigne, iColonne].rouge;           
                     fichier[compteur + 1] = Matricepixel[iLigne, iColonne].vert;
                     fichier[compteur + 2] = Matricepixel[iLigne, iColonne].bleu;
-                    compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
+                    compteur = compteur + 3;                                         
                 }
             }
-            File.WriteAllBytes(name, fichier);                       //on sauvegarde l'image(sous le nom ImageToByte)
+            File.WriteAllBytes(name, fichier);                       
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
         
@@ -2621,10 +2620,10 @@ namespace ProjetInfoGit
             fichier[0] = 66;
             fichier[1] = 77;
 
-            stock = Convertir_Int_To_Endian(taille);                // on récupère chacun leur tour les infos de l'image ( taille, hauteur,largeur...) et on les stockes dans une variables temporaire
+            stock = Convertir_Int_To_Endian(taille);                
             for (int i = 2; i <= 5; i++)
             {
-                fichier[i] = stock[i - 2];                                // on utilise la variable temporaire pour remplir un tableau variable (VAR) que l'on va utiliser pour créer un nouveau fichier
+                fichier[i] = stock[i - 2];                                
             }
 
             stock = Convertir_Int_To_Endian(0);
@@ -2680,13 +2679,13 @@ namespace ProjetInfoGit
                 for (int iColonne = 0; iColonne < Matricepixel.GetLength(1); iColonne++)
                 {
 
-                    fichier[compteur] = Matricepixel[iLigne, iColonne].rouge;           //on attribut chaque couleurs à son emplacement
+                    fichier[compteur] = Matricepixel[iLigne, iColonne].rouge;          
                     fichier[compteur + 1] = Matricepixel[iLigne, iColonne].vert;
                     fichier[compteur + 2] = Matricepixel[iLigne, iColonne].bleu;
-                    compteur = compteur + 3;                                         // on avance de +3 pour les 3 couleurs pour chaque pixel
+                    compteur = compteur + 3;                                         
                 }
             }
-            File.WriteAllBytes(name, fichier);                       //on sauvegarde l'image(sous le nom ImageToByte)
+            File.WriteAllBytes(name, fichier);                       
             Process.Start(new ProcessStartInfo(name) { UseShellExecute = true });
         }
         #endregion

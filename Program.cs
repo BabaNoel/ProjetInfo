@@ -75,7 +75,7 @@ namespace ProjetInfoGit
                                  + "> 1: Mettre en Noir et Blanc \n"
                                  + "> 2: Mettre en dégradés de gris \n"
                                  + "> 3: Réduire\n"
-                                 + "> 4: Aggrandir\n"
+                                 + "> 4: Agrandir\n"
                                  + "> 5: Faire une Rotation selon un angle de 90, 180 ou 270 degré\n"
                                  + "> 6: Mettre en miroir\n"
                                  + "> 7: Matrice de convolution\n"
@@ -91,6 +91,7 @@ namespace ProjetInfoGit
                                  + "> 17: Innovation : Ombre\n"
                                  + "> 18: Innovation : Hautes lumières\n"
                                  + "> 19: Changer d'image\n"
+                                 + "> 20: Afficher image\n"
                                  + "\n");
                 int numero = Convert.ToInt32(Console.ReadLine());
                 string name;
@@ -311,6 +312,9 @@ namespace ProjetInfoGit
                     case 15:
                         Console.WriteLine("Comment voulez vous régler la teinte, la saturation et la luminance de l'image?");
                         image.HSL(Image);
+                        break;
+                    case 20:
+                        image.From_Image_To_File(Image);
                         break;
                     default:
                         Console.WriteLine("Commande non valide, recommencez");
