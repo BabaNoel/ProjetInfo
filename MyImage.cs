@@ -1135,7 +1135,7 @@ namespace ProjetInfoGit
 
 
         /// <summary>
-        /// Permet de régler l'exposition de la photo ( plus sombre ou plus claire)
+        /// Permet de régler l'exposition de la photo
         /// </summary>
         /// <param name="Myfile"></param>
         /// <param name="expo"></param>
@@ -1256,7 +1256,7 @@ namespace ProjetInfoGit
         }
 
         /// <summary>
-        /// Permet de régler les ombres de la photos(les ombres peuvent devenir plus claire ou plus sombre)
+        /// Permet de régler les ombres de la photo
         /// </summary>
         /// <param name="Myfile"></param>
         /// <param name="ombre"></param>
@@ -1389,7 +1389,7 @@ namespace ProjetInfoGit
         }
 
         /// <summary>
-        /// Permet de régler les hautes lumière de la photos(Plus claires ou plus sombre)
+        /// Permet de régler les hautes lumière de la photo
         /// </summary>
         /// <param name="Myfile"></param>
         /// /// <param name="HL"></param>
