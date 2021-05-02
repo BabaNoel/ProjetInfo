@@ -560,18 +560,42 @@ namespace ProjetInfoGit
 
             //noir module
             image[13, 8] = new Pixel(0, 0, 0);
-            int caselibre = 0;
+
+            //ecriture du image
+            //masque damier
+            Pixel[,] damier = new Pixel[21, 21]; 
+            Pixel blanc = new Pixel(255, 255, 255);
+            Pixel noir = new Pixel(0, 0, 0);
+            Pixel couleur;
+            int alternateur = 0;
+            for(int i=0; i<21;i++)
+            {
+                for(int j=0;j<21;j++)
+                {
+                    if (alternateur% 2 == 0)
+                    {
+                        couleur = noir;
+                    }
+                    else
+                    {
+                        couleur = blanc;
+                    }
+                    alternateur++;
+                    if(image[i,j]==null)
+                    {
+                        damier[i, j] = couleur;
+                    }
+                }
+            }
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 21; j++)
                 {
-                    if (image[i, j] == null) {caselibre++ ; }
+                    if (damier[i, j] == null) { damier[i, j] = new Pixel(0,155,0); }
                 }
             }
-            Console.WriteLine(caselibre);
-            Console.WriteLine(code.Length);
-            Console.ReadLine();
-            //ecriture du image
+
+            //remplissage
             bool montee = true;
             int index = 0;
             for (int x = 20; x > 0; x -= 2)
@@ -584,21 +608,13 @@ namespace ProjetInfoGit
 
                         if (image[y, x] == null)
                         {
-                            if(code.Length<=index)
-                            {
-                                image[y, x - 1] = new Pixel(255, 255, 255);
-                            }
-                            else if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+                            if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
                             else { image[y, x] = new Pixel(0, 0, 0); }
                             index++;
                         }
                         if (image[y, x - 1] == null)
                         {
-                            if (code.Length<= index)
-                            {
-                                image[y, x - 1] = new Pixel(255, 255, 255);
-                            }
-                            else if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+                            if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
                             else { image[y, x - 1] = new Pixel(0, 0, 0); }
                             index++;
                         }
@@ -611,21 +627,13 @@ namespace ProjetInfoGit
                     {
                         if (image[y, x] == null)
                         {
-                            if (code.Length <= index)
-                            {
-                                image[x, y] = new Pixel(255, 255, 255);
-                            }
-                            else if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
+                            if (code[index] == '0') { image[y, x] = new Pixel(255, 255, 255); }
                             else { image[y, x] = new Pixel(0, 0, 0); }
                             index++;
                         }
                         if (image[y, x - 1] == null)
                         {
-                            if (code.Length <= index)
-                            {
-                                image[y, x - 1] = new Pixel(255, 255, 255);
-                            }
-                            else if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
+                            if (code[index] == '0') { image[y, x - 1] = new Pixel(255, 255, 255); }
                             else { image[y, x - 1] = new Pixel(0, 0, 0); }
                             index++;
                         }
@@ -634,13 +642,31 @@ namespace ProjetInfoGit
                 }
 
             }
+            Pixel vert = new Pixel(0, 155, 0);
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 21; j++)
                 {
-                    if (image[i, j] == null) { image[i, j] = new Pixel(255, 255, 255); }
+                    if (damier[i, j] == blanc || damier[i,j]==noir)
+                    {
+                        if (damier[i, j].rouge == image[i, j].rouge && damier[i, j].vert == image[i, j].vert && damier[i, j].bleu == image[i, j].bleu)
+                        {
+                            image[i, j] = blanc;
+                        }
+                        else
+                        {
+                            image[i, j] = noir;
+                        }
+                    }
                 }
             }
+            //for (int i = 0; i < 21; i++)
+            //{
+            //    for (int j = 0; j < 21; j++)
+            //    {
+            //        if (image[i, j] == null) { image[i, j] = new Pixel(255, 255, 255); }
+            //    }
+            //}
             MyImage QR = new MyImage(21, image);
             QR.Miroir("QRcode.bmp", 'H');
             QR = new MyImage("QRcode.bmp");
